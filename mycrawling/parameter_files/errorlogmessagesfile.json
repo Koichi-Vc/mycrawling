@@ -1,0 +1,22 @@
+{
+    "custom_message_dict":{
+        "requests.exceptions.Timeout":{
+            "textmessage": "タイムアウトです。robots.txtが参照出来ませんでした。",
+            "logmessage": "None robots.txt or TimeOut. robots.txtの参照失敗 ",
+            "loglevel": "error"
+        },
+
+        "requests.exceptions.RequestException":{
+            "textmessage": ["robotsファイルへのリクエストに問題が発生しました。"],
+            "logmessage": "obotsファイルリクエスト/取得に問題発生"
+        },
+
+        "ValueError": {
+            "textmessage" : "robotsファイル取得に問題が発生しました。",
+            "logmessage" : "robots.txt参照エラー",
+            "loglevel" : "error"
+        }
+    }
+}
+
+

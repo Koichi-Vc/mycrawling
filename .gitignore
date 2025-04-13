@@ -1,0 +1,8 @@
+
+.venv/
+
+mycrawling/*/__pycache__/
+
+__pycache__/
+
+mycrawling/parameter_files/test_*

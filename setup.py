@@ -1,0 +1,11 @@
+from setuptools import setup, find_namespace_packages
+
+
+setup(
+    name='mycrawling',
+    version='0.0.0',
+    packages=find_namespace_packages()
+)
+
+print(f'find_namespace_packages: {find_namespace_packages()}')
+
