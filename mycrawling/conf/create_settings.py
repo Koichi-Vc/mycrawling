@@ -4,9 +4,12 @@ from mycrawling.utils.paths import join_current_dir
 from mycrawling.utils.imports_module import create_module_import_path
 from mycrawling.logs.debug_log import debug_logger
 
-''' ユーザー設定ファイルをデフォルトの設定ファイルをコピーして生成する。 '''
 
-default_setting_file = Path('mycrawling/conf/setting.py')#パッケージのデフォルトセッティングパス
+''' ユーザー設定ファイルをデフォルトの設定ファイルをコピーして生成する。 '''
+print(f'__file__: {__file__}')
+base_dir = Path(__file__).parent.parent.parent
+default_setting_file = base_dir.joinpath(Path('mycrawling/conf/setting.py'))#パッケージのデフォルトセッティングパス
+print(f'default_setting_file: {default_setting_file}')
 created_user_setting_import_path = None
 
 print(f'debug_logger: {debug_logger}')
