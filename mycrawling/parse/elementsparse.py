@@ -1,10 +1,11 @@
 from bs4 import BeautifulSoup
 from bs4.element import SoupStrainer
-from selenium.webdriver import chrome
-from selenium.webdriver import edge
+#from selenium.webdriver import chrome
+#from selenium.webdriver import edge
 from typing import Union
 from mycrawling.utils.imports_module import get_module
 from mycrawling.logs.debug_log import debug_logger
+
 #Var37.06.14.15a(24/07/25/時点のバージョン)
 
 class ElementsParse:

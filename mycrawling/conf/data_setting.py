@@ -11,7 +11,7 @@ from mycrawling.logs.debug_log import get_debug_log
 
 datamediator = DataMediator()
 
-setting_conf = dict()#get_conf_valueを用意した為うまく行けば不要になる。
+#setting_conf = dict()#get_conf_valueを用意した為うまく行けば不要になる。
 
 class Ref_DataConfig():
     '''
@@ -37,7 +37,7 @@ class Ref_DataConfig():
     '''
 
     def __init__(self, parametor_jsonfile=None, parametor_dict=None, retainsettingconf=None, **kwargs):
-        global setting_conf
+
         reading_setting = kwargs.pop('reading_setting', True)
         self.parametor_jsonfile = parametor_jsonfile
         self.parametor_dict = parametor_dict
@@ -53,12 +53,12 @@ class Ref_DataConfig():
         else:
             self.setting_conf = dict()
         self.default_ref_text_file = self.setting_conf.get('REFERENCE_TEXTS_FILES')
-        setting_conf = self.setting_conf
-        get_debug_log(debug=self.setting_conf.get('Debug'))
+        #setting_conf = self.setting_conf
+        get_debug_log(debug=self.setting_conf.get('Debug'))#デバッグ用のログを設定する。
 
     def get_param_json_file(self, file):
         ''' データクラスインスタンス用パラメータをまとめたjsonファイルを読み込む '''
-        #parameters = ref_files_load(file, json_load, encoding='UTF-8')
+
         parameters = FilesLoader.file_load(file, load_method=json_load, encoding='UTF-8')
         return parameters
 
@@ -67,8 +67,8 @@ class Ref_DataConfig():
         ''' setting_confから特定の設定情報を取得する。'''
         kwg_keys = kwargs.keys()
 
-        if configparameter in setting_conf:
-            config_value = setting_conf.get(configparameter, None)
+        if configparameter in self.setting_conf:
+            config_value = self.setting_conf.get(configparameter, None)
         elif 'default' in kwg_keys:
             config_value = kwargs.get('default')
         else:
@@ -91,7 +91,7 @@ class Ref_DataConfig():
     
     def has_config(self, configparameter):
         result = False
-        if configparameter in setting_conf:
+        if configparameter in self.setting_conf:
             result = True
         return result
 

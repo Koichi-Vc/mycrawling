@@ -1,7 +1,7 @@
-from typing import List, Dict
-from collections.abc import Iterable
-from inspect import signature
-#from mycrawlingpack.conf.data_setting import setting_conf
+from typing import Dict
+#from collections.abc import Iterable
+#from inspect import signature
+#from mycrawling.conf.data_setting import setting_conf
 from mycrawling.filters.filtersets import filterset_factory
 from mycrawling.filters.filtermanage import BaseFilterManage
 #from .load_parameter_files import elements_filter_parameters, get_filter_parameters, FilterParameterLoader

@@ -12,9 +12,7 @@ debug_logger.setLevel(INFO)
 
 #debug_loggerとconfパッケージ間の循環インポート問題を次回解決する。
 def get_debug_log(debug=False):
-    global debug_logger
-    #from mycrawling.conf.data_setting import ref_dataconfig
-    
+    global debug_logger 
     if debug is True:
         debug_logger.setLevel(DEBUG)    
     return debug_logger

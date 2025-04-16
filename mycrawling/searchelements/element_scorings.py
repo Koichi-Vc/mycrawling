@@ -7,6 +7,8 @@ from mycrawling.logs.debug_log import debug_logger
 #Var37.06.14.15a(24/07/25/時点のバージョン)
 class ElementsScoring(ScoringTexts):
     ''' 要素のテキストコンテンツをスコアリング '''
+    
+
     def __init__(self, ref_text:Union[List, Tuple, Set]=None, **kwargs):
         self.reference_texts = ref_text
         self.text_scorer = Indel.normalized_distance

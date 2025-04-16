@@ -1,10 +1,9 @@
 import logging
 import tracemalloc
-import bs4
+from bs4.element import Tag
 from mycrawling.evaluations.evaluationtexts import EvaluateTexts
 from mycrawling.parse.elementsparse import ElementsParse
 #from mycrawling.crawlings.crawling import MyCrawlingSearch#循環インポート
-from mycrawling.searchelements.metaelements.attrs_robot import EvalRobotsMetaElements
 from mycrawling.conf.data_setting import ref_dataconfig
 from mycrawling.utils.imports_module import get_module
 from mycrawling.logs.debug_log import debug_logger
@@ -135,7 +134,7 @@ class PageEvaluation(EvaluateTexts):
         if elements:
             #対象テキスト検出, 要素が取得出来たら走査を開始する。
             for element in elements:
-                if isinstance(element, bs4.element.Tag):
+                if isinstance(element, Tag):
                     
                     detection_texts_obj = self.pagescorings.child_elements_traverse_beta(element)
                     if detection_texts_obj is not None:

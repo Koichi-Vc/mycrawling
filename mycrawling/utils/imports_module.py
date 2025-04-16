@@ -1,5 +1,4 @@
 import importlib
-import os
 from pathlib import Path
 from re import sub, escape
 import logging
@@ -18,12 +17,11 @@ def create_module_import_path(file_path):
     path = Path(file_path)
     path_dir = str(path.parent) 
     module = path.stem
-    print('create_module_import_path>>>>\n')
-    print(f'rep : {rep} | path_dir: {path_dir}')
-    print(f'file_path: {file_path}')
+    debug_logger.debug(f'rep : {rep} | path_dir: {path_dir}')
+    debug_logger.debug(f'file_path: {file_path}')
     import_path = sub(rep, '.', path_dir)
-    print(f'import_path: {import_path}')
-    print('create_module_import_path>>>>')
+    debug_logger.debug(f'import_path: {import_path}')
+
 
     joined_import_path = import_path + '.' + module if import_path != '.' else import_path+module
 

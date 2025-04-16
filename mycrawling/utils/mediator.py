@@ -97,7 +97,7 @@ class DataMediator(BaseDataMediator):
                 self.registry_notify_objects.setdefault(key, obj_value)
 
 
-    #find_notification_filterからの名称変更25/01/15/349
+    #find_notification_filterからの名称変更25/01/15/
     def find_all_notification(self, object_name):
         ''' 辞書値を元に登録しているクラスとインスタンスをフィルター検索。戻り値はリスト '''
         '''

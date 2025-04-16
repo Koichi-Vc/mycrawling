@@ -4,14 +4,12 @@ from .imports_module import get_module
 from .method_parse import run_method, has_param_names
 from mycrawling.utils.loaders.loader import FilesLoader, json_load
 from mycrawling.logs.debug_log import debug_logger
-'''
-柔軟性、再利用性と言うよりも、簡潔性を重視する。
 
-'''
+
 debug_logger.debug(f'ref_dataconfig: {ref_dataconfig}')
 
 class AbstractFactory(ABC):
-    #一応抽象基底クラスを用意しかけてみたが、あまり必要ないかもしれない。
+
     @abstractmethod
     def create_instance(self, class_name, arguments):
         pass
@@ -56,9 +54,7 @@ class Factory(AbstractFactory):
         if not classes:
             classes = self.USE_CLASSES
         self.classes.update(classes)#インポート, インスタンス化を行うクラスをクラス名-インポートパスの辞書型で保持。
-        
-        #self.class_objects = self.import_classes(**classes)
-        #self.lazy_instances = self.import_classes(**self.LAZY_INSTANCES_CLASS)
+
         if not ref_dataconfig:
             ref_dataconfig = self.ref_dataconfig
         debug_logger.debug(f'ref_dataconfig: {ref_dataconfig}')
