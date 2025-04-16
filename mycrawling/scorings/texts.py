@@ -1,6 +1,6 @@
 from typing import List
 from collections import deque
-from bs4.element import Tag as bs4_element_Tag
+from bs4.element import Tag
 import re
 from rapidfuzz import process as rpdfuzz_process
 from rapidfuzz.fuzz import WRatio as rapidfuzz_WRatio
@@ -128,7 +128,7 @@ class ScoringTitleTexts(ScoringTexts):
         self._ref_title_choices = ref_texts
     
 
-    def scoring_title_elements(self, titles:List[bs4_element_Tag], cutoff=80, text_scorer=None, ):
+    def scoring_title_elements(self, titles:List[Tag], cutoff=80, text_scorer=None, ):
         choices = self.ref_title_choices
 
         debug_logger.debug(f'choices: {choices} | cutoff: {cutoff}')
