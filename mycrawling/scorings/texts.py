@@ -16,13 +16,15 @@ class ScoringTexts:
     all_text_scoringとbest_text_scoringの違いは、テキストコンテンツリストのスコアリング時に
     all_text_scoring全てのスコアを返し、best_text_scoringはリスト中の最高スコアのみを返す。
     """
+    default_all_text_scorer = Indel.normalized_distance
+    default_best_text_scorer = Indel.normalized_distance
     #base_text_scoringだったが存在意義が薄れた為、ひとまずジェネレータ化するメソッドとして対応する。
     def decorator_text_scoring(parse_method):
         def wrapper(self, texts, choices, scorer, *args, **kwargs):
             query_txt = ''
             ext_txt = ''
-            #print(f'base_text_scoring>>> args: {args} | kwargs: {kwargs}')
-            #print(f'score_init確認: {self.__score_cutoff_init_}')
+            #debug_logger.debug(f'base_text_scoring>>> args: {args} | kwargs: {kwargs}')
+            #debug_logger.debug(f'score_init確認: {self.__score_cutoff_init_}')
             if isinstance(texts, str):
                 ''' list型以外が渡されたら変換 '''
                 texts = [texts]
@@ -43,7 +45,7 @@ class ScoringTexts:
         if not text_scorer and hasattr(self, 'text_scorer'):
             text_scorer = self.text_scorer
         elif not text_scorer or not callable(text_scorer):
-            text_scorer = Indel.normalized_distance
+            text_scorer = self.default_all_text_scorer
 
         if isinstance(texts, str):
             ''' list型以外が渡されたら変換 '''
@@ -69,7 +71,7 @@ class ScoringTexts:
             yield score, applicable_txt, txt
 
 
-    def best_text_scoring(self, texts:List, choices, text_scorer=Indel.normalized_distance, cutoff=None ,*args, **kwargs):
+    def best_text_scoring(self, texts:List, choices, text_scorer=None, cutoff=None ,*args, **kwargs):
         ''' テキストリストの最高スコアを返す。cutoff値外又は評価不能の場合はNoneを返す。 '''
         
         if isinstance(texts, str):
@@ -79,7 +81,7 @@ class ScoringTexts:
         if not text_scorer and hasattr(self, 'text_scorer'):
             text_scorer = self.text_scorer
         elif not text_scorer or not callable(text_scorer):
-            text_scorer = Indel.normalized_distance
+            text_scorer = self.default_best_text_scorer
         
         applicable_txt = None
         text_item = None
@@ -101,9 +103,7 @@ class ScoringTexts:
         return score, applicable_txt, text_item
 
 
-
 #Var37.06.14.15a(24/07/25/時点のバージョン)
-
 class ScoringTitleTexts(ScoringTexts):
     ''' title要素のスコア算出 '''
     title_scorer = rapidfuzz_WRatio
@@ -128,11 +128,7 @@ class ScoringTitleTexts(ScoringTexts):
         self._ref_title_choices = ref_texts
     
 
-    def scoring_title_elements(self,
-                               titles:List[bs4_element_Tag],
-                               cutoff=80,
-                               text_scorer=None,
-                               ):
+    def scoring_title_elements(self, titles:List[bs4_element_Tag], cutoff=80, text_scorer=None, ):
         choices = self.ref_title_choices
 
         debug_logger.debug(f'choices: {choices} | cutoff: {cutoff}')
