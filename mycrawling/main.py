@@ -72,8 +72,7 @@ class Main():
             kwargs = self.kwargs
         
         with self.webdriver_manager(**self.WEBDRIVER_MANAGER_PARAM) as driver_manager:
-            #driver = driver_manager.driver
-            #テスト用にcrawlをインスタンス変数として保持しておく。
+
             self.crawl =self.crawlig_obj(driver_manager, input_url, *args, **kwargs)
             self.factory.datamediator.register_object({'crawling_class':self.crawl})
             self.crawl.myscraping(*args, **kwargs)
