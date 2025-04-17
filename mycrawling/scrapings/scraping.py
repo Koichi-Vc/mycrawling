@@ -2,10 +2,11 @@ from collections import deque
 import bs4
 import logging
 import pandas
+from statistics import median
 import time
 import tracemalloc
-from statistics import median
 from mycrawling.logs.debug_log import debug_logger
+
 #Var37.06.14.15a(24/07/25/時点のバージョン)
 
 class PageScraping():
@@ -65,7 +66,7 @@ class PageScraping():
 
         tr_elements = []
         debug_logger.debug(f'element: {element}')
-        elems_index = element
+        #elems_index = element
         if element.name == 'table' or element.find_all('tr'):
             tr_elements = (i for i in element.find_all('tr') if isinstance(i, bs4.element.Tag))
         elif element.name == 'tr':
@@ -170,7 +171,7 @@ class PageScraping():
             #elem_index = ''#child_text毎のインデックスを参照する為の一時的な変数
             for elem in child_text:
                 debug_logger.debug(f'child_text[elem] : {elem}')
-                if elem in reference_score_texts:#【24/06/13/734am】any(reference in elem for reference in reference_score_texts)も導入するか検討する。
+                if elem in reference_score_texts:#【24/06/13/】any(reference in elem for reference in reference_score_texts)も導入するか検討する。
                     
                     if tx:#既にアイテムが収集されていた場合、今検出された項目の前の項目テキストに対応するアイテムの為保存処理に移る
                         company_list.append(tx)

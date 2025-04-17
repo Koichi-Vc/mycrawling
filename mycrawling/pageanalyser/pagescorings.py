@@ -1,9 +1,9 @@
-import logging
-from types import GeneratorType
-from typing import Iterable
 from bs4 import element as bs4_element
+import logging
 from rapidfuzz.fuzz import WRatio as rapd_WRatio
 from rapidfuzz.distance import Indel
+from types import GeneratorType
+from typing import Iterable
 from .data import PageScoreStatisticsSet
 from .pageparse import PageTextContentsParse
 from mycrawling.scorings.texts import ScoringTexts

@@ -1,11 +1,6 @@
 from mycrawling.utils.imports_module import get_module
-#from mycrawling.conf.data_setting import setting_conf
 from mycrawling.conf.data_setting import ref_dataconfig
-from mycrawling.logs.debug_log import debug_logger
 
-
-#debug_logger.debug(f'setting_conf: {setting_conf}')
-#25/01/13/; ref_dataconfigインスタンスに替わる場合、以下の変数二つは廃止される。
 
 CREATEFILTER_CLS = ref_dataconfig.get_conf_value('CREATEFILTER_CLS', default='')
 CREATEFILTERSETS_CLS = ref_dataconfig.get_conf_value('CREATEFILTERSETS_CLS', default='')

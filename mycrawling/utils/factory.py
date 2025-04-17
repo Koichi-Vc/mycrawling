@@ -188,3 +188,4 @@ class Factory(AbstractFactory):
         #parameters = ref_files_load(file, json_load, encoding='UTF-8')
         parameters = FilesLoader.file_load(file, load_method=json_load, encoding='UTF-8')
         return parameters
+

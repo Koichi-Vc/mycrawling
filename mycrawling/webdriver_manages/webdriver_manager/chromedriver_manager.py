@@ -1,11 +1,10 @@
-''' chromiumバージョンのウェブドライバー起動モジュールを作成する。24/12/29/'''
-
 from selenium.webdriver import Chrome
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
 from .basemanager import BasebWebDriverContextManager
 from mycrawling.utils.imports_module import get_module
 
+''' chromiumバージョンのウェブドライバー起動モジュールを作成する。'''
 
 remote_debugging_pipe = '--remote-debugging-pipe'
 

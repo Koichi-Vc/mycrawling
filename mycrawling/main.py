@@ -1,5 +1,5 @@
 import json
-from mycrawling.conf.data_setting import Ref_DataConfig, ref_dataconfig#, #datamediator
+from mycrawling.conf.data_setting import Ref_DataConfig, ref_dataconfig
 from mycrawling.utils.factory import Factory
 from mycrawling.utils.imports_module import get_module
 from mycrawling.utils.loaders.loader import FilesLoader

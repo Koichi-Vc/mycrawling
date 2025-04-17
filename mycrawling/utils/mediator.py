@@ -1,6 +1,4 @@
-import logging
 from typing import Union, Dict
-from collections.abc import Iterable
 from abc import ABC, abstractmethod
 from .imports_module import get_module
 from mycrawling.logs.debug_log import debug_logger
@@ -107,7 +105,7 @@ class DataMediator(BaseDataMediator):
         datamediatorは値としてインスタンスやクラスオブジェクトを持つ事が想定されている為、
         '''
         searched_obj = []
-        #result = False
+
         if isinstance(object_name, str):
             searched_obj = [
                 self.registry_notify_objects[notify] for notify in self.registry_notify_objects.keys() if self.filter_exact_match(notify, object_name)

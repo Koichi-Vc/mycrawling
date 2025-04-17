@@ -5,7 +5,6 @@ import traceback
 from typing import Dict
 from collections.abc import Iterable
 from collections import deque
-from requests import exceptions
 from mycrawling.utils.imports_module import get_module
 from .debug_log import debug_logger
 

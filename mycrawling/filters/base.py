@@ -5,6 +5,8 @@ from mycrawling.logs.debug_log import debug_logger
 #Var37.06.14.15a(24/07/25/時点のバージョン)
 class AbstractElementsFilter(ABC):
     ''' 要素の属性名と属性値のフィルター '''
+
+    
     def __init__(self,filter_method=None):
         debug_logger.debug(f'filter_method is callable: {callable(filter_method)}')
         self._filter_method = filter_method if callable(filter_method)else self.set_filter_method(filter_method) 

@@ -26,7 +26,6 @@ def join_path(*args):
     
     return path
     
-        
 
 def match_urls(url1, url2):
     '''

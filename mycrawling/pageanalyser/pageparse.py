@@ -1,7 +1,7 @@
-import logging
-from typing import List
 from bs4.element import Tag
 from collections.abc import Iterable
+import logging
+from typing import List
 from mycrawling.parse.textcontentsparse import Spacy_TextParse
 
 #Var37.06.14.15a(24/07/25/時点のバージョン)

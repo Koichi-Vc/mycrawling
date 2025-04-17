@@ -1,5 +1,5 @@
-from typing import Dict
 import bs4
+from typing import Dict
 from mycrawling.parse.elementsparse import ElementsParse
 from mycrawling.logs.debug_log import debug_logger
 

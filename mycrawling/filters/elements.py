@@ -1,45 +1,20 @@
-from .base import AbstractElementsFilter
-from mycrawling.utils.operators import SelectListOperator
-from mycrawling.utils.method_parse import run_method, method_parameter_parse, has_param_names
-from mycrawling.utils.method_parse import edit_keyword_argument
-from collections.abc import Iterable
-import operator
 from inspect import isfunction, ismethod
+import operator
 from typing import List
-import inspect
+from .base import AbstractElementsFilter
 from mycrawling.logs.debug_log import debug_logger
+from mycrawling.utils.method_parse import edit_keyword_argument
+from mycrawling.utils.method_parse import run_method, method_parameter_parse, has_param_names
+from mycrawling.utils.operators import SelectListOperator
 
 
-'''
-Processingクラスのドキュメンテーション
-
-<クラス設計にあたって>
-当クラスはデコレータクラスとして設計されており対象のメソッドを修飾する事により対象のメソッドの前後に任意のプロセスを
-配置出来る物である。
-当クラス設計にあたり一番の問題であり障壁にもなったのは引数周りの処理である。
-まず、processメソッドが受け取るmethodは被修飾対象メソッドであるが、インスタンスメソッドの場合クラス定義の時点ではインスタンス化
-されていない為、アンバウンドなインスタンスメソッドとしてデコレータに渡されてしまう。
-
-'''
-#フィルター前後処理を定義するデコレータをクラスデコレータ版にしてみた。※これがうまく行ったらデコレータ版は削除
+#フィルター前後処理を定義するデコレータをクラスデコレータ版にしてみた。
 class Processing():
     '''
-    要素又は値をフィルターで評価する前後にプロセス(処理や加工)を追加する。 デフォルトでは何もしない(affix == no_process
+    要素又は値をフィルターで評価する前後にプロセス(処理や加工)を追加する。 デフォルトでは何もしない(affix == no_process)
     になっている。
     
     '''
-    '''
-    <当クラス設計にあたって>
-    当クラスの設計にあたり一番問題となったのが、被修飾メソッド(method)がインスタンスメソッドだった場合、適用時点では、
-    インスタンス化されていないアンバウンドなインスタンスメソッドの状態であると言う点であり、この場合のprocessメソッドの
-    wrapperが受け取る第一引数に渡されるアイテムがインスタンスオブジェクトなのか通常のデータなのかを適切にハンドリング
-    する必要があった。
-    
-    また、プロセスメソッド(self.affix_methods)は、任意のメソッド又はメソッドを文字列で登録する(此の場合wrapperメソッド第一引数がインスタンスで
-    合った場合に限りメソッド本体の取得を試みる。)事が出来るが、こちらは被修飾メソッドとは異なりインスタンスメソッド又はグローバルメソッドどちらも登録
-    され得る。その為プロセスメソッドを実際に実行する_processingメソッドに於いてもこの違いを適切にハンドリングするロジックにしなければならなかった。
-    '''
-
 
     def __init__(self, *affix_methods, affix=None, **kwargs):
 

@@ -1,4 +1,3 @@
-import numpy as np
 from collections.abc import Iterable
 from mycrawling.parse.urlcontentsparse import ParseUrls
 from .base import ScoreEvaluations

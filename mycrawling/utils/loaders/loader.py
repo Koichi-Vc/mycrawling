@@ -40,6 +40,3 @@ class FilesLoader():
                 data = load_method(f)
         return data
 
-    
-
-

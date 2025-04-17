@@ -1,6 +1,6 @@
+from bs4.element import Tag
 import logging
 import tracemalloc
-from bs4.element import Tag
 from mycrawling.evaluations.evaluationtexts import EvaluateTexts
 from mycrawling.parse.elementsparse import ElementsParse
 #from mycrawling.crawlings.crawling import MyCrawlingSearch#循環インポート

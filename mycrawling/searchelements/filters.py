@@ -1,10 +1,6 @@
 from typing import Dict
-#from collections.abc import Iterable
-#from inspect import signature
-#from mycrawling.conf.data_setting import setting_conf
 from mycrawling.filters.filtersets import filterset_factory
 from mycrawling.filters.filtermanage import BaseFilterManage
-#from .load_parameter_files import elements_filter_parameters, get_filter_parameters, FilterParameterLoader
 from .load_parameter_files import FilterParameterLoader
 from mycrawling.utils.method_parse import run_method, isiterable
 from mycrawling.utils.loaders.loader import json_load
@@ -12,8 +8,8 @@ import logging
 from mycrawling.logs.debug_log import debug_logger
 
 
-filtermanage_object = None#必要かどうか現時点では不明。
-filter_object = None#必要かどうか現時点では不明。
+#filtermanage_object = None
+#ilter_object = None
 
 #parameter_files\elements_filter_arguments3.jsonを元に設計する。
 class SearchElementFilterManager(BaseFilterManage):

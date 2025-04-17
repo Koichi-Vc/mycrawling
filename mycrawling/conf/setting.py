@@ -1,8 +1,8 @@
 
 ''' DataMediatorに登録する各オブジェクト '''
 '''
-REGISTRY_CLASS:
-    クラスオブジェクト自体を登録する。インスタンス化は行わない。
+USE_CLASSES:
+    使用するクラスのインポートパスを指定する。
 
 REGISTRY_DATA_CLASS_INSTANCE:
     データクラスをインスタンス化した上で登録する。
@@ -10,6 +10,7 @@ REGISTRY_DATA_CLASS_INSTANCE:
 PARAMETERHANDLER:
     パラメータ管理クラスを指定する。    
 '''
+
 USE_WEBDRIVER = 'selenium.webdriver.Chrome'
 
 WEBDRIVER_MANAGER = 'mycrawling.webdriver_manages.webdriver_manager.chromedriver_manager.ChromeWebDriverContextManager'
@@ -116,7 +117,7 @@ ROBOTS_ERROR_MESSAGE_DICT = {
         }
 }
 
-#USE_CLASSES_PARAMETERからロボットを分離してみた
+
 #robots.txtを解析するクラス(robotfileparse)のインスタンス化用パラメータ
 ROBOTFILEPARSE_PARAMETER = {
     'rp': 'urllib.robotparser.RobotFileParser',

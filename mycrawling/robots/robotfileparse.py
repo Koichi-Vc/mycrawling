@@ -1,10 +1,8 @@
-from urllib import robotparser
-from urllib.parse import urlparse
+import logging
 import requests
 import time
-import logging
-#from mycrawling.logs.errors import Errorloghandlings_Class
-#from .data.prohibitions import RobotsParseDataList
+#from urllib import robotparser
+from urllib.parse import urlparse
 from mycrawling.conf.data_setting import ref_dataconfig
 from mycrawling.utils.imports_module import get_module
 from mycrawling.logs.debug_log import debug_logger
@@ -226,6 +224,5 @@ class RobotFileparseManager():
                 debug_logger.debug(f'self.result: {self.result} ')
         logging.info(f'<robots_url: {robots_url} | urls: {urls} | result: {self.result}>')
         return self.result
-
 
 

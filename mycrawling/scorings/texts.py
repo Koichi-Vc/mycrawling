@@ -1,10 +1,10 @@
-from typing import List
-from collections import deque
 from bs4.element import Tag
-import re
+from collections import deque
 from rapidfuzz import process as rpdfuzz_process
-from rapidfuzz.fuzz import WRatio as rapidfuzz_WRatio
 from rapidfuzz.distance import Indel
+from rapidfuzz.fuzz import WRatio as rapidfuzz_WRatio
+import re
+from typing import List
 from mycrawling.parse.textcontentsparse import Spacy_TextParse
 from mycrawling.logs.debug_log import debug_logger
 

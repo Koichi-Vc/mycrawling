@@ -118,8 +118,6 @@ class AnchorElementsScorings(ElementsScoring, ScoringUrls):
         for text, href in contents:
             text_score = self.best_textcontent_scoring(text, **kwargs)[0]
             absolutepath = urljoin(current_url, href)
-            #hrefpath = urlparse(absolutepath).path
-            #hrefpath = urlparse(absolutepath)
             #print(f'hrefpath: {hrefpath}')
             hrefs_score = self.urls_scoring(absolutepath,
                                             scoring_urls_attrs=self.select_url_attrs_list,

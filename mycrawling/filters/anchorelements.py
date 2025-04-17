@@ -117,7 +117,7 @@ class AnchorFilterMixin:
 class CreateAnchorElementFilter(ElementsFilter, AnchorFilterMixin):
     ''' a要素専用の検索フィルターを作成する。 '''
     '''
-    ≪CreateAnchorElementFilterに関するドきゅめんてーション≫24/12/21/431am
+    ≪CreateAnchorElementFilterに関するドきゅめんてーション≫24/12/21/
     
     processing:
         フィルターの前後に処理を追加する為のオブジェクト。現在valuefilterメソッドのみでのサポートであり、

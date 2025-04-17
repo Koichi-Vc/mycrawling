@@ -1,10 +1,10 @@
 from collections import deque
 import logging
-import tracemalloc
-from urllib.parse import urlparse
-import time
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as ec
+import time
+import tracemalloc
+from urllib.parse import urlparse
 #以下新しく追加したwebdrivercontextmanager↓↓↓
 from mycrawling.conf import data_setting
 from mycrawling.conf.data_setting import ref_dataconfig
