@@ -1,0 +1,4 @@
+include mycrawling/parameter_files/ref_textfiles *
+
+recursive-exclude mycrawling/parameter_files test_*.json
+
