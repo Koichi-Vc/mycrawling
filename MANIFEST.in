@@ -1,4 +1,5 @@
-include mycrawling/parameter_files/ref_textfiles *
+recursive-include mycrawling/parameter_files/ref_textfiles *
 
 recursive-exclude mycrawling/parameter_files test_*.json
 
+include mycrawling/requirements.txt
