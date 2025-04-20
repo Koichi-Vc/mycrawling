@@ -8,5 +8,5 @@ setup(
     include_package_data=True
 )
 
-print(f'find_namespace_packages: {find_namespace_packages()}')
+
 
