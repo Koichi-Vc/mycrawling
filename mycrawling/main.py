@@ -14,7 +14,7 @@ class Main():
 
     def __init__(self, webdriver_manager=None, crawling_obj=None, factory_instance=None, loader=None, *args, **kwargs):
         global ref_dataconfig
-        if not ref_dataconfig:
+        if not ref_dataconfig or not getattr(ref_dataconfig, 'setting_conf', None):
             ref_dataconfig = Ref_DataConfig.ref_dataconfig_factory()
             self.WEBDRIVER_SERVICE_PARAM = ref_dataconfig.get_conf_value('WEBDRIVER_SERVICE_PARAM', default=dict())
             self.WEBDRIVER_MANAGER_PARAM = ref_dataconfig.get_conf_value('WEBDRIVER_MANAGER_PARAM', default=dict())
