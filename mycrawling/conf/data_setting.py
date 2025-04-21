@@ -118,7 +118,7 @@ class RetainSettingConf:
         #)
 
         self.setting_tuple = (
-            val for val in dir(setting) if val.isupper() and not bool(re_match(r'[__]', val))
+            val for val in dir(setting) if (val.isupper() or val.istitle()) and not bool(re_match(r'[__]', val))
         )
         self.setting_conf = dict()
 
