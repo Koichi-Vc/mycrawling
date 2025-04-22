@@ -30,7 +30,6 @@ class Factory(AbstractFactory):
     LAZY_INSTANCES_CLASS = ref_dataconfig.get_conf_value('LAZY_INSTANCES_CLASS')
 
     def __init__(self, classes:dict=None, conf_class_name=None, **kwargs):
-        global ref_dataconfig
         '''
         conf_class_name:
             settingオブジェクトに登録されているクラスを指定する。
@@ -55,8 +54,8 @@ class Factory(AbstractFactory):
             classes = self.USE_CLASSES
         self.classes.update(classes)#インポート, インスタンス化を行うクラスをクラス名-インポートパスの辞書型で保持。
 
-        if not ref_dataconfig:
-            ref_dataconfig = self.ref_dataconfig
+        #if not ref_dataconfig or not getattr(ref_dataconfig, 'setting_conf', None):
+        #    ref_dataconfig = self.ref_dataconfig
         debug_logger.debug(f'ref_dataconfig: {ref_dataconfig}')
         self.datamediator = get_module(ref_dataconfig.get_conf_value('USE_MEDIATOR_PATH'))
 
