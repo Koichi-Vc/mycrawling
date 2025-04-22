@@ -22,7 +22,7 @@ class AbstractFactory(ABC):
 class Factory(AbstractFactory):
     ''' 実行する前に、data_setting.Ref_DataConfigのインスタンス化をする。'''
     #使用するクラスのインポートパスを取得、
-    if not ref_dataconfig or not getattr(ref_dataconfig, 'setting_conf', None):
+    if getattr(ref_dataconfig, 'setting_conf', None):
         ref_dataconfig = Ref_DataConfig.ref_dataconfig_factory()#設定ファイルの初期化が未実行だった場合は初期化を実行する。
     debug_logger.debug(f'ref_dataconfig: {ref_dataconfig}')
 
@@ -54,7 +54,7 @@ class Factory(AbstractFactory):
             classes = self.USE_CLASSES
         self.classes.update(classes)#インポート, インスタンス化を行うクラスをクラス名-インポートパスの辞書型で保持。
 
-        #if not ref_dataconfig or not getattr(ref_dataconfig, 'setting_conf', None):
+        #if not ref_datl;poiaconfig or not getattr(ref_dataconfig, 'setting_conf', None):
         #    ref_dataconfig = self.ref_dataconfig
         debug_logger.debug(f'ref_dataconfig: {ref_dataconfig}')
         self.datamediator = get_module(ref_dataconfig.get_conf_value('USE_MEDIATOR_PATH'))
