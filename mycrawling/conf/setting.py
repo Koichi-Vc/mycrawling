@@ -1,4 +1,7 @@
+from pathlib import Path
 
+package_root = Path(__file__).parent.parent.parent
+print(f'package_root: {package_root}')
 ''' DataMediatorに登録する各オブジェクト '''
 '''
 USE_CLASSES:
@@ -83,7 +86,7 @@ FILTER_PARAMETER_HANDLER = 'mycrawling.filters.parameter.ElementsFilterParameter
 USE_MEDIATOR_PATH = 'mycrawling.conf.data_setting.datamediator'
 
 #リファレンステキスト
-REFERENCE_TEXTS_FILES = 'mycrawling/parameter_files/ref_textfiles/ref_texts.json'
+REFERENCE_TEXTS_FILES = package_root / 'mycrawling/parameter_files/ref_textfiles/ref_texts.json'
 
 #ページ評価(pageevaluation)クラスのインスタンス化用パラメータ
 PAGEEVALUATION_PARAMETER = {
