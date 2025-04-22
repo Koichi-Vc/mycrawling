@@ -22,7 +22,7 @@ print(f'data_setting.datamediator: {data_setting.datamediator} (data_setting_med
 #Var37.06.14.15a(24/07/25/時点のバージョン)
 class MyCrawlingSearch():
 
-    default_datamediator = get_module(ref_dataconfig.get_conf_value('USE_MEDIATOR_PATH'), default=None)#デフォルトで使用するdatamediatorをsettingから取得する。
+    default_datamediator = get_module(ref_dataconfig.get_conf_value('USE_MEDIATOR_PATH', default=None))#デフォルトで使用するdatamediatorをsettingから取得する。
     CRAWL_DELAY_TIME = ref_dataconfig.get_conf_value('CRAWL_DELAY_TIME', default=5)
     import_classes_parameters = {
 
