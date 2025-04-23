@@ -54,14 +54,14 @@ class PageScorings(PageTextContentsParse, ScoringTexts):
         self.do_parsetext = kwargs.pop('do_parsetext', True)
         exclude_ref_words = kwargs.pop('exclude_ref_words', set())
 
-        if isinstance(exclude_ref_words, str) and '.' in exclude_ref_words:
-            #ドットが含まれる場合はインポートパスと解釈する。
-            #ドットをただの文字列として認識させる場合は、set型で渡すこと。
-            exclude_ref_words = get_module(exclude_ref_words)
-        elif isinstance(exclude_ref_words, str) and 'self.' in exclude_ref_words:
+        if isinstance(exclude_ref_words, str) and 'self.' in exclude_ref_words:
             #自クラス内のメンバーを指定した場合は取得する。
             exclude_ref_words = exclude_ref_words.removeprefix('self.')
             exclude_ref_words = getattr(self, exclude_ref_words, set())
+        elif isinstance(exclude_ref_words, str) and '.' in exclude_ref_words:
+            #ドットが含まれる場合はインポートパスと解釈する。
+            #ドットをただの文字列として認識させる場合は、set型で渡すこと。
+            exclude_ref_words = get_module(exclude_ref_words)
         elif isinstance(exclude_ref_words, str):
             #語彙を直接指定した場合はsetにして保持。
             exclude_ref_words = {exclude_ref_words}
