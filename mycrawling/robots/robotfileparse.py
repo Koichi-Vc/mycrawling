@@ -84,7 +84,8 @@ class RobotFileparseManager():
         self.domain_host = None
         self.notify_to_instance = kwargs.pop('notify_to_instance', None)#通知先インスタンスを指定
         self.select_notify_attr = kwargs.pop('select_notify_attr', 'crawl_delay_time')#通知先インスタンスへ通知するオブジェクトを指定する。
-        self.notify_to_attr = kwargs.pop('notify_to_attr', None)#呼び出す通知先インスタンスのメソッドを指定
+        if not hasattr(self, 'notify_to_attr'):
+            self.notify_to_attr = kwargs.pop('notify_to_attr', None)#呼び出す通知先インスタンスのメソッドを指定
 
     @property
     def robots_url(self):
