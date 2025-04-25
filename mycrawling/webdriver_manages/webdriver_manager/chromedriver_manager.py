@@ -3,6 +3,7 @@ from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
 from .basemanager import BasebWebDriverContextManager
 from mycrawling.utils.imports_module import get_module
+import chromedriver_binary
 
 ''' chromiumバージョンのウェブドライバー起動モジュールを作成する。'''
 
