@@ -1,9 +1,4 @@
-
 {
-    "robotfileparse":{
-        "notify_to_attr": "get_time_sleep"
-    },
-
     "searchanchorelements": {
         "evaluate_objects": "",
         "handling_fragment": true
