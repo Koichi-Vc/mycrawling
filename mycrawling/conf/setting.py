@@ -78,15 +78,16 @@ CREATEFILTER_CLS = {
 CREATEFILTERSETS_CLS = 'mycrawling.filters.filtersets.Elements_Filterset'
 
 
-#要素検索のフィルターを管理するクラスを指定
-FILTER_PARAMETER_HANDLER = 'mycrawling.filters.parameter.ElementsFilterParameterHandler'
+#要素検索のフィルターを管理するクラスを指定※廃止。
+#FILTER_PARAMETER_HANDLER = 'mycrawling.filters.parameter.ElementsFilterParameterHandler'
 
+FILTER_PARAMETER_FILE = package_root.joinpath('mycrawling/parameter_files/elements_filter_arguments.json')
 
 #mediatorの指定。
 USE_MEDIATOR_PATH = 'mycrawling.conf.data_setting.datamediator'
 
 #リファレンステキスト
-REFERENCE_TEXTS_FILES = package_root / 'mycrawling/parameter_files/ref_textfiles/ref_texts.json'
+REFERENCE_TEXTS_FILES = package_root.joinpath('mycrawling/parameter_files/ref_textfiles/ref_texts.json')
 
 #ページ評価(pageevaluation)クラスのインスタンス化用パラメータ
 PAGEEVALUATION_PARAMETER = {
@@ -94,12 +95,15 @@ PAGEEVALUATION_PARAMETER = {
 }
 
 #mycrawlingでクローリング時に使用するクラスのインスタンス化用パラメータ
+'''
 USE_CLASSES_PARAMETER = {
     'robotfileparse': {
         'datamediator': USE_MEDIATOR_PATH,
         
     }
-}
+}'''
+
+USE_CLASSES_PARAMETER = package_root.joinpath('mycrawling/parameter_files/create_instance_parameters.json')
 
 ROBOTS_ERROR_MESSAGE_DICT = {
     'requests.exceptions.Timeout': {
@@ -127,7 +131,8 @@ ROBOTFILEPARSE_PARAMETER = {
     'request_check_timeout': 10,
     'useragent': '*',
     'datamediator': USE_MEDIATOR_PATH,
-    'error_loghandling_obj': 'mycrawling.logs.errors.Errorloghandlings_Class',   
+    'error_loghandling_obj': 'mycrawling.logs.errors.Errorloghandlings_Class',
+    "notify_to_attr": "get_time_sleep" 
 }
 
 ROBOTPARSER_PARAMETER = None

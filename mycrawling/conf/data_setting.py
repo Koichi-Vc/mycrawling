@@ -5,7 +5,7 @@ from . import user_setting_import_path
 from mycrawling.utils.imports_module import get_module
 from mycrawling.utils.loaders.loader import json_load, FilesLoader
 from mycrawling.utils.mediator import DataMediator
-from mycrawling.logs.debug_log import get_debug_log
+from mycrawling.logs.debug_log import setting_debug_log
 
 #ここでdebug_logをインポートしてデバッグログを共有するやり方をしてみる。
 
@@ -54,7 +54,7 @@ class Ref_DataConfig():
             self.setting_conf = dict()
         self.default_ref_text_file = self.setting_conf.get('REFERENCE_TEXTS_FILES')
         #setting_conf = self.setting_conf
-        get_debug_log(debug=self.setting_conf.get('Debug'))#デバッグ用のログを設定する。
+        setting_debug_log(debug=self.setting_conf.get('Debug'))#デバッグ用のログを設定する。
 
     def get_param_json_file(self, file):
         ''' データクラスインスタンス用パラメータをまとめたjsonファイルを読み込む '''
