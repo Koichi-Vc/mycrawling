@@ -22,14 +22,18 @@ class AbstractFactory(ABC):
 class Factory(AbstractFactory):
     ''' 実行する前に、data_setting.Ref_DataConfigのインスタンス化をする。'''
     #使用するクラスのインポートパスを取得、
-    if getattr(ref_dataconfig, 'setting_conf', None):
-        ref_dataconfig = Ref_DataConfig.ref_dataconfig_factory()#設定ファイルの初期化が未実行だった場合は初期化を実行する。
+    if not getattr(ref_dataconfig, 'setting_conf', None):
+        default_ref_dataconfig = Ref_DataConfig.ref_dataconfig_factory()#設定ファイルの初期化が未実行だった場合は初期化を実行する。
+        USE_CLASSES = default_ref_dataconfig.get_conf_value('USE_CLASSES')
+        LAZY_INSTANCES_CLASS = default_ref_dataconfig.get_conf_value('LAZY_INSTANCES_CLASS')
+    else:
+        USE_CLASSES = ref_dataconfig.get_conf_value('USE_CLASSES')
+        LAZY_INSTANCES_CLASS = ref_dataconfig.get_conf_value('LAZY_INSTANCES_CLASS')
+
     debug_logger.debug(f'ref_dataconfig: {ref_dataconfig}')
 
-    USE_CLASSES = ref_dataconfig.get_conf_value('USE_CLASSES')
-    LAZY_INSTANCES_CLASS = ref_dataconfig.get_conf_value('LAZY_INSTANCES_CLASS')
-
     def __init__(self, classes:dict=None, conf_class_name=None, **kwargs):
+        #global ref_dataconfig
         '''
         conf_class_name:
             settingオブジェクトに登録されているクラスを指定する。
@@ -38,7 +42,7 @@ class Factory(AbstractFactory):
         '''
         self.classes = dict()
         self.class_objects = dict()#インポートしたクラスを保持。
-        
+        self.ref_dataconfig_obj = ref_dataconfig
         self.class_instances = dict()#インスタンス
         self.lazy_instances_class = kwargs.pop('lazy_instances_class', dict())#インスタンス化を遅延するクラスを保持。
         conf_lazy_instances_class = kwargs.pop('conf_lazy_instances_class', None)
@@ -54,10 +58,11 @@ class Factory(AbstractFactory):
             classes = self.USE_CLASSES
         self.classes.update(classes)#インポート, インスタンス化を行うクラスをクラス名-インポートパスの辞書型で保持。
 
-        #if not ref_datl;poiaconfig or not getattr(ref_dataconfig, 'setting_conf', None):
-        #    ref_dataconfig = self.ref_dataconfig
-        debug_logger.debug(f'ref_dataconfig: {ref_dataconfig}')
-        self.datamediator = get_module(ref_dataconfig.get_conf_value('USE_MEDIATOR_PATH'))
+        if not ref_dataconfig or not getattr(ref_dataconfig, 'setting_conf', None):
+            self.ref_dataconfig_obj = self.default_ref_dataconfig
+        debug_logger.debug(f'self.ref_dataconfig_obj: {self.ref_dataconfig_obj}')
+        
+        self.datamediator = get_module(self.ref_dataconfig_obj.get_conf_value('USE_MEDIATOR_PATH'))
 
 
     def import_classes(self, class_name=None, retainer=None, **class_paths):
@@ -150,8 +155,8 @@ class Factory(AbstractFactory):
 
         #datacls_objects = setting.registry_data_class_instance
 
-        datacls_objects = self.ref_dataconfig.get_conf_value('REGISTRY_DATA_CLASS_INSTANCE')
-        ref_texts_arguments_path = arguments if arguments else ref_dataconfig.get_conf_value('REFERENCE_TEXTS_FILES')
+        datacls_objects = self.ref_dataconfig_obj.get_conf_value('REGISTRY_DATA_CLASS_INSTANCE')
+        ref_texts_arguments_path = arguments if arguments else self.ref_dataconfig_obj.get_conf_value('REFERENCE_TEXTS_FILES')
         ref_texts_arguments = self.get_param_json_file(ref_texts_arguments_path)
         data_cls_instances = dict()
         class_names = list()
