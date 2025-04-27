@@ -13,9 +13,8 @@ from mycrawling.conf.data_setting import ref_dataconfig
 #from mycrawling.searchelements.metaelements.attrs_robot import EvalRobotsMetaElements
 from mycrawling.utils.imports_module import get_module
 from mycrawling.utils.paths import match_urls
-#from mycrawling.webdriver_manages.webdriver_manager.chromedriver_manager import ChromeWebDriverContextManager
-
 from mycrawling.logs.debug_log import debug_logger
+
 print(f'data_setting.datamediator: {data_setting.datamediator} (data_setting_mediatorと同じ)')
 
 
