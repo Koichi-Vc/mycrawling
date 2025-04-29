@@ -1,51 +1,9 @@
-NOTICE
-このプロジェクトには以下のライブラリが組み込まれています。
 
-Requests - Licensed under the Apache License 2.0
+Requests
 Copyright 2019 Kenneth Reitz
-License: https://github.com/psf/requests/blob/main/LICENSE
 
 
-Beautifulsoup4 - Licensed under the MIT License
-Copyright (c) Leonard Richardson
-License: https://github.com/deepin-community/beautifulsoup4/blob/master/LICENSE
-
-
-Selenium - Licensed under the Apache License Version 2.0
+Selenium
 Copyright 2011-2025 Software Freedom Conservancy
 Copyright 2004-2011 Selenium committers
-License: https://github.com/SeleniumHQ/selenium/blob/trunk/LICENSE
-
-
-Rapidfuzz - Licensed under the MIT License
-Copyright © 2020-present Max Bachmann
-Copyright © 2011 Adam Cohen
-License: https://github.com/rapidfuzz/RapidFuzz/blob/main/LICENSE
-
-
-Numpy - Licensed under the BSD License
-Copyright (C) 2010-2019 Free Software Foundation, Inc.
-License: https://github.com/numpy/numpy/blob/main/LICENSE.txt
-
-
-Pandas - Licensed under the BSD-3-Clause
-Copyright (c) 2008-2011, AQR Capital Management, LLC, Lambda Foundry, Inc. and PyData Development Team
-All rights reserved.
-Copyright (c) 2011-2025, Open source contributors.
-License: https://github.com/pandas-dev/pandas/blob/main/LICENSE
-
-
-Spacy - Licensed under the MIT License
-Copyright (c) 2024 ExplosionAI GmbH
-License: https://github.com/explosion/spacy-layout/blob/main/LICENSE
-
-
-Ginza - Licensed under the MIT License
-Copyright (c) 2019 Megagon Labs
-License: https://github.com/megagonlabs/ginza/blob/master/LICENSE
-
-
-Chromedriver_binary - Licensed under the MIT License
-Copyright (c) 2017 Daniel Kaiser
-License: https://github.com/danielkaiser/python-chromedriver-binary/blob/master/LICENSE
 
