@@ -26,13 +26,3 @@ ginza
 
 ja-ginza
 
-###### Requirements with Version Specifiers ######
-
-#selenium == 4.1.3
-
-#numpy == 1.26.3
-
-#Pandas == 1.4.2
-
-#spacy == 3.7.5
-
