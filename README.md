@@ -89,21 +89,21 @@ ref_dataconfig = Ref_DataConfig.ref_dataconfig_factory()
 ## サードパーティーライセンス
 サードパーティライブラリのライセンスの全文は、Licenses/Third_Party_License.txtにあります。
 
-- **Beautifulsoup4**
+- **Beautiful Soup4**
     - copyright
         - Copyright (c) Leonard Richardson
     - ライセンス情報ソースurl
         - [MIT License](https://github.com/deepin-community/beautifulsoup4/blob/master/LICENSE)
 
 
-- **Chromedriver_binary**
+- **chromedriver-binary**
     - copyright
         - Copyright (c) 2017 Daniel Kaiser
     - ライセンス情報ソースurl
         - [MIT License](https://github.com/danielkaiser/python-chromedriver-binary/blob/master/LICENSE)
 
 
-- **Ginza**
+- **GiNZA**
     - copyright
         - Copyright (c) 2019 Megagon Labs
     - ライセンス情報ソースurl
@@ -115,14 +115,14 @@ ref_dataconfig = Ref_DataConfig.ref_dataconfig_factory()
     - ライセンス情報ソースurl
         - [BSD License](https://github.com/lxml/lxml/blob/master/doc/licenses/BSD.txt)
 
-- **Numpy**
+- **NumPy**
     - copyright
         - Copyright (c) 2005-2025, NumPy Developers. All rights reserved.
     - ライセンス情報ソースurl
         - [BSD License](https://github.com/numpy/numpy/blob/main/LICENSE.txt)
 
 
-- **Pandas**
+- **pandas**
     - copyright
         - Copyright (c) 2008-2011, AQR Capital Management, LLC, Lambda Foundry, Inc. and PyData Development Team
         All rights reserved.
@@ -131,7 +131,7 @@ ref_dataconfig = Ref_DataConfig.ref_dataconfig_factory()
         - [BSD-3-Clause](https://github.com/pandas-dev/pandas/blob/main/LICENSE)
 
 
-- **Rapidfuzz**
+- **RapidFuzz**
     - copyright
         - Copyright © 2020-present Max Bachmann
         - Copyright © 2011 Adam Cohen
@@ -146,14 +146,14 @@ ref_dataconfig = Ref_DataConfig.ref_dataconfig_factory()
         - [Apache License 2.0](https://github.com/psf/requests/blob/main/LICENSE)
 
 
-- **selenium**
+- **Selenium**
     - copyright
         - Copyright 2025 Software Freedom Conservancy (SFC)
     - ライセンス情報ソースurl
         - [Apache License Version 2.0](https://github.com/SeleniumHQ/selenium/blob/trunk/LICENSE)
 
 
-- **Spacy**
+- **spaCy**
     - copyright
         - Copyright (c) 2024 ExplosionAI GmbH
     - ライセンス情報ソースurl
