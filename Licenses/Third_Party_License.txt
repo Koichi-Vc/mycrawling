@@ -1,4 +1,4 @@
-Beautifulsoup4
+Beautiful Soup4
 --------
 
 Beautiful Soup is made available under the MIT license:
@@ -35,7 +35,7 @@ Isaac Muse
 
 
 
-Chromedriver_binary
+chromedriver-binary
 --------
 
 MIT License
@@ -62,7 +62,7 @@ SOFTWARE.
 
 
 
-Ginza
+GiNZA
 --------
 
 MIT License
@@ -89,7 +89,7 @@ SOFTWARE.
 
 
 
-Lxml(doc/licenses/BSD.txt)
+lxml(doc/licenses/BSD.txt)
 --------
 
 Copyright (c) 2004 Infrae. All rights reserved.
@@ -124,7 +124,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 
 
-Lxml
+lxml
 --------
 
 BSD 3-Clause License
@@ -161,7 +161,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 
 
-Numpy
+NumPy
 --------
 
 Copyright (c) 2005-2025, NumPy Developers.
@@ -197,7 +197,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 
 
-Pandas
+pandas
 --------
 
 BSD 3-Clause License
@@ -234,7 +234,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 
 
-Rapidfuzz
+RapidFuzz
 --------
 
 Copyright © 2020-present Max Bachmann
@@ -648,7 +648,7 @@ Selenium
 
 
 
-Spacy
+spaCy
 --------
 
 MIT License
