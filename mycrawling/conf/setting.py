@@ -1,8 +1,7 @@
 from pathlib import Path
 
 package_root = Path(__file__).parent.parent.parent
-print(f'package_root: {package_root}')
-''' DataMediatorに登録する各オブジェクト '''
+
 '''
 USE_CLASSES:
     使用するクラスのインポートパスを指定する。
