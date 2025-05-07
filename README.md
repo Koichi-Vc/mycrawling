@@ -70,9 +70,9 @@ crawl_main = Main()
 ユーザーによるセッティングファイルを自動生成する場合は、create_settins.pyをスクリプト実行します。
 
 例:
-```
-python -m mycrawling.conf.create_settings
-```
+
+`python -m mycrawling.conf.create_settings`
+
 上記のコードを実行すると設定ファイルが生成されデフォルトの設定をオーバーライド出来る様になります。
 設定内容を読み込むには、以下のコードを実行します。
 
