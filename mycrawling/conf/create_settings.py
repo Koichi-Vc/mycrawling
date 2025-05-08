@@ -47,7 +47,13 @@ class CreateSetting:
             user_setting_module_dir_path.parent.mkdir(parents=True)#ディレクトリ生成
             #user_setting_module_dir_path.touch()#ファイル生成
             shutil.copy(default_setting_file, user_setting_module_dir_path)#コピー
-            
+            #ユーザー用設定ファイル生成時にベースディレクトリをsetting.pyの__file__にしておく。
+            package_base_dir = __file__
+            with open(user_setting_module_dir_path, mode='+r', encoding='UTF-8') as f:
+                content = f.read()
+                replaced_file_path = content.replace('__file__', f'"{package_base_dir}"')
+                f.seek(0)
+                f.write(replaced_file_path)
             created_user_setting_import_path = create_module_import_path(self.dir_path)
             print(f'created_user_setting_import_path: {created_user_setting_import_path}')
 
