@@ -50,7 +50,7 @@ class Processing():
         args_list = list(args_tup)
         args_list.append(kwargs)
         argument = args_list
-        debug_logger.debug(f'args_tup: {args_tup}\naffix_method: {self.affix_methods} | args_list: {args_list}')
+        debug_logger.debug(f'args_tup: {args_tup} | affix_method: {self.affix_methods} | args_list: {args_list}')
         
         for affix_method in self.affix_methods:
 
@@ -76,14 +76,15 @@ class Processing():
         has_self_parm = has_param_names(method_parameter_parse(method), 'self')#引数selfが定義されているかどうか。
         is_function = isfunction(method)#メソッドがグローバル又は、アンバウンドメソッドかどうかの判定。
         is_method = ismethod(method)
+        debug_logger.debug(f'self: {self} | method: {method} | method_name: {method.__name__}')        
+        debug_logger.debug(f'is_function: {is_function} | ismethod: {is_method} | has_self_param: {has_self_parm} ')
 
         def wrapper(*args, **kwargs):
             args_list = list(args)
             importance_keys = list()
             instance_obj = None
+
             debug_logger.debug(f'args: {args} | kwargs: {kwargs}')
-            debug_logger.debug(f'is_function: {is_function} | ismethod: {is_method} | has_self_param: {has_self_parm} ')           
-            debug_logger.debug(f'before  instance_obj: {instance_obj}')
             preprocess_args = list()#前処理に渡す引数を保持する。
             #methodがインスタンス化されていないインスタンスメソッドかを調べる
             if has_self_parm and is_function and not is_method:
@@ -97,7 +98,7 @@ class Processing():
             if not preprocess_args and args:
                 preprocess_args = list(args)
 
-            debug_logger.debug(f'preprocess_args: {preprocess_args} | after instance_obj: {instance_obj}')
+            debug_logger.debug(f'preprocess_args: {preprocess_args} | instance_obj: {instance_obj}')
             debug_logger.debug(f'affix: {self.affix}')
             if self.affix == 'pre':
                 debug_logger.debug('affix is pre')
@@ -113,8 +114,8 @@ class Processing():
                 return run_method(preprocessed, method, importance_keys=importance_keys)
             
             elif self.affix == 'after':
-                debug_logger.debug(f'affix is after>>>>')
-                debug_logger.debug(f'args_list: {args_list}\nmethod: {method}')
+                debug_logger.debug(f'affix is after')
+                debug_logger.debug(f'args_list: {args_list} | method: {method}')
                 after_processed = run_method(args_list, method)
                 #return self._processing(*after_processed, instance=instance_obj)
                 after_processed = edit_keyword_argument(after_processed, {'instance': instance_obj})
@@ -122,8 +123,6 @@ class Processing():
             if kwargs:
                 #return method(instance, item, **kwargs) if instance else method(item, **kwargs)
                 return run_method(args_list, method, importance_keys=importance_keys)
-            
-        debug_logger.debug(f'self: {self} | method: {method} | method_name: {method.__name__}')
 
         return wrapper
 
@@ -134,7 +133,7 @@ class ElementsFilter(AbstractElementsFilter, SelectListOperator):
     ''' 要素を属性でフィルタリングする '''
     
     def __init__(self, attr, criteria_value, condition= operator.eq, list_operator_type=any, filter_method=None, **kwargs):
-        debug_logger.debug(f'kwargs:{kwargs} |filter_method: {filter_method}')
+        debug_logger.debug(f'kwargs:{kwargs} | filter_method: {filter_method}')
         self.attr = attr
         self.criteria_value = criteria_value
         self.values_list = kwargs.pop('values_list', list())#複数属性値を対象にする場合に指定
@@ -174,7 +173,7 @@ class ElementsFilter(AbstractElementsFilter, SelectListOperator):
             評価する際の基準とする値。比較対象。
         '''
         elem_attr_value = self.get_attribute(element)
-        debug_logger.debug(f'element: {element} | criteria_value: {criteria_value} | attr_value: {elem_attr_value}')
+        debug_logger.debug(f'criteria_value: {criteria_value} | attr_value: {elem_attr_value}')
         if criteria_value is None:
             criteria_value = self.criteria_value        
         return self.condition(elem_attr_value, criteria_value)

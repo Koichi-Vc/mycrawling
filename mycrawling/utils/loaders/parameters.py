@@ -21,8 +21,7 @@ class ClassParameterLoader(FilesLoader):
             file_path = self.user_parameter_file_path
 
         loaded_obj = self.file_load(file_path, self.option, self.load_method, encoding=self.encoding, **self.kwargs)
-        debug_logger.debug(f'loaded_obj: {loaded_obj}')
-        debug_logger.debug(f'type: {type(loaded_obj)}')
+        debug_logger.debug(f'loaded_obj: {loaded_obj} | type: {type(loaded_obj)}')
         
         return loaded_obj
 

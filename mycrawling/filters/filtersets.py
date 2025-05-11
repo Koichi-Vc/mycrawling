@@ -31,9 +31,9 @@ class Elements_Filterset(SelectListOperator):
             self.list_operator= custom_list_operator
 
         for method in filter_method_list:
-            debug_logger.debug(f'method: {method} | callable: {callable(method)}')
             if callable(method):
                 self.filters.append(method)
+        debug_logger.debug(f'filters: {self.filters}')
 
 
     def __call__(self, element):
@@ -83,7 +83,7 @@ def filterset_factory(createfilter_cls,
             createfilter_clsからフィルターインスタンスを生成する為の引数の辞書
 
     '''
-    debug_logger.debug(f'createfilter_cls: {createfilter_cls} \nfilterset_cls: {filterset_cls}')
+    debug_logger.debug(f'createfilter_cls: {createfilter_cls} | filterset_cls: {filterset_cls}')
     debug_logger.debug(f'createfilter_factory_param: {createfilter_factory_param}')
     instance_list = []
     
@@ -97,7 +97,7 @@ def filterset_factory(createfilter_cls,
         return instance_list
 
     for parametor in createfilter_factory_param:
-        debug_logger.debug(f'filterset_factory.parametor:{parametor}')
+        #debug_logger.debug(f'parametor:{parametor}')
         instance = run_method(parametor, createfilter_cls)#run_methodにインスタンス化を代行させてみる。24/12/03
 
         if hasattr(instance, 'get_filter_method'):

@@ -9,11 +9,10 @@ from mycrawling.logs.debug_log import debug_logger
 def run_method(arguments, method, **kwargs):
     ''' メソッドにパラメータを渡して実行する。argumentsに何も渡さない場合は、空のコレクション型を渡す。'''
 
-    debug_logger.debug(f'arguments:{arguments} | method: {method}')
-    debug_logger.debug(f'kwargs:{kwargs}')
+    debug_logger.debug(f'arguments:{arguments} | method: {method} | kwargs:{kwargs}')
     importance_keys = kwargs.pop('importance_keys', list())
     args, kwargs = prepare_arguments(arguments, method, importance_keys=importance_keys)
-    debug_logger.debug(f'args: {args} | kwargs: {kwargs}')
+    debug_logger.debug(f'result prepare_arguments. args: {args} | kwargs: {kwargs}')
 
     return method(*args, **kwargs)
 

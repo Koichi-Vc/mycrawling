@@ -27,7 +27,7 @@ class MyCrawlingSearch():
 
     }
     
-    debug_logger.debug(f'crawl_delay: {CRAWL_DELAY_TIME}秒')
+    #debug_logger.debug(f'crawl_delay: {CRAWL_DELAY_TIME}秒')
     def __init__(self, driver_manager, input_url, current_url=None, crawl_delay_time=None, robotmanager=None, **kwargs):
         self.driver_manager = driver_manager
         self.driver = self.driver_manager.driver
@@ -37,8 +37,8 @@ class MyCrawlingSearch():
         
         datamediator = kwargs.pop('datamediator') if 'datamediator' in kwargs else self.default_datamediator
         self.datamediator = datamediator
-        debug_logger.debug(f'DataMediator: {self.datamediator}')
-        debug_logger.debug(f'datamediator.dict: {self.datamediator.registry_notify_objects} \n')
+        #debug_logger.debug(f'DataMediator: {self.datamediator}')
+        #debug_logger.debug(f'datamediator.dict: {self.datamediator.registry_notify_objects} \n')
         #self.robotmanager新コード
         self.robotmanager = self.datamediator.get_instance('robotfileparse') if not robotmanager else robotmanager
 
@@ -79,8 +79,8 @@ class MyCrawlingSearch():
 
     def get_time_sleep(self, time_sleep_value):
         ''' datamediatorを通した待機時間の取得 '''
-        debug_logger.debug(f'get_time_sleep>>>')
-        debug_logger.debug(f'time_sleep_value: {time_sleep_value}')
+        #debug_logger.debug(f'get_time_sleep>>>')
+        #debug_logger.debug(f'time_sleep_value: {time_sleep_value}')
         self.__time_sleep = time_sleep_value
 
 

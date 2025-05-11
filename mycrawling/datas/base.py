@@ -8,7 +8,7 @@ class BaseDataClass(ABC):
     __instance = None
 
     def __new__(cls, *args, **kwargs):
-        debug_logger.debug(f'__instance: {cls.__instance}')
+        #debug_logger.debug(f'__instance: {cls.__instance}')
         if cls.__instance is None:
             cls.__instance = super().__new__(cls)
         

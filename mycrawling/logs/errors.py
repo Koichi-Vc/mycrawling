@@ -154,14 +154,11 @@ class Errorloghandlings_Class:
             methods_instance = self.get_methods_instance(method)
 
         def wrapper(instance_obj, *args, **kwargs):
-            debug_logger.debug(f'instance_obj: {instance_obj}')
-            debug_logger.debug(f'self: {self}')
-            debug_logger.debug(f'args: {args}')
-            debug_logger.debug(f'kwargs: {kwargs}')
+            debug_logger.debug(f'self: {self} | instance_obj: {instance_obj} | args: {args} | kwargs: {kwargs}')
             args_list = list()
 
             if is_bound_method and methods_instance:
-                #
+                
                 args_list = list(args)
                 args_list.insert(0, instance_obj)
                 instance_obj = methods_instance
@@ -280,7 +277,7 @@ class Errorloghandlings_Class:
     @classmethod
     def setup_logger(cls, getlogger=None, handler=None, **kwargs):
         ''' ロガーの取得とセットアップ '''
-        debug_logger.debug(f'cls: {cls} |getlogger:{getlogger} | handler: {handler} | kwargs:{kwargs}')
+        debug_logger.debug(f'cls: {cls} | getlogger:{getlogger} | handler: {handler} | kwargs:{kwargs}')
         
         fmt = None
 

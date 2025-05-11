@@ -61,7 +61,7 @@ class AnchorFilterMixin:
         for item in value:
 
             self.__reference_exclude_downloads.add(item)
-        debug_logger.debug(f'self.__reference_exclude_downloads: {self.__reference_exclude_downloads}')
+        #debug_logger.debug(f'self.__reference_exclude_downloads: {self.__reference_exclude_downloads}')
 
     #2.    
     @property#exclude_dwl_contentsメソッド使用時に用いるscorer
@@ -140,10 +140,13 @@ class CreateAnchorElementFilter(ElementsFilter, AnchorFilterMixin):
                 有効にする場合は、attr, criteria_value, filter_methodに何も渡されていない様にする必要がある。
                 これは用意したフィルター条件やメソッドと常にフラグメントに関するフィルターが重複してしまうのを防ぐためである。
         '''
-        debug_logger.debug(f'filter_method:{filter_method} | kwargs:{kwargs}')
         
         is_exclude_fragment = bool(kwargs.pop('is_exclude_fragment', False))
         has_attr_and_value = attr and value
+
+        debug_logger.debug(f'filter_method:{filter_method} | kwargs:{kwargs}')
+        debug_logger.debug(f'is_exclude_fragment: {is_exclude_fragment}| has_attr_and_value:{has_attr_and_value}')
+        
         if filter_method and isinstance(filter_method, str) and '.' in filter_method:
             #インポートパスであると思われる場合はインポートを試みる。
             filter_method = get_module(filter_method)
@@ -159,7 +162,6 @@ class CreateAnchorElementFilter(ElementsFilter, AnchorFilterMixin):
             #フラグメントの除外フィルターを指定する。
             filter_method = 'exclude_fragment'
 
-        debug_logger.debug(f'is_exclude_fragment: {is_exclude_fragment} | filter_method:{filter_method} | has_attr_and_value:{has_attr_and_value}')
         
         #フィルターに通す前後プロセスに関する定義を行う。
         affix_methods = kwargs.pop('affix_methods', list())
@@ -189,7 +191,7 @@ class CreateAnchorElementFilter(ElementsFilter, AnchorFilterMixin):
     @processing
     def valuefilter(self, element_attr_value, value=None):
 
-        debug_logger.debug(f'self: {self}\n element_attr_value: {element_attr_value} | value: {value}')
+        debug_logger.debug(f'self: {self} | element_attr_value: {element_attr_value} | value: {value}')
         return super().valuefilter(element_attr_value, value)
 
     
