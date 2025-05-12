@@ -4,8 +4,7 @@ recursive-exclude mycrawling/parameter_files test_*.json
 
 include requirements.txt
 
-graft Licenses
-
 include NOTICE
 
 include README.md
+
