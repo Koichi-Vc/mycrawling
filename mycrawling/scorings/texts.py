@@ -40,13 +40,14 @@ class ScoringTexts:
                          text_scorer=None, cutoff=None ,*args, **kwargs:dict['custom_initvalue': '']):
         ''' テキストリスト内全アイテムのスコアを順次返す。cutoff値外又は評価不能の場合はNoneを返す。'''
 
-        debug_logger.debug(f'self has text_scorer: {hasattr(self, "text_scorer")}')
 
         if not text_scorer and hasattr(self, 'text_scorer'):
             text_scorer = self.text_scorer
         elif not text_scorer or not callable(text_scorer):
             text_scorer = self.default_all_text_scorer
 
+        debug_logger.debug(f'has text_scorer: {text_scorer}')
+        
         if isinstance(texts, str):
             ''' list型以外が渡されたら変換 '''
             texts = [texts]
@@ -58,7 +59,6 @@ class ScoringTexts:
         for txt in texts:
             if txt is None:
                 txt = ''
-            debug_logger.debug(f'txt: {txt}')
             re_txt = re.sub(' |　', '', txt)
             re_txt = re_txt.casefold()
             score_value = rpdfuzz_process.extractOne(re_txt, choices=choices, score_cutoff=cutoff, scorer=text_scorer)
@@ -68,6 +68,8 @@ class ScoringTexts:
             else:
                 score = default#score_valueがNoneの場合デフォルト値を代入
                 applicable_txt = ''
+            
+            debug_logger.debug(f'score: {score} | applicable_txt: {applicable_txt} | txt: {txt}')
             yield score, applicable_txt, txt
 
 
@@ -152,6 +154,6 @@ class ScoringTitleTexts(ScoringTexts):
             title_score = scored_title
             text = scoring_title[2]
 
-        debug_logger.debug(f'score:{title_score} | text: {text}')
+        debug_logger.debug(f'title_score:{title_score} | text: {text}')
         return title_score, text
 

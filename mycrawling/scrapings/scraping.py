@@ -65,13 +65,13 @@ class PageScraping():
         '''table要素の場合のスクレイピング関数'''
 
         tr_elements = []
-        debug_logger.debug(f'element: {element}')
         #elems_index = element
         if element.name == 'table' or element.find_all('tr'):
             tr_elements = (i for i in element.find_all('tr') if isinstance(i, bs4.element.Tag))
         elif element.name == 'tr':
             tr_elements = element
-        debug_logger.debug(f'tr_elements: {tr_elements}')
+        debug_logger.debug(f'element: {element} | tr_elements: {tr_elements}')
+
         td_tag_gen = (i.find_all(['th','td']) for i in tr_elements if isinstance(i, bs4.element.Tag))
         td_list = []
 
@@ -157,8 +157,8 @@ class PageScraping():
         child_elements = [child for child in element.contents if isinstance(child, (bs4.element.Tag, bs4.element.NavigableString, bs4.Comment))]
         #print(f'child_elements: {child_elements}')
         child_count = len(child_elements)#子要素の数をカウント
-        debug_logger.debug(f'child_count: {child_count}')
-        debug_logger.debug(f'child_elements: {child_elements}')
+        debug_logger.debug(f'child_elements: {child_elements} | child_count: {child_count}')
+        
         tx = []
         line_count = 0
         elem_index = ''
@@ -171,7 +171,7 @@ class PageScraping():
             #elem_index = ''#child_text毎のインデックスを参照する為の一時的な変数
             for elem in child_text:
                 debug_logger.debug(f'child_text[elem] : {elem}')
-                if elem in reference_score_texts:#【24/06/13/】any(reference in elem for reference in reference_score_texts)も導入するか検討する。
+                if elem in reference_score_texts:#【24/06/13/】any(reference in elem for reference in reference_score_texts)の導入可否を検討。
                     
                     if tx:#既にアイテムが収集されていた場合、今検出された項目の前の項目テキストに対応するアイテムの為保存処理に移る
                         company_list.append(tx)
@@ -199,17 +199,17 @@ class PageScraping():
             
             debug_logger.debug(f'forループ終了後 tx: {tx}')
         debug_logger.debug(f'ifの手前, company_list: {company_list} | ')
-        debug_logger.debug(f'index: {index} | elem_index: {elem_index} ')
-        debug_logger.debug(f'len(company_list) : {len(company_list)} | len(index) : {len(index)}')
+        debug_logger.debug(f'index: {index} | elem_index: {elem_index} | company_list length: {len(company_list)} | index length : {len(index)}')
+        
         if tx:
             company_list.append(tx)
             if not elem_index:
                 index.append('')      
         elif elem_index and not tx:
-            debug_logger.debug(f'elif-True , elem_index: {elem_index} | tx: {tx}')
+            debug_logger.debug(f'elif-True. elem_index: {elem_index} | tx: {tx}')
             tx.append('')
             company_list.append(tx)
-        debug_logger.debug(f'ifの後, company_list: {company_list} | ')
+        debug_logger.debug(f'ifの後, company_list: {company_list}')
         if transpose:
             debug_logger.debug('転置実行')
             company_list = list(zip(*company_list))

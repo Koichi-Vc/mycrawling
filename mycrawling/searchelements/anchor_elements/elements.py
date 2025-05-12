@@ -76,7 +76,6 @@ class SearchAnchorElements(BaseSearchElements):
     def __call__(self, soup_obj):
         parse_only_tag = 'a'#beautifulsoup解析対象をa要素に絞る。
         elements = super().__call__(soup_obj, parse_only_tag=parse_only_tag)
-        debug_logger.debug('__call__実行完了')
         debug_logger.debug(f'elements: {elements}')
 
 
@@ -104,7 +103,7 @@ class SearchAnchorElements(BaseSearchElements):
         self.__current_url = url
         host = urlparse(url).hostname
         if not hasattr(self, 'current_hostname') or host and host != self.current_hostname:
-            debug_logger.debug(f'set current_hostname, host: {host}')
+            debug_logger.debug(f'set current_hostname. host: {host}')
             self.current_hostname = host
 
 
@@ -139,9 +138,9 @@ class SearchAnchorElements(BaseSearchElements):
         for element in elements:
             href_value = element.get('href', None)
             debug_logger.debug(f'href_value: {href_value}')
-            if not href_value or (href_value and "#" not in href_value):
-                debug_logger.debug(f'if-True, href_value: {href_value}')
 
+            if not href_value or (href_value and "#" not in href_value):
+                debug_logger.debug(f'if-True')
                 yield element
 
     def exclude_rel_attr_nofollow(self, elements):

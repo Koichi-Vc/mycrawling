@@ -1,6 +1,6 @@
 from pathlib import Path
 from mycrawling.utils.loaders.loader import json_load, ref_files_load, FilesLoader
-from mycrawling.logs.debug_log import debug_logger
+#from mycrawling.logs.debug_log import debug_logger
 from mycrawling.conf.data_setting import ref_dataconfig
 ''' 要素検索のフィルターを作成する為の引数をまとめたjsonファイルを読み込む。 '''
 

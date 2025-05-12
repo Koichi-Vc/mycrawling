@@ -34,7 +34,7 @@ class PageEvaluation(EvaluateTexts):
         elif hasattr(self, 'datamediator'):
             self.pagescorings = self.datamediator.get_instance('pagescorings')
 
-        debug_logger.debug(f'evaluate_reference_textsets: {evaluate_reference_textsets}')
+        debug_logger.debug(f'evaluate_reference_textsets: {evaluate_reference_textsets} ')
         debug_logger.debug(f'reference_title_a_url_texts: {reference_title_a_url_texts}')
         
         #コンテンツの評価に用いる条件
@@ -73,7 +73,6 @@ class PageEvaluation(EvaluateTexts):
                                    eval_primary_or_highscore_text_count,
                                    eval_all_high_score_rate):
         ''' 評価した数値をもとに統計を取り、対象要素オブジェクトかどうか条件判定する '''
-        debug_logger.debug(f'eval_primary_text_count: {eval_primary_text_count} | eval_highscore_text_count : {eval_highscore_text_count}')
         result = False
 
         if eval_primary_or_highscore_text_count and eval_all_high_score_rate:#その要素に属する子要素の必要数を前提にする。
@@ -147,9 +146,7 @@ class PageEvaluation(EvaluateTexts):
                         result = False
                     
                     if result:
-                        debug_logger.debug(f'element: {element}')
-                        debug_logger.debug(f'elements texts: {[e.text for e in element]}')
-
+                        debug_logger.debug(f'element: {element} | elements text: {[e.text for e in element]}')
                         length_contents = len([content for content in element.contents if content.name != None])
                         targ_contents_rate = 85
 
@@ -160,10 +157,7 @@ class PageEvaluation(EvaluateTexts):
                         yield element                   
                 
 
-    def company_profile(self,
-                        driver,
-                        current_url,
-                        **kwargs): 
+    def company_profile(self, driver, current_url, **kwargs): 
         """
         ページが会社概要ページかどうかを検査する。ページ内でリンクのない会社概要に関する項目テキストを返す。
         compay: 会社概要を構成する項目キーワードのリスト(会社概要キーワード)
@@ -188,11 +182,10 @@ class PageEvaluation(EvaluateTexts):
             ''' trimming()後にオブジェクトが有り且つページtitle, urlの評価スコアを参照 '''
             logging.info(f'similar_title_url == True')
             
-            debug_logger.debug(f'kwargs: {kwargs}')
             elements = self.find_overview_elements(soup)
             
             for element in elements:
-                debug_logger.debug(f'yield element: {element} | True')
+                #debug_logger.debug(f'yield element: {element} | True')
                 yield element
             current, peak = tracemalloc.get_traced_memory()
             debug_logger.debug(f'company_profile()for文内のメモリリソース: current: {current/10**6}MB; peak: {peak/10**6}MB;\n詳細値: current: {current}; peak: {peak}')

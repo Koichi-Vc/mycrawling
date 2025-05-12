@@ -38,7 +38,7 @@ class PageScorings(PageTextContentsParse, ScoringTexts):
             raise TypeError('PageScorings() に必要な引数"reference_title_a_url_texts"が足りません。')
         debug_logger.debug(f'reference_object: {self.reference_object}')
         debug_logger.debug(f'reference_object.all_reference_text_list: {hasattr(self.reference_object, "all_reference_text_list")}| get_all_fields: {hasattr(self.reference_object, "get_all_fields")}')
-        debug_logger.debug(f'reference_object.get_all_fields: {self.reference_object.get_all_fields()}')
+        
         try:
             reference_attrs = self.reference_object.get_all_fields()
 
@@ -81,6 +81,7 @@ class PageScorings(PageTextContentsParse, ScoringTexts):
         self.high_score_en_text = list()#言語別の検出語彙※現状未使用
         self.primary_text_list = list()#ページ内から検出した重要語彙
         self.high_score_text_list = list()#ページ内から検出した高類似度語彙
+
 
     @property
     def text_scorer(self):
@@ -138,9 +139,9 @@ class PageScorings(PageTextContentsParse, ScoringTexts):
         if not isinstance(element, bs4_element.Tag):
             return
         #25/03/26/0501am; ここだけ新規で追加。うまく行かなかったら即削除。※ここ１
-        elements_texts = [ i.strip() for i in element.text.strip().split('\n' or '\t') if i.strip() != '']
+        #elements_texts = [ i.strip() for i in element.text.strip().split('\n' or '\t') if i.strip() != '']
         
-        debug_logger.debug(f'elements_texts: {elements_texts}')
+        #debug_logger.debug(f'elements_texts: {elements_texts}')
 
         text_contents = self.run_parse_textcontents(element, do_parsetext=self.do_parsetext, exclude_ref_words = self.exclude_ref_words, **kwargs)
         text_contents = [txt for txt in text_contents]
@@ -153,9 +154,9 @@ class PageScorings(PageTextContentsParse, ScoringTexts):
             )#contents_parser⇒self        
         
         for score, ext_txt, txt in evaluated_text:
-            debug_logger.debug(f'high_score_search>>> score: {score} | txt: {txt}')
+            debug_logger.debug(f'score: {score} | txt: {txt} | ext_txt: {ext_txt}')
             if score is not None:
-                debug_logger.debug(f'ハイスコアのテキスト, txt: {txt} | score: {score} | ext_txt: {ext_txt}')
+
                 if ext_txt in self.all_primary_texts:
                     self.primary_text_list = txt
                 else:
@@ -204,7 +205,7 @@ class PageScorings(PageTextContentsParse, ScoringTexts):
         children_list = self.run_parse_textcontents_list(children)
 
         for child in children_list:
-            debug_logger.debug(f'for roop>> child: {child}')
+            debug_logger.debug(f'child: {child}')
             #childがジェネレータ式ならば展開してtextsに保持、リスト型ならそのまま。
             if isinstance(child, GeneratorType):
                 texts = [txt for txt in child]
@@ -218,7 +219,7 @@ class PageScorings(PageTextContentsParse, ScoringTexts):
                 match_high_score_texts = self.scoring_eval.collect_contain_texts(texts, reference_texts=self.high_score_text_list)
                 debug_logger.debug(f'match_primary_texts: {match_primary_texts}')
                 debug_logger.debug(f'match_high_score_texts: {match_high_score_texts}')
-
+                debug_logger.debug('start texts_similarity>>>')
                 for similarity_score in texts_similarity:
                     is_primary_texts = False
                     is_high_score_texts = False
@@ -243,7 +244,7 @@ class PageScorings(PageTextContentsParse, ScoringTexts):
                     if detect_text_is_true is False and (is_primary_texts or is_high_score_texts):
                         detect_text_is_true = True
                 
-                debug_logger.debug(f'text roop end')
+                debug_logger.debug(f'text roop end>>>')
                 debug_logger.debug(f'is_primary_texts:{is_primary_texts} | is_high_score_texts: {is_high_score_texts}')                                                  
                 if detect_text_is_true:
                     child_count += 1
@@ -274,7 +275,6 @@ class PageScorings(PageTextContentsParse, ScoringTexts):
                                                                       cutoff= self.title_boundary,
                                                                       text_scorer=title_scorer)#obj_parser⇒self
                 if title_score:
-                    debug_logger.debug(f'title_score==あり')
                     break
         else:
             title_score = None

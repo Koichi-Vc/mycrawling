@@ -86,11 +86,13 @@ class SearchElementFilterManager(BaseFilterManage):
 
         filter_instance_dict = {}
         first_print = False
+        debug_logger.debug('start for roop>>>')
         for target in targets:
             if not first_print:
-                debug_logger.debug('create_attrs_filtersのループ内:')
+                #debug_logger.debug('create_attrs_filtersのループ内:')
                 first_print = True
-            debug_logger.debug(f'ループ,target: {target}')
+            debug_logger.debug(f'target: {target}')
+            
             if isinstance(target, dict) and 'attr' in target and 'arguments' in target:
                 attr = target.get('attr')if target.get('attr', None) else 'class'#attrキーがNoneの場合、クラス属性に対する指定とする。
                 arguments = target.get('arguments')
@@ -103,12 +105,12 @@ class SearchElementFilterManager(BaseFilterManage):
                     args = [arguments]
                 
                 args.append(kwargs)
-                debug_logger.debug(f'ループ,\narguments: {arguments} \nargs: {args}')
+                debug_logger.debug(f'arguments: {arguments} | args: {args}')
 
                 filter_instance = run_method(args, self.filter_instantiation)
                 filter_obj = self.executable_filter(filter_instance)
                 filter_instance_dict.setdefault(attr, filter_obj)
-
+        debug_logger.debug('stop for roop')
         self.filter_instance_obj_dict[tag_name].update(filter_instance_dict)
 
 
@@ -133,12 +135,12 @@ class SearchElementFilterManager(BaseFilterManage):
         すると言う事の為フィルターセットを作成する。
         '''
         debug_logger.debug(f'arguments: {arguments}')
-        debug_logger.debug(f'createfilter_cls: {createfilter_cls}')
-        debug_logger.debug(f'kwargs: {kwargs}')
+        debug_logger.debug(f'createfilter_cls: {createfilter_cls} | kwargs: {kwargs}')
+        
         single_item = 1
         if arguments and len(arguments) == single_item:
             argument = arguments[0]
-            debug_logger.debug('filter_instantiationのif節-------')
+            debug_logger.debug('filter_instantiationのif-------')
             return run_method(argument, createfilter_cls)
 
         filter_set = filterset_factory(createfilter_cls, self.filterset_cls, arguments, **kwargs)

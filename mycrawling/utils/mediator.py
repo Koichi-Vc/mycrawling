@@ -129,9 +129,8 @@ class DataMediator(BaseDataMediator):
             notify for notify in self.registry_notify_objects.values() if self.search_notify_to_filter(notify, object_name)
             ]
 
-        debug_logger.debug(f'object_name: {object_name}')
-        debug_logger.debug(f'search_notify_to_filter: {self.search_notify_to_filter.__name__}')
-        debug_logger.debug(f'searched_obj: {searched_obj}')
+        debug_logger.debug(f'object_name: {object_name} | search_notify_to_filter: {self.search_notify_to_filter.__name__} | searched_obj: {searched_obj}')
+        
         if searched_obj:
             searched_result = searched_obj[0]
         return searched_result      
@@ -175,8 +174,8 @@ class DataMediator(BaseDataMediator):
         instance = self.search_notify_object(object_name)#インスタンスの検索
 
         if instance:
-            debug_logger.debug(f'instance: {getattr(instance, attr_value, None)}')
             value = getattr(instance, attr_value, None)
+            debug_logger.debug(f'instance: {value}')
         return value
 
 

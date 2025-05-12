@@ -29,7 +29,7 @@ class Attr_RobotsMetaElements_Parse(SearchMetaElements):
         ''' 検索結果からcontents属性値を抽出し、robotへの命令を取得する。 '''        
         for element in elements:
             content = element.get('content')
-            debug_logger.debug(f'element content: {content}')
+            debug_logger.debug(f'elements content: {content}')
             content_values = content.split(',')#","区切りで複数指定されている場合を想定してsplitを掛けておく。
             if content_values:
                 for value in content_values:

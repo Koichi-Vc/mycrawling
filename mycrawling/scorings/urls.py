@@ -22,10 +22,7 @@ class ScoringUrls(ScoringTexts):
         return text_scoring_method
 
 
-    def urls_text_scoring(self,
-                         texts,
-                         choices,
-                         scorer, cutoff=None, *args, **kwargs):
+    def urls_text_scoring(self, texts, choices, scorer, cutoff=None, *args, **kwargs):
         ''' all_text_scoringの戻り値(generator)を展開して返す '''
         #戻り値はタプル型リストの二次元配列
         score_value = []
@@ -47,11 +44,7 @@ class ScoringUrls(ScoringTexts):
     ''' BaseScoringUrls.urls_scoringではscoringメソッドを用いた基本的な
     urlsのスコア付けのみ行う。 '''
     
-    def urls_scoring(self, urls_attributes:list,
-                     choices_url_text,
-                     scoring_method,
-                     scorer=None,
-                     score_cutoff=None, **kwargs):
+    def urls_scoring(self, urls_attributes:list, choices_url_text, scoring_method, scorer=None, score_cutoff=None, **kwargs):
         
         ''' ParseUrlsで解析された一つのurlから抽出したpath等の属性値をscoring_methodに基づきスコアリングする '''
         ''' urlの各属性名をスコアリングし、属性毎スコアのリストにした二次元配列を返す。 '''
@@ -76,8 +69,8 @@ class ScoringUrls(ScoringTexts):
             
             debug_logger.debug(f'evaluate_text:{evaluate_text}')
             urls_score.append(evaluate_text)
-            debug_logger.debug(f'urls_attributes: {urls_attributes} | urls_score: {urls_score}')
-            debug_logger.debug(f'any(): {any(urlscore for urlscore in urls_score if urlscore is not None)}')
+            
+        debug_logger.debug(f'urls_attributes: {urls_attributes} | urls_score: {urls_score}')
         return urls_score 
 
 

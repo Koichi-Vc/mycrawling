@@ -29,12 +29,13 @@ class RobotFileparseManager():
         self.optional_data_obj = optional_data_obj
         self.custom_message_dict = custom_message_dict
         self.kwargs = kwargs
-
+        debug_logger.debug(f'kwargs: {kwargs}')
         if not self.rp:#RobotFileParserオブジェクトが指定されていない場合、設定オブジェクトの内容を優先して適用する。
             parameters = ref_dataconfig.get_conf_value('ROBOTFILEPARSE_PARAMETER')
+            debug_logger.debug(f'parameters:{parameters}')
             for param_name, value in parameters.items():
                 obj = None
-                debug_logger.debug(f'param_name:{param_name}')
+                
                 if isinstance(value, str) and '.' in value:
                     obj = get_module(value)
                     if param_name == 'rp' and callable(obj) and 'rp_parameter' in kwargs:
@@ -205,7 +206,7 @@ class RobotFileparseManager():
         elif urls not in self.parse_dict and self.rp.url == robots_url:#urlが評価済み辞書に無く、rp.urlにセットされたrobots.txtへのパス == robots_urlだった場合
             #parse_dictにないがrp.urlとrobots_urlが同じ
             debug_logger.debug('urls not in parse_dict and rp.url is not robots_url')
-            debug_logger.debug(f'robots_url: {robots_url};  rp.url：　{self.rp.url}; parse_dict: {self.parse_dict}')
+            debug_logger.debug(f'rp.url | {self.rp.url} | parse_dict: {self.parse_dict}')
             logging.info(f'url is not in parse_dict and rp.url is : True')
             self.result = self.rp.can_fetch(self.useragent, urls)
             self.parse_dict[urls] = self.result
