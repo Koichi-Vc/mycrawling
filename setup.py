@@ -12,5 +12,5 @@ setup(
     include_package_data=True,
     long_description = description,
     long_description_content_type = 'text/markdown',
-    license_files = ['NOTICE', 'third_party_license/Third_Party_License.txt']
+    license_files = ['LICENSE','NOTICE', 'third_party_license/Third_Party_License.txt']
 )
