@@ -42,6 +42,13 @@ git cloneを使用する場合は以下を実行してください。
 ### インストール時の注意
 requirements.txtに記載されたライブラリをインストールしてください。
 
+[requirements.txtのダウンロードurl](https://github.com/Koichi-Vc/mycrawling/blob/develop/requirements.txt)
+
+**インストール方法の例**
+
+` pip install -r requirements.txt `
+
+
 #### chromedriver-binaryについて
 webドライバーとブラウザのバージョンは必ず一致する様にして下さい。
 このプロジェクトでは、デフォルトでchromedriver-binaryの最新バージョンをインストールする仕様になっています
