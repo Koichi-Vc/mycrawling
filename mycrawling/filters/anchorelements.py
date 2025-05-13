@@ -6,13 +6,10 @@ from collections.abc import Iterable
 from .elements import ElementsFilter
 from rapidfuzz import process as rpdfuzz_process
 from rapidfuzz.distance import Indel
-from .datas import FilterDataList
 from .elements import Processing
 import inspect#テスト用
 from mycrawling.utils.imports_module import get_module
 from mycrawling.logs.debug_log import debug_logger
-
-#from mycrawlingpack.setup import exclude_downloads#後で修正
 
 '''
 フィルター生成クラスはあくまでフィルターを生成するオブジェクトである為、属性をはじめとするフィルタリング対象

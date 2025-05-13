@@ -1,7 +1,6 @@
 import logging
 import requests
 import time
-#from urllib import robotparser
 from urllib.parse import urlparse
 from mycrawling.conf.data_setting import ref_dataconfig
 from mycrawling.utils.imports_module import get_module

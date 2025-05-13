@@ -8,15 +8,13 @@ from urllib.parse import urlparse
 #以下新しく追加したwebdrivercontextmanager↓↓↓
 from mycrawling.conf import data_setting
 from mycrawling.conf.data_setting import ref_dataconfig
-#from . import load_use_classes
 #from mycrawling.robots.robotfileparse import RobotFileparseManager
 #from mycrawling.searchelements.metaelements.attrs_robot import EvalRobotsMetaElements
 from mycrawling.utils.imports_module import get_module
 from mycrawling.utils.paths import match_urls
 from mycrawling.logs.debug_log import debug_logger
 
-print(f'data_setting.datamediator: {data_setting.datamediator} (data_setting_mediatorと同じ)')
-
+print(f'data_setting.datamediator: {data_setting.datamediator}')
 
 #Var37.06.14.15a(24/07/25/時点のバージョン)
 class MyCrawlingSearch():

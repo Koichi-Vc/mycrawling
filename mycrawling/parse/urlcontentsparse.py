@@ -3,7 +3,6 @@ from typing import List
 
 
 #Var37.06.14.15a(24/07/25/時点のバージョン)
-
 class ParseUrls():
     ''' urlの具体的な属性名解析 '''
 

@@ -1,6 +1,5 @@
 import logging
 import re
-#import spacy
 from spacy import load as spacy_load
 from spacy.tokens.doc import Doc as spacy_DoC_Type
 from mycrawling.logs.debug_log import debug_logger
