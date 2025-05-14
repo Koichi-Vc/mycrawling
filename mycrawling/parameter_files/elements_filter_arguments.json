@@ -6,9 +6,6 @@
                 {
                     "filter_method":"exclude_dwl_contents",
                     "exclude_downloads": [".pdf",".jpeg",".gif",".png","xlsx",".doc",".docx",".xlsm",".xlsb",".xltx",".xltm",".xls"]
-                },
-                {
-                    "is_exclude_fragment":true
                 }
             ]
         }
