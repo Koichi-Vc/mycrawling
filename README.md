@@ -94,7 +94,7 @@ ref_dataconfig = Ref_DataConfig.ref_dataconfig_factory()
 
 
 ## サードパーティーライセンス
-サードパーティライブラリのライセンスの全文は、Licenses/Third_Party_License.txtにあります。
+サードパーティライブラリのライセンスの全文は、third_party_license/Third_Party_License.txtにあります。
 
 - **Beautiful Soup4**
     - copyright
