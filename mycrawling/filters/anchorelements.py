@@ -32,6 +32,8 @@ class AnchorFilterMixin:
         #href属性に対して使う。
         #フラグメントを検索対象から除外するフィルター
         debug_logger.debug(f'cls: {cls} | href_value: {href_value}')
+        if href_value is None:
+            href_value = ''
         return '#' not in href_value
 
 
