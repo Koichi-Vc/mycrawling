@@ -65,7 +65,7 @@ class PageEvaluation(EvaluateTexts):
         debug_logger.debug(f'cls.is_true_urls: {cls.is_true_urls}')
     
 
-    def condition_evaluation_beta(self, 
+    def condition_evaluation(self, 
                                    eval_primary_text_types,
                                    eval_highscore_text_types,
                                    eval_primary_text_count,
@@ -138,10 +138,10 @@ class PageEvaluation(EvaluateTexts):
                     detection_texts_obj = self.pagescorings.child_elements_traverse_beta(element)
                     if detection_texts_obj is not None:
                         evaluated_statistics = detection_texts_obj.text_score_statistics_eval(self)
-                        reqd_condition_evaluation_beta_parametor = 6
-                        if not len(evaluated_statistics) >= reqd_condition_evaluation_beta_parametor:
+                        reqd_condition_evaluation_parametor = 6
+                        if not len(evaluated_statistics) >= reqd_condition_evaluation_parametor:
                             continue
-                        result = self.condition_evaluation_beta(*evaluated_statistics.values())
+                        result = self.condition_evaluation(*evaluated_statistics.values())
                     else:
                         result = False
                     
