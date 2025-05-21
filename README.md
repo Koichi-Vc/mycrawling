@@ -40,7 +40,7 @@ git cloneを使用する場合は以下を実行してください。
 `git clone https://github.com/Koichi-Vc/mycrawling.git`
 
 ### インストール時の注意
-requirements.txtに記載されたライブラリをインストールしてください。
+requirements.txtに記載されたライブラリと、英語解析モデルのen_core_web_smをインストールしてください。
 
 [requirements.txtのダウンロードurl](https://github.com/Koichi-Vc/mycrawling/blob/develop/requirements.txt)
 
@@ -48,6 +48,8 @@ requirements.txtに記載されたライブラリをインストールしてく�
 
 ` pip install -r requirements.txt `
 
+**en_core_web_emのインストール**
+`python -m spacy download en_core_web_sm`
 
 #### chromedriver-binaryについて
 webドライバーとブラウザのバージョンは必ず一致する様にして下さい。
