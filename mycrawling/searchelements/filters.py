@@ -27,7 +27,7 @@ class SearchElementFilterManager(BaseFilterManage):
         
         self.retain_tag = set()#既に登録済みのタグ。Noneもタグ無しと言う意味で含める。
         is_load_files = kwargs.pop('is_load_files', True)#ファイルの読み込み許可。
-        debug_logger.debug(f'not filter_parameters and not no_load_files: {not filter_parameters and not is_load_files}')
+        debug_logger.debug(f'filter_parameters: {filter_parameters} | is_load_files: {is_load_files}')
         encoding = kwargs.pop('encoding', 'UTF-8')
         #パラメータを取得する。新コード
         if not filter_parameters and is_load_files:
@@ -89,7 +89,6 @@ class SearchElementFilterManager(BaseFilterManage):
         debug_logger.debug('start for roop>>>')
         for target in targets:
             if not first_print:
-                #debug_logger.debug('create_attrs_filtersのループ内:')
                 first_print = True
             debug_logger.debug(f'target: {target}')
             

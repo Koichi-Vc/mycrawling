@@ -52,8 +52,7 @@ class SearchAnchorElements(BaseSearchElements):
         if not evaluate_objects:
             self.evaluate_objects = self.default_evaluate_object.create_instance()
 
-        #評価クラス新コードここまで。
-        debug_logger.debug(f'self.evaluate_objects : {self.evaluate_objects } | evaluate_objects: {evaluate_objects}')
+        debug_logger.debug(f'self.evaluate_objects : {self.evaluate_objects} | evaluate_objects: {evaluate_objects}')
         
         self.filtermanager = filtermanager
         if not callable(filtermanager) and not attrs_value and not string:
@@ -76,7 +75,7 @@ class SearchAnchorElements(BaseSearchElements):
     def __call__(self, soup_obj):
         parse_only_tag = 'a'#beautifulsoup解析対象をa要素に絞る。
         elements = super().__call__(soup_obj, parse_only_tag=parse_only_tag)
-        debug_logger.debug(f'elements: {elements}')
+        #debug_logger.debug(f'elements: {elements}')
 
 
         if self.handling_fragment:
@@ -207,7 +206,7 @@ class SearchAnchorElements(BaseSearchElements):
         return absolute, relative
 
 
-    #find_elementsメソッドのベータ版、
+
     #__call__が担う場合不要になる可能性あり
     #__call__を使わない場合でも内部タスクは大幅に削減される。
     def find_elements(self,

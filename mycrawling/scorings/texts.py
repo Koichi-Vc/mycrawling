@@ -34,12 +34,8 @@ class ScoringTexts:
         return wrapper
 
 
-    def all_text_scoring(self,
-                         texts,
-                         choices,
-                         text_scorer=None, cutoff=None ,*args, **kwargs:dict['custom_initvalue': '']):
+    def all_text_scoring(self, texts, choices, text_scorer=None, cutoff=None ,*args, **kwargs:dict['custom_initvalue': '']):
         ''' テキストリスト内全アイテムのスコアを順次返す。cutoff値外又は評価不能の場合はNoneを返す。'''
-
 
         if not text_scorer and hasattr(self, 'text_scorer'):
             text_scorer = self.text_scorer
@@ -149,7 +145,7 @@ class ScoringTitleTexts(ScoringTexts):
                                                cutoff=cutoff)
         scored_title = scoring_title[0]
         
-        debug_logger.debug(f'scoring_title: {scoring_title} | scored_title: {scored_title}')
+        debug_logger.debug(f'scoring_title: {scoring_title}')
         if scored_title is not None:
             title_score = scored_title
             text = scoring_title[2]

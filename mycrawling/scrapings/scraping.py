@@ -24,7 +24,7 @@ class PageScraping():
         #tag_name = None
         tag_elements = []
         for elem in company_overview:
-            debug_logger.debug(f'column_count実行:  elem: {elem} | elem length : {len(elem)} | elem.text: {elem.text}')
+            debug_logger.debug(f'elem: {elem} | elem length : {len(elem)} | elem.text: {elem.text}')
 
             if elem.name in ['table','tbody','th','tr']:
                 #isinstance(i, bs4.element.Tag)を追加して事前にコメントアウトに対してattributeエラーが起きない様にした。

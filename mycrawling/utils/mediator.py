@@ -216,7 +216,6 @@ class DataMediator(BaseDataMediator):
         notification_to = kwargs.pop('notification_to', None)
         notify_to_attr = kwargs.pop('notify_to_attr', None)
         instance_list = list()
-        debug_logger.debug(f'notify実行')
         debug_logger.debug(f'attr_value: {attr_value}')
         debug_logger.debug(f'self.registry_notify_objects: {self.registry_notify_objects}')
         debug_logger.debug(f'notification_to: {notification_to}')

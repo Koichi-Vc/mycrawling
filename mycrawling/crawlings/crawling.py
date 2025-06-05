@@ -98,7 +98,7 @@ class MyCrawlingSearch():
             self.scraping.df = self.data_frame
         robot = self.robotmanager.robots_parse(urls=self.input_url)
         self.time_sleep = getattr(self.robotmanager, 'crawl_delay_time', None)
-        debug_logger.debug(f'robot: {robot}')
+        #debug_logger.debug(f'robot: {robot}')
         if robot:
             logging.info(f'robots_parse():  {robot}')
             self.driver.get(self.input_url)

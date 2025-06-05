@@ -1,6 +1,6 @@
 from abc import ABC
 from mycrawling.utils.mediator import DataMediator
-from mycrawling.logs.debug_log import debug_logger
+#from mycrawling.logs.debug_log import debug_logger
 #Var37.06.14.15a(24/07/25/時点のバージョン)
 
 class BaseDataClass(ABC):
@@ -8,13 +8,12 @@ class BaseDataClass(ABC):
     __instance = None
 
     def __new__(cls, *args, **kwargs):
-        #debug_logger.debug(f'__instance: {cls.__instance}')
+
         if cls.__instance is None:
             cls.__instance = super().__new__(cls)
         
         return cls.__instance
 
-    #__init__はいらないかもしれない
     def __init__(self):
         self.datamediator = DataMediator()
 

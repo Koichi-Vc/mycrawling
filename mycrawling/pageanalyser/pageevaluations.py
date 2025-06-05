@@ -147,12 +147,13 @@ class PageEvaluation(EvaluateTexts):
                     
                     if result:
                         debug_logger.debug(f'element: {element} | elements text: {[e.text for e in element]}')
-                        length_contents = len([content for content in element.contents if content.name != None])
+                        contents_length = len([content for content in element.contents if content.name != None])
                         targ_contents_rate = 85
 
-                        debug_logger.debug(f'elementのdl要素数: {len(element.find_all("dl"))} | element.contents: {len(element.contents)} | length_contents: {length_contents}')
-                        
-                        if len(element.find_all('dl')) / length_contents*100 >= targ_contents_rate:
+                        debug_logger.debug(f'element.contentsの数: {len(element.contents)} | contents_length: {contents_length}')
+                        dl_length = len(element.find_all('dl'))
+                        if dl_length / contents_length*100 >= targ_contents_rate:
+                            debug_logger.debug(f'dl要素数: {dl_length}')
                             element.attrs['class'] = 'overview_dl_elements'
                         yield element                   
                 

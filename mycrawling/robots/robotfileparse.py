@@ -134,10 +134,9 @@ class RobotFileparseManager():
         #urls = quote(urls, safe=':/')
         parsed_url = urlparse(urls)#parseしたurlsを格納
         domain_name = parsed_url.hostname
-        debug_logger.debug(f'domain_name: {domain_name}')
+        #debug_logger.debug(f'domain_name: {domain_name}')
         domain = parsed_url.scheme + '://' + domain_name
         robots_url = domain + '/robots.txt'
-                #　↓元々urlsを返していた
         return parsed_url, domain, domain_name, robots_url
 
 
@@ -183,7 +182,6 @@ class RobotFileparseManager():
         
         parsed_url, domain, domain_name , robots_url = self.url_extract(urls)
         debug_logger.debug(f'parsed_url: {parsed_url} | domain: {domain} | domain_name: {domain_name} | robots_url: {robots_url}')
-        debug_logger.debug(f'any:  {any(name for name in self.prohibition_url_list if not domain_name in name)}')
         
         is_prohibition_url = any(name for name in self.prohibition_url_list if domain_name in name)#クロール/スクレイピング禁止サイト判定
         

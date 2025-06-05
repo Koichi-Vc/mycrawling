@@ -1,6 +1,5 @@
 from pathlib import Path
 from mycrawling.utils.loaders.loader import FilesLoader
-#from mycrawling.logs.debug_log import debug_logger
 from mycrawling.conf.data_setting import ref_dataconfig
 ''' 要素検索のフィルターを作成する為の引数をまとめたjsonファイルを読み込む。 '''
 
@@ -26,8 +25,8 @@ class FilterParameterLoader(FilesLoader):
         self.elements_filter_parameters = None
     
     def load_filter(self, **kwargs):
-        print(f'FilterParameterLoader.load_filter>>>>>')
-        print(f'self: {self} | kwargs: {kwargs}')
+        #print(f'FilterParameterLoader.load_filter>>>>>')
+        #print(f'self: {self} | kwargs: {kwargs}')
         load_file = self.user_parameter_file_path if self.user_parameter_file_path.is_dir() else self.default_load_file
         elements_filter_parameters = self.file_load(
             load_file,
