@@ -11,8 +11,6 @@ from mycrawling.logs.debug_log import setting_debug_log
 
 datamediator = DataMediator()
 
-#setting_conf = dict()#get_conf_valueを用意した為うまく行けば不要になる。
-
 class Ref_DataConfig():
     '''
     設定ファイルの内容を纏める。纏めた設定内容は、setting_confに辞書で保持され、get_conf_valueでアクセス可能になる。
@@ -32,10 +30,7 @@ class Ref_DataConfig():
     #default_ref_text_file = 'mycrawling/parameter_files/ref_textfiles/ref_texts.json'
     default_ref_text_file = setting.REFERENCE_TEXTS_FILES
     
-    '''先にRetainSettingConfをインスタンス化したreteinsettingconfにしてそれを
-    どうにかしてここにいれるやり方にしてみる。
-    '''
-
+ 
     def __init__(self, parametor_jsonfile=None, parametor_dict=None, retainsettingconf=None, **kwargs):
 
         reading_setting = kwargs.pop('reading_setting', True)
@@ -157,6 +152,6 @@ class RetainSettingConf:
         ''' 設定内容を参照する。 '''
         return self.setting_conf.get(item_name, None)
 
-#デフォルトでは設定の読み込みはFalse
+#インポート時のreading_settingはFalse
 ref_dataconfig = Ref_DataConfig(reading_setting=False, default=None)
 
