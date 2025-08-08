@@ -12,7 +12,7 @@ from mycrawling.logs.debug_log import debug_logger
 
 #Var37.06.14.15a(24/07/25/時点のバージョン)
 class PageEvaluation(EvaluateTexts):
-    ''' search_sys_dev.ipynbより「find_all(True)の後のフィルター機能の開発　クラス var2」を採用'''
+    ''' search_sys_dev.ipynbより「find_all(True)の後のフィルター機能の開発 クラス var2」を採用'''
 
     is_true_urls = set()#searchanchorelementsインスタンスによるurl単独のスコアリング評価でTrue判定を受けたurlの絶対パスセットを保持。
     default_notify_to_obj_name = 'crawling_class'
@@ -135,7 +135,7 @@ class PageEvaluation(EvaluateTexts):
             for element in elements:
                 if isinstance(element, Tag):
                     
-                    detection_texts_obj = self.pagescorings.child_elements_traverse_beta(element)
+                    detection_texts_obj = self.pagescorings.child_elements_traverse(element)
                     if detection_texts_obj is not None:
                         evaluated_statistics = detection_texts_obj.text_score_statistics_eval(self)
                         reqd_condition_evaluation_parametor = 6
