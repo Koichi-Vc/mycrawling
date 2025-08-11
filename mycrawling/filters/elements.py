@@ -60,7 +60,7 @@ class Processing():
                 continue
 
             debug_logger.debug(f'affix_method: {affix_method} | affix_method.__name__: {affix_method.__name__}')
-            ''' ここのロジックで引数に渡すのがうまく行っていない為次回検証する。24/11/15/425'''
+
             if first is True:
                 result = run_method(argument, affix_method)
                 first = False
