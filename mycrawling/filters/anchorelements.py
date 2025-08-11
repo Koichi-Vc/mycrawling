@@ -115,13 +115,7 @@ class AnchorFilterMixin:
 #Var37.06.14.15a(24/07/25/時点のバージョン)
 class CreateAnchorElementFilter(ElementsFilter, AnchorFilterMixin):
     ''' a要素専用の検索フィルターを作成する。 '''
-    '''
-    ≪CreateAnchorElementFilterに関するドきゅめんてーション≫24/12/21/
-    
-    processing:
-        フィルターの前後に処理を追加する為のオブジェクト。現在valuefilterメソッドのみでのサポートであり、
-        AnchorFilterMixinのメソッドやその他カスタムのフィルタには対応していない。
-    '''
+
 
     default_exclude_downloads_scorer = Indel.normalized_distance
     processing = Processing()

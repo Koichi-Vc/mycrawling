@@ -138,10 +138,6 @@ class PageScorings(PageTextContentsParse, ScoringTexts):
 
         if not isinstance(element, bs4_element.Tag):
             return
-        #25/03/26/0501am; ここだけ新規で追加。うまく行かなかったら即削除。※ここ１
-        #elements_texts = [ i.strip() for i in element.text.strip().split('\n' or '\t') if i.strip() != '']
-        
-        #debug_logger.debug(f'elements_texts: {elements_texts}')
 
         text_contents = self.run_parse_textcontents(element, do_parsetext=self.do_parsetext, exclude_ref_words = self.exclude_ref_words, **kwargs)
         text_contents = [txt for txt in text_contents]
@@ -171,7 +167,7 @@ class PageScorings(PageTextContentsParse, ScoringTexts):
 
 
     #child_elements_parseと同じで後継を想定したクラス。
-    def child_elements_traverse_beta(self, element):
+    def child_elements_traverse(self, element):
         ''' 各要素の子要素を走査し、ルート要素から抽出した全ての高類似度語彙の含有量を調べる '''
         ''' 
         変数解説

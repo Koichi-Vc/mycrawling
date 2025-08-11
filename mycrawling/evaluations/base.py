@@ -7,7 +7,7 @@ class ScoreEvaluations:
     ''' スコアを評価 '''
     
     def __num_symbol_decorator(func):
-        """ 数値符号をアルゴリズムに合わせて操作する"""
+        ''' 数値符号をアルゴリズムに合わせて操作する'''
 
         def wrapper(self, scorer=None, score=None, *args, **kwargs):
             """ 
@@ -44,10 +44,10 @@ class ScoreEvaluations:
 
         return wrapper
 
-
+    
     @__num_symbol_decorator
     def score_cutoff_init_(self, scorer_type=None, score=None, *args, **kwargs):
-        """ socreの初期値をアルゴリズムに合わせて定義する"""
+        ''' socreの初期値をアルゴリズムに合わせて定義する'''
 
         custom_initvalue = kwargs.pop('custom_initvalue', '')
 
@@ -61,43 +61,6 @@ class ScoreEvaluations:
         else:
             result = 0
         return result
-
-
-    @__num_symbol_decorator
-    def scorering_complement_value(self,
-                                   scorer_type=None,
-                                   score=None,
-                                   add_subst='add',
-                                   comp_num=0, *args, **kwargs):
-        ''' スコアに追加で値を上乗せをする。 '''
-        '''
-        <comp_num> 
-        distance:加算ならばscore - comp_num,減算ならscore + comp_num
-        similarlity: 加算ならばscore + comp_num, 減算ならscore - comp_num
-        ratio:
-            int型の場合: 加算ならばscore + comp_num, 減算ならscore - comp_num
-            
-            float型の場合: 100をmaxとした場合の割合と解釈し、加算減算評価する。
-        '''
-        if not score:
-            #scoreがNoneだった場合、初期値をセットする。
-            score = self.score_cutoff_init_(scorer_type=scorer_type)
-
-        if 'distance' == scorer_type:
-            comp_num = comp_num * -1
-        elif 'similarlity' == scorer_type:
-            comp_num = abs(comp_num)
-
-        elif 'ratio' == scorer_type and isinstance(comp_num, float):
-            ''' ratio系且つcomp_numがfloat型の場合、ratio系最高スコア100に対する割合と解釈 '''
-            comp_num = 100*comp_num
-        
-        if add_subst == 'add':
-            score += comp_num
-        elif add_subst == 'subt' or add_subst == 'subtraction':
-            score -= comp_num
-
-        return score
 
 
     @__num_symbol_decorator
