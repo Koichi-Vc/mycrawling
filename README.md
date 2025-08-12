@@ -49,6 +49,7 @@ requirements.txtに記載されたライブラリと、英語解析モデルのe
 ` pip install -r requirements.txt `
 
 **en_core_web_emのインストール**
+
 `python -m spacy download en_core_web_sm`
 
 #### chromedriver-binaryについて
