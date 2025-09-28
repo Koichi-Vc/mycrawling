@@ -6,7 +6,7 @@ description = (this_directory / 'README.md').read_text(encoding='UTF-8')
 
 setup(
     name='mycrawling',
-    version='0.0.0',
+    version='0.1.0',
     packages=find_namespace_packages(),
     include_package_data=True,
     long_description = description,
