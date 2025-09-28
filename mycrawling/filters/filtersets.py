@@ -4,7 +4,6 @@ from mycrawling.utils.method_parse import run_method
 from mycrawling.logs.debug_log import debug_logger
 
 
-#Var37.06.14.15a(24/07/25/時点のバージョン)
 class Elements_Filterset(SelectListOperator):
     '''beautifulsoup.find, find_allに渡すフィルターセットを生成するクラス '''
     '''
@@ -20,8 +19,8 @@ class Elements_Filterset(SelectListOperator):
         当クラスのインスタンス化時にフィルターを追加する場合は、以下のパラメータに値を渡す
         ''' 
         #filter_methods: 1乃至複数の検索フィルターメソッドを渡す。
-        #呼び出し可能なフィルターのみfiltersへ格納。内包表記が問題であればfor文で対応
-        #self.filters = [method for method in filter_method_list if callable(method)]
+        #呼び出し可能なフィルターのみfiltersへ格納。
+
         debug_logger.debug(f'filter_method_list: {filter_method_list}')
         
         self.filters = []
@@ -66,7 +65,7 @@ class Elements_Filterset(SelectListOperator):
         return cls(*filter_method_list, list_operator_type, custom_list_operator, **kwargs)
         
 
-#Var37.06.14.15a(24/07/25/時点のバージョン)
+
 def filterset_factory(createfilter_cls, filterset_cls= Elements_Filterset, createfilter_factory_param:List[Dict]=[dict()], **kwargs):
     #検索フィルタークラスのインスタンスを生成しフィルターセットに束ねる。
     '''
@@ -95,7 +94,7 @@ def filterset_factory(createfilter_cls, filterset_cls= Elements_Filterset, creat
 
     for parametor in createfilter_factory_param:
         #debug_logger.debug(f'parametor:{parametor}')
-        instance = run_method(parametor, createfilter_cls)#run_methodにインスタンス化を代行させてみる。24/12/03
+        instance = run_method(parametor, createfilter_cls)#run_methodを用いてインスタンス化
 
         if hasattr(instance, 'get_filter_method'):
             instance = instance.get_filter_method()

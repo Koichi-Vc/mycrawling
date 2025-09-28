@@ -8,9 +8,7 @@ USE_CLASSES:
 
 REGISTRY_DATA_CLASS_INSTANCE:
     データクラスをインスタンス化した上で登録する。
-
-PARAMETERHANDLER:
-    パラメータ管理クラスを指定する。    
+ 
 '''
 
 USE_WEBDRIVER = 'selenium.webdriver.Chrome'
@@ -77,9 +75,6 @@ CREATEFILTER_CLS = {
 CREATEFILTERSETS_CLS = 'mycrawling.filters.filtersets.Elements_Filterset'
 
 
-#要素検索のフィルターを管理するクラスを指定※廃止。
-#FILTER_PARAMETER_HANDLER = 'mycrawling.filters.parameter.ElementsFilterParameterHandler'
-
 FILTER_PARAMETER_FILE = package_root.joinpath('mycrawling/parameter_files/elements_filter_arguments.json')
 
 #mediatorの指定。
@@ -94,15 +89,8 @@ PAGEEVALUATION_PARAMETER = {
 }
 
 #mycrawlingでクローリング時に使用するクラスのインスタンス化用パラメータ
-'''
-USE_CLASSES_PARAMETER = {
-    'robotfileparse': {
-        'datamediator': USE_MEDIATOR_PATH,
-        
-    }
-}'''
-
 USE_CLASSES_PARAMETER = package_root.joinpath('mycrawling/parameter_files/create_instance_parameters.json')
+
 
 ROBOTS_ERROR_MESSAGE_DICT = {
     'requests.exceptions.Timeout': {

@@ -7,8 +7,6 @@ from mycrawling.utils.loaders.loader import json_load, FilesLoader
 from mycrawling.utils.mediator import DataMediator
 from mycrawling.logs.debug_log import setting_debug_log
 
-#ここでdebug_logをインポートしてデバッグログを共有するやり方をしてみる。
-
 datamediator = DataMediator()
 
 class Ref_DataConfig():

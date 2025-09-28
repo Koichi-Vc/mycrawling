@@ -4,7 +4,6 @@ from .base import ScoreEvaluations
 from mycrawling.scorings.urls import ScoringUrls
 from mycrawling.logs.debug_log import debug_logger
 
-#Var37.06.14.15a(24/07/25/時点のバージョン)
 
 class EvaluateUrls(ParseUrls, ScoreEvaluations):
     ''' urlスコアに基づいて評価。 '''
@@ -30,7 +29,6 @@ class EvaluateUrls(ParseUrls, ScoreEvaluations):
 
         urls_hostname_is_current_hostname = urls_hostname == current_hostname
 
-        #result = result_urls_hostname or self.compareobjct(
         #    urls_hostname,current_hostname)#urlsにhostnameが無い又はcurrent_hostnameと一致した場合、同サイト内と見做す。
         result = result_urls_hostname or urls_hostname_is_current_hostname
         

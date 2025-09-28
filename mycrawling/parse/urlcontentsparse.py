@@ -2,7 +2,6 @@ from urllib.parse import urlparse
 from typing import List
 
 
-#Var37.06.14.15a(24/07/25/時点のバージョン)
 class ParseUrls():
     ''' urlの具体的な属性名解析 '''
 
@@ -15,7 +14,7 @@ class ParseUrls():
             return urls_attrvalue_dict
         
         for url in urls:
-            #url = urls.pop()
+
             parsed_url = urlparse(url)
             result = {}#属性名をキーにしてvalueを格納
             

@@ -11,7 +11,6 @@ from mycrawling.logs.debug_log import debug_logger
 #filtermanage_object = None
 #ilter_object = None
 
-#parameter_files\elements_filter_arguments3.jsonを元に設計する。
 class SearchElementFilterManager(BaseFilterManage):
     '''
     フィルタークラスとパラメータのインスタンス化を行う。
@@ -116,6 +115,7 @@ class SearchElementFilterManager(BaseFilterManage):
     def executable_filter(self, obj, **kwargs):
         ''' インスタンスがフィルターとして実行可能か評価する。Falseだった場合フィルターの取得を試みる。'''
         ''' もし実行可能なフィルター取得に失敗した場合は警告ログを出力する。'''
+
         if callable(obj):
             filter_obj = obj
         elif not callable(obj) and hasattr(obj, 'get_filter_method'):
@@ -133,6 +133,7 @@ class SearchElementFilterManager(BaseFilterManage):
         argumentsが複数のパラメータのリストになっていた場合、一つの属性又はelementオブジェクトに対して複数のフィルターを生成
         すると言う事の為フィルターセットを作成する。
         '''
+
         debug_logger.debug(f'arguments: {arguments}')
         debug_logger.debug(f'createfilter_cls: {createfilter_cls} | kwargs: {kwargs}')
         
@@ -149,6 +150,7 @@ class SearchElementFilterManager(BaseFilterManage):
 
     def get_filter_instance(self, tag_name, **kwargs):
         ''' インスタンス化したフィルターオブジェクトを指定して取得する。 '''
+        
         debug_logger.debug(f'tag_name: {tag_name} | kwargs: {kwargs}')
 
         attr = kwargs.pop('attr') if 'attr' in kwargs else ''

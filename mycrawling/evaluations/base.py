@@ -1,7 +1,6 @@
 from mycrawling.logs.debug_log import debug_logger
 ''' スコア値をscorerアルゴリズム、符号に合わせてラップする。 '''
 
-#Var37.06.14.15a(24/07/25/時点のバージョン)
 
 class ScoreEvaluations:
     ''' スコアを評価 '''

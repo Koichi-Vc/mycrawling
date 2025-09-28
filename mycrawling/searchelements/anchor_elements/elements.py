@@ -11,26 +11,28 @@ from mycrawling.utils.imports_module import get_module
 from mycrawling.logs.debug_log import debug_logger
 
 
-#Var37.06.14.15a(24/07/25/時点のバージョン)
+
 class SearchAnchorElements(BaseSearchElements):
-    ''' a要素を検索する為のクラス
-    '''
+    ''' a要素を検索する為のクラス'''
+
     default_filter_class_key = 'a'#FilterManagerに於いてフィルタークラスを管理しているキー
     #default_evaluate_object = ref_dataconfig.get_conf_value('USE_CLASSES', 'evaluateanchorelements')
     default_evaluate_object = EvaluateAnchorElements
-    #default_evaluate_object = None
     default_webdriver = get_module(ref_dataconfig.get_conf_value('USE_WEBDRIVER'))
     #datamediator = get_module(ref_dataconfig.get_conf_value('USE_MEDIATOR_PATH'))#やっぱり使わないかも。
 
-    def __init__(self,
-                 attrs_value:Dict = None,
-                 string=None,
-                 current_url=None,
-                 current_hostname = None,
-                 evaluate_objects= None,
-                 handling_fragment=False,
-                 filtermanager=None,
-                 **query_kwargs):
+
+    def __init__(
+            self,
+            attrs_value:Dict = None,
+            string=None,
+            current_url=None,
+            current_hostname = None,
+            evaluate_objects= None,
+            handling_fragment=False,
+            filtermanager=None,
+            **query_kwargs
+            ):
         '''
         args:
             evaluate_objects:
@@ -48,7 +50,7 @@ class SearchAnchorElements(BaseSearchElements):
         self.visited_page = set()#クロール訪問済みのurlを保持
         self.filter_class_key = query_kwargs.pop('filter_class_key', self.default_filter_class_key)
 
-        #if-elifの修正
+
         if not evaluate_objects:
             self.evaluate_objects = self.default_evaluate_object.create_instance()
 
@@ -62,7 +64,7 @@ class SearchAnchorElements(BaseSearchElements):
 
         self.handling_fragment = handling_fragment
 
-        #filtermanageの新コード
+
         if self.filtermanager:
             filters = self.filtermanager.create_filter(tag, self.filter_class_key)
             attrs_value.update(filters)
@@ -73,6 +75,7 @@ class SearchAnchorElements(BaseSearchElements):
 
 
     def __call__(self, soup_obj):
+        
         parse_only_tag = 'a'#beautifulsoup解析対象をa要素に絞る。
         elements = super().__call__(soup_obj, parse_only_tag=parse_only_tag)
         #debug_logger.debug(f'elements: {elements}')
@@ -87,7 +90,7 @@ class SearchAnchorElements(BaseSearchElements):
             elements,
             current_url=self.current_url
         )
-        #print(f'evaluated_elements: {}')
+
         evaluated_href_values = self.return_evaluated_urls(evaluated_elements)
         debug_logger.debug(f'evaluated_href_values: {evaluated_href_values} | searched_url: {self.searched_urls} | visited_page: {self.visited_page}') 
         return evaluated_href_values     
@@ -97,6 +100,7 @@ class SearchAnchorElements(BaseSearchElements):
     def current_url(self):
         return self.__current_url
     
+
     @current_url.setter
     def current_url(self, url):
         self.__current_url = url
@@ -116,11 +120,13 @@ class SearchAnchorElements(BaseSearchElements):
     def current_hostname(self, host):
         self.__current_hostname = host
 
+
     @property
     def handling_fragment(self):
         #フラグメントの扱いを指定する。
         return self._handling_fragment
     
+
     @handling_fragment.setter
     def handling_fragment(self, value):
         if not isinstance(value, bool):
@@ -144,20 +150,11 @@ class SearchAnchorElements(BaseSearchElements):
 
     def exclude_rel_attr_nofollow(self, elements):
         #rel属性値がnofollowの要素を除外する。
+        
         for element in elements:
             rel_value = element.get('rel', None)
             if not rel_value or (rel_value and 'nofollow' not in rel_value):
                 yield element
-
-    #廃止する方向で。
-    def get_evaluate_class(self, cls_name):
-        ''' 検索した要素の評価を行うクラスを設定情報から取得し、evaluate_objectsに設定する。 '''
-        cls_path = None
-        if hasattr(ref_dataconfig, 'get_class_obj'):
-            cls_path = ref_dataconfig.get_conf_value('USE_CLASSES', cls_name)
-            self.evaluate_objects = get_module(cls_path)
-
-        return self.evaluate_objects
 
 
     def add_searched_urls(self, *searched_url):
@@ -173,10 +170,10 @@ class SearchAnchorElements(BaseSearchElements):
 
     def return_evaluated_urls(self, url_items:List[List[str]], *other_exclude_elements):
         '''
-        検索したhref値(絶対url/相対urlパス)を返す。href値・テキストにより返すアイテムを除外する場合は、
-        other_exclude_elementsを指定する。
-        '''
-        ''' urls_itemsには二次元配列で[absolute, relative]のペアリストを渡す。 ''' 
+        検索したhref値(絶対url/相対urlパス)を返す。href値・テキストにより返すアイテムを除外する場合は、other_exclude_elementsを指定する。
+        urls_itemsには二次元配列で[absolute, relative]のペアリストを渡す。 
+        ''' 
+        
         list_length = 1
 
         if not isinstance(url_items, (list, tuple, deque, GeneratorType)):
@@ -206,9 +203,6 @@ class SearchAnchorElements(BaseSearchElements):
         return absolute, relative
 
 
-
-    #__call__が担う場合不要になる可能性あり
-    #__call__を使わない場合でも内部タスクは大幅に削減される。
     def find_elements(self,
                            soup_obj,
                            current_url=None):

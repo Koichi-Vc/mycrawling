@@ -2,7 +2,7 @@ from abc import ABC
 from abc import abstractmethod
 from mycrawling.logs.debug_log import debug_logger
 
-#Var37.06.14.15a(24/07/25/時点のバージョン)
+
 class AbstractElementsFilter(ABC):
     ''' 要素の属性名と属性値のフィルター '''
 
@@ -10,23 +10,6 @@ class AbstractElementsFilter(ABC):
     def __init__(self,filter_method=None):
         debug_logger.debug(f'filter_method is callable: {callable(filter_method)}')
         self._filter_method = filter_method if callable(filter_method)else self.set_filter_method(filter_method) 
-
-
-    """
-    def __call__(self, element):
-        #クラス自信がフィルタとして機能する。
-        result = False
-        result = self.__filter_function(element)
-        return result
-    """
-    
-    '''#__call__を使えばクラスをメソッドの様に呼び出せるが、
-       #何を返すのか事前に把握し難い為get_filter_methodに代行させる。
-    def __call__(self):
-        #フィルターを作成して返す。
-        created_filter = self.__filter_function
-        return created_filter
-    '''
 
     
     def set_filter_method(self, filter_name=None):

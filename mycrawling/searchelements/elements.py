@@ -4,7 +4,7 @@ from mycrawling.parse.elementsparse import ElementsParse
 from mycrawling.logs.debug_log import debug_logger
 
 
-#Var37.06.14.15a(24/07/25/時点のバージョン)
+
 class BaseSearchElements(ElementsParse):
     
     defaultparser_name = 'lxml'
@@ -24,8 +24,7 @@ class BaseSearchElements(ElementsParse):
                 find_allが受け取る引数をまとめて指定
                 !同じキーがattr_nameに存在していた場合attr_name側キーが優先される。
         '''
-        print('BaseSearchElements>>>>>>')
-        print(f'query_kwargs: {query_kwargs}')
+
         
         if 'name' in query_kwargs:
             #キーワード引数としてnameは指定出来ない。
@@ -57,7 +56,6 @@ class BaseSearchElements(ElementsParse):
 
 
 
-    #内容は__call__メソッドと同じ.
     def find_elements(self, soup_obj:bs4.BeautifulSoup):
         #処理は__call__と同じであるが、soup_objはbs4.BeautifulSoupのみを受け取る。
         debug_logger.debug(f'tag:{self.tag} | attrs: {self.attrs_value} | query: {self.query_kwargs}')        

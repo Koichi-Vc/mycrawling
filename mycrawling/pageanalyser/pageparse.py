@@ -4,7 +4,6 @@ import logging
 from typing import List
 from mycrawling.parse.textcontentsparse import Spacy_TextParse
 
-#Var37.06.14.15a(24/07/25/時点のバージョン)
 
 class PageTextContentsParse(Spacy_TextParse):
     ''' 訪問したサイトページのテキストコンテンツを解析し、分かち書きする。 '''

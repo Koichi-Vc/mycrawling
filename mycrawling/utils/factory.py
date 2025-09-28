@@ -21,6 +21,7 @@ class AbstractFactory(ABC):
 
 class Factory(AbstractFactory):
     ''' 実行する前に、data_setting.Ref_DataConfigのインスタンス化をする。'''
+    
     #使用するクラスのインポートパスを取得、
     if not getattr(ref_dataconfig, 'setting_conf', None):
         default_ref_dataconfig = Ref_DataConfig.ref_dataconfig_factory()#設定ファイルの初期化が未実行だった場合は初期化を実行する。
@@ -31,6 +32,7 @@ class Factory(AbstractFactory):
         LAZY_INSTANCES_CLASS = ref_dataconfig.get_conf_value('LAZY_INSTANCES_CLASS')
 
     debug_logger.debug(f'ref_dataconfig: {ref_dataconfig}')
+
 
     def __init__(self, classes:dict=None, conf_class_name=None, **kwargs):
         #global ref_dataconfig
@@ -102,6 +104,7 @@ class Factory(AbstractFactory):
         
         elif class_name in self.classes.keys():
             #インポート済みクラスにない場合は、保持しているクラス辞書からインポートを行う。
+            
             class_path = self.classes.get(class_name)
             class_object = self.import_classes(class_name=class_path)
             self.class_objects.update(**class_object)
@@ -110,6 +113,7 @@ class Factory(AbstractFactory):
 
     def create_instance(self, class_name, arguments=tuple(), **kwargs):
         ''' クラスのインスタンス化を行う。'''
+        
         instance = None
         datamediator = kwargs.get('datamediator', None)
         class_obj = self.get_class(class_name)

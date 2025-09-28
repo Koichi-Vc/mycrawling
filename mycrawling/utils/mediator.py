@@ -3,7 +3,7 @@ from abc import ABC, abstractmethod
 from .imports_module import get_module
 from mycrawling.logs.debug_log import debug_logger
 
-#Var37.06.14.15a(24/07/25/時点のバージョン)
+
 class BaseDataMediator(ABC):
     ''' DataMediatorクラスの抽象基底クラス '''
     ''' 仲介クラスを定義するにあたり、以下のメソッドを用いる。 '''
@@ -21,7 +21,7 @@ class BaseDataMediator(ABC):
         pass
 
 
-#Var37.06.14.15a(24/07/25/時点のバージョン)
+
 class DataMediator(BaseDataMediator):
 
     ''' 
@@ -52,6 +52,7 @@ class DataMediator(BaseDataMediator):
             custom_filter:
                 登録オブジェクト検索にカスタムのフィルターを使う場合はこの引数が受け取る。
         '''
+
         self.registry_notify_objects = dict()#送受信者の登録
         self.registry_notify_object_set = set()#送受信者の登録※登録時にキーを指定しない場合に格納される場所。
         self.default_instance_name = None
@@ -74,13 +75,14 @@ class DataMediator(BaseDataMediator):
             self.search_notify_to_filter = self.filter_isinstance_or_exact_match
 
        
-    #register_notification_toの後継メソッド
+
     def register_object(self, objects_dict:Dict, override=True):
         '''
         datamediatorインスタンスへオブジェクトをkey-valueで登録する。
         override:
             Trueの場合、既に存在している値は上書きされる。Falseの場合、既に存在している値が優先される。
         '''
+
         if not isinstance(objects_dict, dict):
             raise TypeError('obj_dictはdict型を取ります。')
 
@@ -95,7 +97,7 @@ class DataMediator(BaseDataMediator):
                 self.registry_notify_objects.setdefault(key, obj_value)
 
 
-    #find_notification_filterからの名称変更25/01/15/
+
     def find_all_notification(self, object_name):
         ''' 辞書値を元に登録しているクラスとインスタンスをフィルター検索。戻り値はリスト '''
         '''
@@ -104,6 +106,7 @@ class DataMediator(BaseDataMediator):
                 検索対象の登録オブジェくトを受け取り、該当するインスタンス、クラスオブジェクトをフィルターする。
         datamediatorは値としてインスタンスやクラスオブジェクトを持つ事が想定されている為、
         '''
+
         searched_obj = []
 
         if isinstance(object_name, str):
@@ -119,10 +122,11 @@ class DataMediator(BaseDataMediator):
         return searched_obj
 
 
-    #find_notification_dictからの名称変更25/01/15/
+
     def find_notification(self, object_name):
         ''' 辞書値を元に登録しているクラスとインスタンスを検索し、該当した最初の値を返す。 '''
         ''' クラスとインスタンスを辞書値で検索し該当した最初のオブジェクトを返す。'''
+
         searched_result = []
 
         searched_obj = [
@@ -136,7 +140,7 @@ class DataMediator(BaseDataMediator):
         return searched_result      
 
     
-    #search_notify_objectへ名称変更する予定
+
     def search_notify_object(self, object_name:Union[str, type], **kwargs):
         ''' registry_notify_objectsへ登録済みのオブジェクトを名前検索する。 '''
         '''
@@ -145,6 +149,7 @@ class DataMediator(BaseDataMediator):
             str: 登録済みから辞書キー検索をする。
             type: クラスオブジェクトの場合、該当するクラスインスタンス全てを検索する。
         '''
+
         debug_logger.debug(f'object_name: {object_name} | type: {type(object_name)}')
 
         objects = None
@@ -170,6 +175,7 @@ class DataMediator(BaseDataMediator):
         attr_value:
             object_nameから取得する属性
         '''
+        
         value = None
         instance = self.search_notify_object(object_name)#インスタンスの検索
 

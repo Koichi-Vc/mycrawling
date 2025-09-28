@@ -16,7 +16,7 @@ from mycrawling.logs.debug_log import debug_logger
 は別途キーワード引数として用意する。
 '''
 
-#Var37.06.14.15a(24/07/25/時点のバージョン)
+
 class AnchorFilterMixin:
     ''' a要素検索フィルターに使う条件式をまとめた。 '''
     

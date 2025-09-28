@@ -5,7 +5,6 @@ from mycrawling.scorings.texts import ScoringTexts
 from mycrawling.logs.debug_log import debug_logger
 
 
-#Var37.06.14.15a(24/07/25/時点のバージョン)
 class EvaluateTexts(ScoreEvaluations, SelectListOperator):
     ''' 文字列の評価 '''
     
@@ -23,7 +22,6 @@ class EvaluateTexts(ScoreEvaluations, SelectListOperator):
             result = False
             remove_whitespace = txt.replace(' ', '')#空白スペースを消したタイプも検証する。
             remove_full_width_space = txt.replace('　', '')#
-            #debug_logger.debug(f'texts_is_contain>>txt:{txt}')
             for ref in reference:
 
                 if (txt in ref or ref in txt) or (remove_whitespace in ref) or (remove_full_width_space in ref):
@@ -42,7 +40,7 @@ class EvaluateTexts(ScoreEvaluations, SelectListOperator):
         contain_results = self.texts_is_contain(texts, reference_texts)
 
         for results in contain_results:
-            #debug_logger.debug(f'results: {results}')
+
             text = results[0]
             is_contain = results[1]
             if is_contain:

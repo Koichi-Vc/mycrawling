@@ -9,10 +9,7 @@ from mycrawling.utils.imports_module import get_module
 from mycrawling.logs.debug_log import debug_logger
 
 
-
-#Var37.06.14.15a(24/07/25/時点のバージョン)
 class PageEvaluation(EvaluateTexts):
-    ''' search_sys_dev.ipynbより「find_all(True)の後のフィルター機能の開発 クラス var2」を採用'''
 
     is_true_urls = set()#searchanchorelementsインスタンスによるurl単独のスコアリング評価でTrue判定を受けたurlの絶対パスセットを保持。
     default_notify_to_obj_name = 'crawling_class'

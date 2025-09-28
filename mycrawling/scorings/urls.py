@@ -5,7 +5,8 @@ from rapidfuzz.distance import Indel
 from typing import List
 from .texts import ScoringTexts
 from mycrawling.logs.debug_log import debug_logger
-#Var37.06.14.15a(24/07/25/時点のバージョン)
+
+
 
 class ScoringUrls(ScoringTexts):
     ''' urlのスコア算出 '''
@@ -31,7 +32,6 @@ class ScoringUrls(ScoringTexts):
         text_scores = self.all_text_scoring(texts, choices, scorer, cutoff, *args, **kwargs)
         debug_logger.debug(f'text_scores:{text_scores}')
 
-        #'self.all_text_scoringを呼び出して展開↓↓'
         for score, appl_txt, txt in text_scores:
 
             score_value.append(score)
@@ -41,15 +41,13 @@ class ScoringUrls(ScoringTexts):
         return score_value, applicable_texts, text_list
 
 
-    ''' BaseScoringUrls.urls_scoringではscoringメソッドを用いた基本的な
-    urlsのスコア付けのみ行う。 '''
+    ''' BaseScoringUrls.urls_scoringではscoringメソッドを用いた基本的なurlsのスコア付けのみ行う。 '''
     
     def urls_scoring(self, urls_attributes:list, choices_url_text, scoring_method, scorer=None, score_cutoff=None, **kwargs):
         
         ''' ParseUrlsで解析された一つのurlから抽出したpath等の属性値をscoring_methodに基づきスコアリングする '''
         ''' urlの各属性名をスコアリングし、属性毎スコアのリストにした二次元配列を返す。 '''
-        #evaluate_textはリスト型を返す。
-        ''' 戻り値:リスト型の3次元配列[([],[],[]), ([],[],[])] '''
+
         if scorer is None:
             scorer = Indel.normalized_distance
         if not callable(scoring_method) and isinstance(scoring_method, str):

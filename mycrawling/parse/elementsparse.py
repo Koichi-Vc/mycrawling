@@ -4,7 +4,6 @@ from typing import Union
 from mycrawling.utils.imports_module import get_module
 from mycrawling.logs.debug_log import debug_logger
 
-#Var37.06.14.15a(24/07/25/時点のバージョン)
 
 class ElementsParse:
     ''' htmlの解析 '''      
@@ -34,7 +33,6 @@ class ElementsParse:
         if not parser:
             parser = self.htmlparser
         
-        #print(f'element_parse>>> parser: {parser} | parse_only_tag: {parse_only_tag}\n')
         parse_tag = self.element_strainer(parse_only_tag=parse_only_tag)
         
         if isinstance(data, self.webdriver):

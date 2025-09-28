@@ -8,7 +8,6 @@ from mycrawling.utils.method_parse import run_method, method_parameter_parse, ha
 from mycrawling.utils.operators import SelectListOperator
 
 
-#フィルター前後処理を定義するデコレータをクラスデコレータ版にしてみた。
 class Processing():
     '''
     要素又は値をフィルターで評価する前後にプロセス(処理や加工)を追加する。 デフォルトでは何もしない(affix == no_process)
@@ -117,17 +116,17 @@ class Processing():
                 debug_logger.debug(f'affix is after')
                 debug_logger.debug(f'args_list: {args_list} | method: {method}')
                 after_processed = run_method(args_list, method)
-                #return self._processing(*after_processed, instance=instance_obj)
+
                 after_processed = edit_keyword_argument(after_processed, {'instance': instance_obj})
                 return run_method(after_processed, self._processing)
             if kwargs:
-                #return method(instance, item, **kwargs) if instance else method(item, **kwargs)
+
                 return run_method(args_list, method, importance_keys=importance_keys)
 
         return wrapper
 
 
-#Var37.06.14.15a(24/07/25/1:24am時点のバージョン)
+
 class ElementsFilter(AbstractElementsFilter, SelectListOperator):
     affix_methods = list()
     ''' 要素を属性でフィルタリングする '''

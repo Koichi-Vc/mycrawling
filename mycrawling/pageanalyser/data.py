@@ -1,6 +1,5 @@
 import dataclasses
 
-#Var37.06.14.15a(24/07/25/時点のバージョン)
 
 @dataclasses.dataclass()
 class PageScoreStatisticsSet():

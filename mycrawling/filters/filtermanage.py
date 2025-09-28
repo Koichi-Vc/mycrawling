@@ -45,7 +45,7 @@ class BaseFilterManage():
 
 
     def has_loaded_createfilter_cls(self, name):
-        '''  nameのフィルター生成クラスがインポート済みであるか判定する.24/12/13/追加'''
+        '''  nameのフィルター生成クラスがインポート済みであるか判定する。'''
         result = False
         if not hasattr(self, 'createfilter_cls_obj_dict'):
             #辞書が存在しない場合、一つもインポート出来ていない為Falseを返す。

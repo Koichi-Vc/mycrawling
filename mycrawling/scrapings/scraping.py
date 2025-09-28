@@ -7,10 +7,10 @@ import time
 import tracemalloc
 from mycrawling.logs.debug_log import debug_logger
 
-#Var37.06.14.15a(24/07/25/時点のバージョン)
 
 class PageScraping():
 
+    
     def __init__(self, df=None, text_parse_method=None):
         self.company_overview = None
         self.col_median_list = deque()
@@ -20,6 +20,7 @@ class PageScraping():
     
     def column_count(self, company_overview):
         '''各項目の列数をカウントし、中央値を算出する。改行の基準を中央値にする。'''
+        
         num_column = []
         #tag_name = None
         tag_elements = []
@@ -62,7 +63,7 @@ class PageScraping():
      
     
     def table_element_scrape(self, element, col_median, company_list, index, text_line_blake):
-        '''table要素の場合のスクレイピング関数'''
+        '''table要素のスクレイピングを行う。'''
 
         tr_elements = []
         #elems_index = element
@@ -105,8 +106,8 @@ class PageScraping():
 
 
     def dl_element_scrape(self, element, col_median, company_list, index, text_line_blake):
-        '''element_scrape()関数が長すぎる為dl要素のelement_scrape()をこちらへ分ける'''
-        elem_index = element
+        '''dlなどの要素をスクレイピングを行う。'''
+        #elem_index = element
         
         element_dt = element.find_all('dt')
         element_dd = element.find_all('dd')
@@ -135,8 +136,10 @@ class PageScraping():
                     tag_name = 'dl'
                     text_line_blake(txt, tag_name, index, row_head=dt_txt)
 
+
     def comment_scrape(self, element, col_median, company_list, index, text_line_blake):
         '''コメントアウトのスクレイピング '''
+        
         comment = []
         head = 'コメントアウト'
         text = element.find_all(text= lambda text: isinstance(text, bs4.Comment))
@@ -148,9 +151,10 @@ class PageScraping():
             else:
                 text_line_blake(comment,'', index, row_head='')
 
+
     def other_elements_scrape(self, element, col_median, company_list, index, reference_score_texts, transpose=False):
         ''' text_key_listが問題なく動作していたら、 reference_score_textsは撤去する。24/03/05/216am '''
-        #text_key_list = element[1]
+
         debug_logger.debug(f'element: {element}')
         if not col_median or col_median <= 1:
             col_median += 1
@@ -217,6 +221,7 @@ class PageScraping():
             
     def element_scrape(self, company_overview, reference_score_texts:list):
         """対象ページをスクレイピングする。"""
+        
         debug_logger.debug(f'reference_score_texts: {reference_score_texts}')
         
         if isinstance(company_overview, str) or isinstance(company_overview, bs4.element.Tag):
@@ -224,6 +229,7 @@ class PageScraping():
 
         def text_line_blake(text, tag_name, index, row_head=''):
             ''' データが長い場合はcol_median値を基準に改行する。'''
+            
             counta = 1
             tx = []
             for key, txt in enumerate(text):

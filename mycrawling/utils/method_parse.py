@@ -6,6 +6,8 @@ from typing import Union, List, Dict
 from types import MappingProxyType
 from mycrawling.logs.debug_log import debug_logger
 
+
+
 def run_method(arguments, method, **kwargs):
     ''' メソッドにパラメータを渡して実行する。argumentsに何も渡さない場合は、空のコレクション型を渡す。'''
 
@@ -20,6 +22,7 @@ def run_method(arguments, method, **kwargs):
 ''' argumentsの検証と整形。 '''
 def edit_keyword_argument(arguments:List, keywords):
     ''' argumentsにキーワード引数を追加又は編集する。 '''
+    
     if not isinstance(keywords, dict):
         raise TypeError('keyowrdsは辞書型のみを受けとります。')
     
@@ -49,6 +52,7 @@ def edit_keyword_argument(arguments:List, keywords):
 
 def edit_word_argument(arguments:List, value, **kwargs):
     ''' 任意の位置に位置引数値を挿入する。デフォルトでは、最後尾、キーワード引数アイテムの直前'''
+    
     index = kwargs.pop('index', None)
 
     if isinstance(arguments, tuple):
@@ -70,6 +74,7 @@ def edit_word_argument(arguments:List, value, **kwargs):
 
 def isiterable(item):
     ''' アイテムが str, bytesを除いたイテラブルオブジェクトかどうか判定する。'''
+    
     result = False
     if not isinstance(item, (str, bytes)) and isinstance(item, Iterable):
         result = True
@@ -113,6 +118,7 @@ def method_parameter_parse(method):
 
 def get_sig_parameters_kinds(signature_parameters:Union[MappingProxyType, Signature]):
     ''' メソッドのシグネチャから取得した各パラメータ(inspect.Parameterオブジェクト)のkind属性を返す。 '''
+    
     parameter_kinds = dict()
     parameters = None
 
@@ -138,8 +144,8 @@ def get_sig_parameters_kinds(signature_parameters:Union[MappingProxyType, Signat
 
 
 def get_parameters_names(obj):
-    ''' オブジェクトからパラメータ名を取得する。 戻り値はリスト型
-    '''
+    ''' オブジェクトからパラメータ名を取得する。 戻り値はリスト型'''
+    
     parameter_names = []
     
     if not isinstance(obj, Signature) and callable(obj):
@@ -167,6 +173,7 @@ def get_parameters_names(obj):
 
 def has_param_type(parameter_obj, type_name):
     ''' 指定したパラメータタイプがシグネチャから取得したパラメータタイプ情報の中に存在するか評価する。 '''
+    
     parameter_kinds = get_sig_parameters_kinds(parameter_obj)
 
     return type_name in parameter_kinds.values()
@@ -174,6 +181,7 @@ def has_param_type(parameter_obj, type_name):
     
 def has_param_names(parameter_obj, name):
     ''' 引数名がmethodのシグネチャに含まれているか評価する。 '''
+    
     if isinstance(parameter_obj, (list, tuple, set)):
         return name in parameter_obj
     parameter_names = get_parameters_names(parameter_obj)
@@ -183,6 +191,7 @@ def has_param_names(parameter_obj, name):
 
 def param_type_count(*type_name, parameter_obj):
     ''' 指定したパラメータタイプがシグネチャから取得したパラメータタイプ情報の中に何個存在するか評価する。'''
+    
     length_param_types = {}#其々のパラメータタイプの型数を辞書で返す。
     parameter_kinds = get_sig_parameters_kinds(parameter_obj)
 
@@ -228,11 +237,12 @@ def split_arg_kwags(arguments):
 
 
 def positional_arg_handling(parameter_obj, arg=None, keyword_param=None):
-    ''' 位置引数とmethodのパラメータ値を検証し、該当する値を評価する。'''
-    '''
+    ''' 
+    位置引数とmethodのパラメータ値を検証し、該当する値を評価する。
     位置引数の有無を確認し、Noneの場合は実引数の内キーワード引数に該当値が無いか検証する。また位置引数値とキーワード引数が
     重複しない様にもする。
     '''
+    
     if not isinstance(parameter_obj, Parameter):
         raise TypeError('parameter_objはParameterオブジェクトを受け取ります。')
     if keyword_param is None:

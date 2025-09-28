@@ -5,18 +5,13 @@ from selenium.webdriver.support import expected_conditions as ec
 import time
 import tracemalloc
 from urllib.parse import urlparse
-#以下新しく追加したwebdrivercontextmanager↓↓↓
-from mycrawling.conf import data_setting
+#from mycrawling.conf import data_setting
 from mycrawling.conf.data_setting import ref_dataconfig
-#from mycrawling.robots.robotfileparse import RobotFileparseManager
-#from mycrawling.searchelements.metaelements.attrs_robot import EvalRobotsMetaElements
 from mycrawling.utils.imports_module import get_module
 from mycrawling.utils.paths import match_urls
 from mycrawling.logs.debug_log import debug_logger
 
-print(f'data_setting.datamediator: {data_setting.datamediator}')
 
-#Var37.06.14.15a(24/07/25/時点のバージョン)
 class MyCrawlingSearch():
 
     default_datamediator = get_module(ref_dataconfig.get_conf_value('USE_MEDIATOR_PATH', default=None))#デフォルトで使用するdatamediatorをsettingから取得する。
@@ -37,7 +32,6 @@ class MyCrawlingSearch():
         self.datamediator = datamediator
         #debug_logger.debug(f'DataMediator: {self.datamediator}')
         #debug_logger.debug(f'datamediator.dict: {self.datamediator.registry_notify_objects} \n')
-        #self.robotmanager新コード
         self.robotmanager = self.datamediator.get_instance('robotfileparse') if not robotmanager else robotmanager
 
         self.page_evaluation = kwargs.pop('pageevaluation', self.datamediator.get_instance('pageevaluation'))
@@ -48,7 +42,6 @@ class MyCrawlingSearch():
         self.evaluaterobotsmeta = kwargs.pop('evaluaterobotsmeta', self.datamediator.get_instance('evaluaterobotsmeta'))
 
         if 'scraping' not in kwargs:
-            #scraping_obj = load_use_classes('scrapings', kwargs.pop('scrapings_parameters', None))
             scraping_obj = self.datamediator.get_instance('scraping')
         else:
             scraping_obj = kwargs.pop('scraping')
@@ -90,10 +83,7 @@ class MyCrawlingSearch():
         ''' 全体の実行 '''
         start_time = time.time()
         debug_logger.debug(f'Var37.06.14.3a: 実行')
-        #time.sleep(2)
-        #raise ConnectionRefusedError#エラー処理実験のみ
-        #raise selem_except.TimeoutException
-        #raise IndexError
+
         if self.scraping:
             self.scraping.df = self.data_frame
         robot = self.robotmanager.robots_parse(urls=self.input_url)
@@ -202,8 +192,6 @@ class MyCrawlingSearch():
             for relat_href, absol_href in zip(relative_url_list.popleft(), absolute_url_list.popleft()):
 
                 debug_logger.debug(f"jump: {jump} | driver.current_url :{self.driver.current_url}")
-                #print(f"absolute_url_list: {absolute_url_list} | : {len(absolute_url_list)}個")
-                #print(f'relative_url_list: {relative_url_list} | : {len(relative_url_list)}個')
                 debug_logger.debug(f'relat_href: {relat_href} | absol_href: {absol_href}')
                 visited_page = self.searchanchorelements.visited_page
                 if absol_href in visited_page or relat_href in visited_page:

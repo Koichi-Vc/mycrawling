@@ -11,6 +11,7 @@ debug_logger.debug(f'package_: {__package__} | __name__: {__name__}')
 
 def create_module_import_path(file_path):
     ''' モジュールファイルディレクトリパスをインポートパスに変換 '''
+    
     back_slash = escape('\\')#\\をエスケープ。
     rep = f"[/ | {back_slash}]"
     path = Path(file_path)
@@ -115,7 +116,5 @@ def get_module(module_path_name, split_place=None):
         return obj
     else:
         return module 
-
-
 
 

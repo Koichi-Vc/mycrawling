@@ -6,7 +6,7 @@ from mycrawling.utils.imports_module import get_module
 from .scoring import AnchorElementsScorings
 from mycrawling.logs.debug_log import debug_logger
 
-#Var37.06.14.15a(24/07/25/時点のバージョン)
+
 class EvaluateAnchorElements(EvaluateUrls):
     ''' a要素のテキストコンテンツ・href属性値をスコアリング・評価する。 '''
 
@@ -68,12 +68,9 @@ class EvaluateAnchorElements(EvaluateUrls):
                 self.__is_true_url_set.discard(item)
 
     
-    def evaluate_text_and_href(self,
-                               elements,
-                               current_url:str,
-                               **kwargs
-                               ):
+    def evaluate_text_and_href(self, elements, current_url:str, **kwargs):
         ''' text_and_urls_scoringで算出されたスコアを元にテキスト/href属性値を評価する。 '''
+        
         #current_urlは、現在アクティブになっているurlを受け取る。
         
         #url_scoring_type = kwargs.pop('url_scoring_type', 'all')

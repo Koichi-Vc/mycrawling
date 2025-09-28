@@ -8,7 +8,7 @@ from collections import deque
 from mycrawling.utils.imports_module import get_module
 from .debug_log import debug_logger
 
-#Var37.06.14.15a(24/07/24/時点のバージョン)
+
 class Errorloghandlings_Class:
 
     '''
@@ -94,7 +94,7 @@ class Errorloghandlings_Class:
         '''
         return
     
-    #25/02/15/新規追加。設定ファイルにカスタムエラーメッセージを定義してインポートする。
+    #設定ファイルにカスタムエラーメッセージを定義してインポートする。
     #この場合、キーが例外オブジェクトのパスだった場合インポートする必要がある為インポートのロジックを次回以降考える。
     
     @classmethod

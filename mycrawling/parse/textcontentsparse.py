@@ -4,7 +4,6 @@ from spacy import load as spacy_load
 from spacy.tokens.doc import Doc as spacy_DoC_Type
 from mycrawling.logs.debug_log import debug_logger
 
-#Var37.06.14.15a(24/07/25/時点のバージョン)
 
 class Spacy_TextParse:
     ''' テキストを解析する。 '''
@@ -25,8 +24,6 @@ class Spacy_TextParse:
     @classmethod
     def textparse(cls, texts, *getattr_name, **kwargs):
         ''' テキストを解析する '''
-        #print('Spacy_TextParse.textparse>>>\n')
-        #print(f'texts: {texts}')
         listing = kwargs.pop('listing', True)
 
         if not isinstance(texts, str):
@@ -40,7 +37,6 @@ class Spacy_TextParse:
             getattr_names = getattr_name
             
         is_jp_language = cls.is_jp_language(texts)#日本語のテキストか調べる。
-        #print(f'language: {language}')
 
         parser = cls.japaniexe_parser
 
@@ -51,7 +47,7 @@ class Spacy_TextParse:
 
         if listing is True:
             parsed_text = cls.listing_parsed_text(parsed_text, *getattr_names)
-        #print('Spacy_TextParse.textparse>>>\n')
+
         return parsed_text
     
 

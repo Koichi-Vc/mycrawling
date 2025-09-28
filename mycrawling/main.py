@@ -9,6 +9,7 @@ from mycrawling.logs.debug_log import get_debug_logger
 
 class Main():
     ''' ページのクローリングをスタートする。'''
+    
     WEBDRIVER_SERVICE_PARAM = None if not ref_dataconfig else ref_dataconfig.get_conf_value('WEBDRIVER_SERVICE_PARAM', default=dict())
     WEBDRIVER_MANAGER_PARAM = None if not ref_dataconfig else ref_dataconfig.get_conf_value('WEBDRIVER_MANAGER_PARAM', default=dict())
 
@@ -58,6 +59,7 @@ class Main():
         #self.debug_logger.debug(f'instance_dict: {instance_dict}')
         self.factory.datamediator.register_object(instance_dict)#datamediatorに生成したインスタンスを登録する。
         self.factory.datamediator.register_object(self.factory.lazy_instances_class_objects)#インスタンス化を遅延するクラスを登録する。
+
 
     def start(self, input_url, *args, **kwargs):
 

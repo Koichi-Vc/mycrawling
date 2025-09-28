@@ -1,8 +1,7 @@
 
-#Var37.06.14.15a(24/07/25/時点のバージョン)
-
 class SelectListOperator:
     ''' リスト全体の論理演算メソッドを指定 '''
+    
     operator_and = {'and', 'AND'}
     operator_or = {'or' , 'OR'}
     operator_nand = {'not and','nand','NAND'}
@@ -35,4 +34,5 @@ class SelectListOperator:
     def not_or(self, *result_list):
         '''配列に対してNOR評価 '''
         return not any(result_list)
+
 

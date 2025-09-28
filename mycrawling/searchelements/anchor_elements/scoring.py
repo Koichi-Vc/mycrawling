@@ -7,7 +7,6 @@ from mycrawling.searchelements.element_scorings import ElementsScoring
 from mycrawling.scorings.urls import ScoringUrls
 from mycrawling.logs.debug_log import debug_logger
 
-#Var37.06.14.15a(24/07/25/時点のバージョン) 
 
 class AnchorElementsScorings(ElementsScoring, ScoringUrls):
     ''' a要素のテキスト、href属性をスコアリングする。 '''
@@ -67,11 +66,7 @@ class AnchorElementsScorings(ElementsScoring, ScoringUrls):
 
 
 
-    def urls_scoring(self,
-                     urls,
-                     scoring_urls_attrs:List[str]=None,
-                     select_param=0,
-                     **kwargs):
+    def urls_scoring(self, urls, scoring_urls_attrs:List[str]=None, select_param=0, **kwargs):
         '''
         scoring_urls_attrs: スコアリング対象にするurlparse属性名 初期値: self.select_url_attrs_list
         '''
@@ -107,6 +102,7 @@ class AnchorElementsScorings(ElementsScoring, ScoringUrls):
 
     def text_and_urls_scoring(self, elements, **kwargs):
         ''' text/href属性値のスコアリング '''
+
         #scoring_urls_attrs: スコアリング対象にするurlparse属性名 初期値: self.select_url_attrs_list
         #要素からテキスト/href属性値/
         contents = ((elem.text.strip(), elem.get('href')) for elem in elements)
