@@ -117,10 +117,6 @@ class RobotFileparseManager():
                                      notification_to=self.notify_to_instance,
                                      notify_to_attr=self.notify_to_attr)
 
-    
-    def get_prohibition_url_list(self):
-        ''' スクレイピング禁止urlを取得する。'''
-        prohibition_url_list = self.datamediator.get_conf_value('robotsparsedatalist')
 
 
     def url_extract(self, urls):
