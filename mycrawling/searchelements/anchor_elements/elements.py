@@ -56,7 +56,8 @@ class SearchAnchorElements(BaseSearchElements):
         if not evaluate_objects:
             self.evaluate_objects = self.get_evaluate_class()
 
-        
+        else:
+            self.evaluate_objects = evaluate_objects        
 
         debug_logger.debug(f'self.evaluate_objects : {self.evaluate_objects} | evaluate_objects: {evaluate_objects}')
         
