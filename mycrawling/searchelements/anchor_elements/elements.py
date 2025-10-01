@@ -50,9 +50,15 @@ class SearchAnchorElements(BaseSearchElements):
         self.visited_page = set()#クロール訪問済みのurlを保持
         self.filter_class_key = query_kwargs.pop('filter_class_key', self.default_filter_class_key)
 
+        #if-elifの修正1
+        #if not evaluate_objects:    
+        #    self.evaluate_objects = self.default_evaluate_object.create_instance()
 
+        #if-elifの修正1の修正
         if not evaluate_objects:
-            self.evaluate_objects = self.default_evaluate_object.create_instance()
+            self.evaluate_objects = self.get_evaluate_class()
+
+        
 
         debug_logger.debug(f'self.evaluate_objects : {self.evaluate_objects} | evaluate_objects: {evaluate_objects}')
         
@@ -155,6 +161,18 @@ class SearchAnchorElements(BaseSearchElements):
             rel_value = element.get('rel', None)
             if not rel_value or (rel_value and 'nofollow' not in rel_value):
                 yield element
+
+
+    def get_evaluate_class(self, cls_name=None):
+        ''' 検索した要素の評価を行うクラスを設定情報から取得し、evaluate_objectsに設定する。 '''
+        cls_path = None
+        if cls_name is None:
+            cls_name = 'evaluateanchorelements'
+        if hasattr(ref_dataconfig, 'get_conf_value'):
+            cls_path = ref_dataconfig.get_conf_value('USE_CLASSES', cls_name)
+            self.evaluate_objects = get_module(cls_path)
+
+        return self.evaluate_objects
 
 
     def add_searched_urls(self, *searched_url):
