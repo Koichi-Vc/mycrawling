@@ -14,12 +14,12 @@ class Main():
 
     def __init__(self, webdriver_manager=None, crawling_obj=None, factory_instance=None, loader=None, *args, **kwargs):
         global ref_dataconfig
-        self.debug_logger = get_debug_logger()
         if not getattr(ref_dataconfig, 'setting_conf', None):
             ref_dataconfig = Ref_DataConfig.ref_dataconfig_factory()
             self.WEBDRIVER_SERVICE_PARAM = ref_dataconfig.get_conf_value('WEBDRIVER_SERVICE_PARAM', default=dict())
             self.WEBDRIVER_MANAGER_PARAM = ref_dataconfig.get_conf_value('WEBDRIVER_MANAGER_PARAM', default=dict())
 
+        self.debug_logger = get_debug_logger()
         self.debug_logger.debug(f'ref_dataconfig: {ref_dataconfig}')
         self.webdriver_manager = webdriver_manager if webdriver_manager else get_module(ref_dataconfig.get_conf_value('WEBDRIVER_MANAGER'))
 
@@ -39,8 +39,8 @@ class Main():
             self.factory.import_classes()
             self.factory.import_lazy_instances_class()
             self.factory.create_data_cls_instance(add_mediator=True)#データクラスインスタンスの生成。
-        self.debug_logger.debug(f'factory.class_objects: {self.factory.class_objects}')
-        self.debug_logger.debug(f'factory.class_instances: {self.factory.class_instances}')
+        self.debug_logger.debug(f'factory.class_objects: {self.factory.class_objects} | factory.class_instances: {self.factory.class_instances}')
+
         if not loader:
             loader = ClassParameterLoader(user_parameter_file_path=ref_dataconfig.get_conf_value('USE_CLASSES_PARAMETER'), load_method=json.load)
         parameters = None
