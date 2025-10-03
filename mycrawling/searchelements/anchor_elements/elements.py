@@ -48,11 +48,7 @@ class SearchAnchorElements(BaseSearchElements):
         self.visited_page = set()#クロール訪問済みのurlを保持
         self.filter_class_key = query_kwargs.pop('filter_class_key', self.default_filter_class_key)
 
-        #if-elifの修正1
-        #if not evaluate_objects:    
-        #    self.evaluate_objects = self.default_evaluate_object.create_instance()
 
-        #if-elifの修正1の修正
         if not evaluate_objects:
             self.evaluate_objects = self.get_evaluate_class().create_instance()
 
@@ -179,13 +175,11 @@ class SearchAnchorElements(BaseSearchElements):
         for url in visited_url:
             self.visited_page.add(url)
 
-
-    def return_evaluated_urls(self, url_items:List[List[str]], *other_exclude_elements):
+    
+    def return_evaluated_urls(self, url_items:List[List[str]]):
         '''
-        検索したhref値(絶対url/相対urlパス)を返す。href値・テキストにより返すアイテムを除外する場合は、
-        other_exclude_elementsを指定する。
+        検索したhref値(絶対url/相対urlパス)を返す。
         '''
-        ''' urls_itemsには二次元配列で[absolute, relative]のペアリストを渡す。 ''' 
         list_length = 1
 
         if not isinstance(url_items, (list, tuple, deque, GeneratorType)):

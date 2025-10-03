@@ -68,11 +68,7 @@ class EvaluateAnchorElements(EvaluateUrls):
                 self.__is_true_url_set.discard(item)
 
     
-    def evaluate_text_and_href(self,
-                               elements,
-                               current_url:str,
-                               **kwargs
-                               ):
+    def evaluate_text_and_href(self, elements, current_url:str, **kwargs ):
         ''' text_and_urls_scoringで算出されたスコアを元にテキスト/href属性値を評価する。 '''
         #current_urlは、現在アクティブになっているurlを受け取る。
         
