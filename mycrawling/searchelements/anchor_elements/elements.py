@@ -56,9 +56,10 @@ class SearchAnchorElements(BaseSearchElements):
 
         #if-elifの修正1の修正
         if not evaluate_objects:
-            self.evaluate_objects = self.get_evaluate_class()
+            self.evaluate_objects = self.get_evaluate_class().create_instance()
 
-        
+        else:
+            self.evaluate_objects = evaluate_objects        
 
         debug_logger.debug(f'self.evaluate_objects : {self.evaluate_objects} | evaluate_objects: {evaluate_objects}')
         
