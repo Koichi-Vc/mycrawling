@@ -8,7 +8,8 @@ from collections import deque
 from mycrawling.utils.imports_module import get_module
 from .debug_log import debug_logger
 
-#Var37.06.14.15a(24/07/24/時点のバージョン)
+
+
 class Errorloghandlings_Class:
 
     '''
@@ -94,8 +95,6 @@ class Errorloghandlings_Class:
         '''
         return
     
-    #25/02/15/新規追加。設定ファイルにカスタムエラーメッセージを定義してインポートする。
-    #この場合、キーが例外オブジェクトのパスだった場合インポートする必要がある為インポートのロジックを次回以降考える。
     
     @classmethod
     def get_setting_conf(cls, variable_name=None):
@@ -128,7 +127,7 @@ class Errorloghandlings_Class:
         return custom_message_dict
 
     
-    #get_exc_handling_variable改良ver2
+    
     def format_exc_handling_variagle(self, instance_obj, **kwargs):
         ''' ログ出力前のパラメータを引数から受けとった場合は、セットを行う。 '''
         

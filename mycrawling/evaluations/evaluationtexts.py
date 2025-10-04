@@ -5,7 +5,7 @@ from mycrawling.scorings.texts import ScoringTexts
 from mycrawling.logs.debug_log import debug_logger
 
 
-#Var37.06.14.15a(24/07/25/時点のバージョン)
+
 class EvaluateTexts(ScoreEvaluations, SelectListOperator):
     ''' 文字列の評価 '''
     

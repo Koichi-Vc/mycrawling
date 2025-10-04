@@ -4,7 +4,7 @@ from mycrawling.searchelements.elements import BaseSearchElements
 from mycrawling.utils.imports_module import get_module
 
 
-#Var37.06.14.15a(24/07/25/時点のバージョン)
+
 class SearchMetaElements(BaseSearchElements):
     default_webdriver = get_module(ref_dataconfig.get_conf_value('USE_WEBDRIVER'))
 

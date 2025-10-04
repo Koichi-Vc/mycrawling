@@ -12,7 +12,8 @@ from mycrawling.evaluations.evaluationtexts import EvaluateTexts
 from mycrawling.utils.imports_module import get_module
 from mycrawling.logs.debug_log import debug_logger
 
-#Var37.06.14.15a(24/07/25/時点のバージョン)
+
+
 class PageScorings(PageTextContentsParse, ScoringTexts):
     
     default_text_scorer = Indel.normalized_distance
@@ -131,9 +132,9 @@ class PageScorings(PageTextContentsParse, ScoringTexts):
                     self.__high_score_text_list.append(value)
 
 
-    #PageEvaluation.high_score_search_betaと同じ
+
     def detect_high_score_texts(self, element, scorer=None, **kwargs):
-        ''' PageEvaluationからhigh_score_search_betaの機能を一部分離した。 '''
+      
         text_scorer = scorer if callable(scorer) else self.text_scorer
 
         if not isinstance(element, bs4_element.Tag):
@@ -166,7 +167,7 @@ class PageScorings(PageTextContentsParse, ScoringTexts):
         return self.primary_text_list, self.high_score_text_list
 
 
-    #child_elements_parseと同じで後継を想定したクラス。
+
     def child_elements_traverse(self, element):
         ''' 各要素の子要素を走査し、ルート要素から抽出した全ての高類似度語彙の含有量を調べる '''
         ''' 

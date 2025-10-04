@@ -4,7 +4,6 @@ from .base import ScoreEvaluations
 from mycrawling.scorings.urls import ScoringUrls
 from mycrawling.logs.debug_log import debug_logger
 
-#Var37.06.14.15a(24/07/25/時点のバージョン)
 
 class EvaluateUrls(ParseUrls, ScoreEvaluations):
     ''' urlスコアに基づいて評価。 '''

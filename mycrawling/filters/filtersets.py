@@ -4,7 +4,7 @@ from mycrawling.utils.method_parse import run_method
 from mycrawling.logs.debug_log import debug_logger
 
 
-#Var37.06.14.15a(24/07/25/時点のバージョン)
+
 class Elements_Filterset(SelectListOperator):
     '''beautifulsoup.find, find_allに渡すフィルターセットを生成するクラス '''
     '''
@@ -66,7 +66,7 @@ class Elements_Filterset(SelectListOperator):
         return cls(*filter_method_list, list_operator_type, custom_list_operator, **kwargs)
         
 
-#Var37.06.14.15a(24/07/25/時点のバージョン)
+
 def filterset_factory(createfilter_cls, filterset_cls= Elements_Filterset, createfilter_factory_param:List[Dict]=[dict()], **kwargs):
     #検索フィルタークラスのインスタンスを生成しフィルターセットに束ねる。
     '''

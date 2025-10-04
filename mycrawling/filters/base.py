@@ -2,7 +2,7 @@ from abc import ABC
 from abc import abstractmethod
 from mycrawling.logs.debug_log import debug_logger
 
-#Var37.06.14.15a(24/07/25/時点のバージョン)
+
 class AbstractElementsFilter(ABC):
     ''' 要素の属性名と属性値のフィルター '''
 

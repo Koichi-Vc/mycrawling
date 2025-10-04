@@ -8,7 +8,7 @@ from typing import List
 from mycrawling.parse.textcontentsparse import Spacy_TextParse
 from mycrawling.logs.debug_log import debug_logger
 
-#Var37.06.14.15a(24/07/25/時点のバージョン)
+
 
 class ScoringTexts:
     """ テキストのscoringを実行する。 """
@@ -101,7 +101,7 @@ class ScoringTexts:
         return score, applicable_txt, text_item
 
 
-#Var37.06.14.15a(24/07/25/時点のバージョン)
+
 class ScoringTitleTexts(ScoringTexts):
     ''' title要素のスコア算出 '''
     title_scorer = rapidfuzz_WRatio

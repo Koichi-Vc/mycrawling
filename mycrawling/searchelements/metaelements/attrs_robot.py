@@ -3,9 +3,8 @@ from typing import Dict, List
 from .metaelements import SearchMetaElements
 from mycrawling.logs.debug_log import debug_logger
 
-#Var37.06.14.15a(24/07/25/時点のバージョン)
 
-#Attr_RobotMetaElements_Parseから改名
+
 class Attr_RobotsMetaElements_Parse(SearchMetaElements):
     ''' meta要素からname robotsを検索し、指示を解析する。 '''
     '''

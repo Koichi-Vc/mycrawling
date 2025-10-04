@@ -7,7 +7,7 @@ from mycrawling.utils.imports_module import get_module
 from mycrawling.logs.debug_log import debug_logger
 
 
-#Var37.06.14.15a(24/07/25/時点のバージョン)
+
 class RobotFileparseManager():
     ''' robots.txtファイルの解析を行う '''
     #default_logging_formatter = '%(asctime)s | %(created)s | %(name)s | %(levelname)s | robots_url: %(robots_url)s | %(message)s | '

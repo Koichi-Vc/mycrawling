@@ -10,7 +10,6 @@ from mycrawling.logs.debug_log import debug_logger
 
 
 
-#Var37.06.14.15a(24/07/25/時点のバージョン)
 class PageEvaluation(EvaluateTexts):
     ''' search_sys_dev.ipynbより「find_all(True)の後のフィルター機能の開発 クラス var2」を採用'''
 

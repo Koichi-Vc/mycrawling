@@ -6,6 +6,8 @@ from typing import Union, List, Dict
 from types import MappingProxyType
 from mycrawling.logs.debug_log import debug_logger
 
+
+
 def run_method(arguments, method, **kwargs):
     ''' メソッドにパラメータを渡して実行する。argumentsに何も渡さない場合は、空のコレクション型を渡す。'''
 

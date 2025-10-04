@@ -11,7 +11,7 @@ from mycrawling.utils.imports_module import get_module
 from mycrawling.logs.debug_log import debug_logger
 
 
-#Var37.06.14.15a(24/07/25/時点のバージョン)
+
 class SearchAnchorElements(BaseSearchElements):
     ''' a要素を検索する為のクラス
     '''

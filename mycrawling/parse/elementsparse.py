@@ -4,7 +4,7 @@ from typing import Union
 from mycrawling.utils.imports_module import get_module
 from mycrawling.logs.debug_log import debug_logger
 
-#Var37.06.14.15a(24/07/25/時点のバージョン)
+
 
 class ElementsParse:
     ''' htmlの解析 '''      
@@ -45,4 +45,5 @@ class ElementsParse:
         elif isinstance(data, BeautifulSoup):
             soup = data
         return soup
+
 

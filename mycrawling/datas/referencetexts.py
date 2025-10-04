@@ -5,8 +5,6 @@ from .base import BaseDataClass
 from mycrawling.logs.debug_log import debug_logger
 
 
-#Var37.06.14.15a(24/07/25/時点のバージョン)
-
 @dataclasses.dataclass()
 class Reference_Title_A_Url_Texts(BaseDataClass):#ElementsFilterを継承しているが、インターフェースが若干異なる為除去するかもしれない。
     
@@ -35,8 +33,6 @@ class Reference_Title_A_Url_Texts(BaseDataClass):#ElementsFilterを継承して�
                 break
         return result
 
-
-#Var37.06.14.15a(24/07/25/時点のバージョン)
 
 @dataclasses.dataclass()
 class Reference_TextCollection(BaseDataClass):
