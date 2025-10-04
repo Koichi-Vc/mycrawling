@@ -17,16 +17,9 @@ class Errorloghandlings_Class:
 
     此のクラスはデコレータとして機能し、発生した例外に対するログ出力及びUIへのテキストメッセージの出力を制御します。
         args:
-            #エラー処理の一貫性の観点から見てcustom_message_dictは削除する方向で行く。
             custom_message_dict:
                 例外に対するメッセージ、ログのカスタムを定義する。
-                exceptionタイプ毎にテキストメッセージおよびログメッセージ、ログレベルを定義した辞書型として渡す。
-                exceptoinオブジェクトはstr()で文字列化して渡す。
-                書式:
-                    {str(exceptiontype): {'textmessage':'ユーザーインターフェースへのメッセージ',
-                                          'logmessage': 'ログメッセージ',
-                                          'loglevel':int又は__loglevel_dictのキーを指定,
-                                          }}
+                各exception発生時に対するテキストメッセージ、ログメッセージ、ログレベルを定義した辞書型を受け取る。
 
             catch_exception:
                 bool型で渡す。初期値はFalse
@@ -203,7 +196,7 @@ class Errorloghandlings_Class:
             return wrapper_catch_except
         return wrapper 
 
-    #add_error_text,add_error_text_betaメソッドの存在意義が薄れた為別の機能として実装してみる
+    
     def join_error_text_beta(self,*messages, separator=' | '):
         ''' エラーに対する複数のテキスト/ログメッセージをseparatorで結合する。 '''
         join_message = ''
@@ -211,6 +204,7 @@ class Errorloghandlings_Class:
             join_message += message
             join_message += separator
         return join_message
+
 
     @classmethod
     def get_methods_instance(cls, method):
@@ -222,6 +216,7 @@ class Errorloghandlings_Class:
         if is_bound_method and hasattr(method, '__self__'):
             result = method.__self__
         return result
+
 
     @classmethod
     def set_formatter(cls, formatter=None):
