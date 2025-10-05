@@ -78,8 +78,8 @@ class PageScorings(PageTextContentsParse, ScoringTexts):
         self.scoring_eval = EvaluateTexts()
         self.text_boundary = text_boundary if isinstance(text_boundary, (int, float)) else 0.3
         self.reqd_child_count = 4        
-        #self.high_score_jp_text = list()#言語別の検出語彙
-        #self.high_score_en_text = list()#言語別の検出語彙
+        self.high_score_jp_text = list()#言語別の検出語彙
+        self.high_score_en_text = list()#言語別の検出語彙
         self.primary_text_list = list()#ページ内から検出した重要語彙
         self.high_score_text_list = list()#ページ内から検出した高類似度語彙
 
