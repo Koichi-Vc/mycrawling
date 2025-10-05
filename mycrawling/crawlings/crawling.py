@@ -82,7 +82,7 @@ class MyCrawlingSearch():
     def myscraping(self, *args, **kwargs):
         ''' 全体の実行 '''
         start_time = time.time()
-        debug_logger.debug(f'Var37.06.14.3a: 実行')
+        debug_logger.debug(f'myscraping実行')
         #time.sleep(2)
         #raise ConnectionRefusedError#エラー処理実験のみ
         #raise selem_except.TimeoutException
@@ -91,7 +91,7 @@ class MyCrawlingSearch():
             self.scraping.df = self.data_frame
         robot = self.robotmanager.robots_parse(urls=self.input_url)
         self.time_sleep = getattr(self.robotmanager, 'crawl_delay_time', None)
-        #debug_logger.debug(f'robot: {robot}')
+
         if robot:
             logging.info(f'robots_parse():  {robot}')
             self.driver.get(self.input_url)
