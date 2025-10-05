@@ -5,17 +5,14 @@ from .base import BaseDataClass
 from mycrawling.logs.debug_log import debug_logger
 
 
-
-
 @dataclasses.dataclass()
 class Reference_Title_A_Url_Texts(BaseDataClass):#ElementsFilterを継承しているが、インターフェースが若干異なる為除去するかもしれない。
     
     reference_texts: set = dataclasses.field(default_factory=set)
     reference_urls: set = dataclasses.field(default_factory=set)
-    #データクラスで保持したテキストが含まれているかを調べるメソッド
-    #他のクラスメソッドで代用できそうかどうか調べてみる。
-
     
+    
+    #データクラスで保持したテキストが含まれているかを調べるメソッド
     def texts_is_contain(self, texts):
         ''' textsにreference_textsのテキストが含まれるか評価する。 '''
         result = False
@@ -36,7 +33,6 @@ class Reference_Title_A_Url_Texts(BaseDataClass):#ElementsFilterを継承して�
         return result
 
 
-#Var37.06.14.15a(24/07/25/時点のバージョン)
 
 @dataclasses.dataclass()
 class Reference_TextCollection(BaseDataClass):

@@ -27,7 +27,7 @@ class EvaluateAnchorElements(EvaluateUrls):
         self.is_true_url_set_notify_to = 'pageevaluation'
 
 
-    #get_is_true_url_setの後継
+
     @property
     def is_true_url_set(self):
         return self.__is_true_url_set
@@ -80,23 +80,28 @@ class EvaluateAnchorElements(EvaluateUrls):
         debug_logger.debug(f'href_list: {href_list}')
 
         urls_boudary = self.anchor_elements_scoring.href_statistics_cutoff
+        
         #算出した各テキスト/hrefのスコアを評価する
-        counta = 0#テスト用
         for text_score, hrefs_score, href_value in zip(*[text_score_list,href_score_list,href_list]):
-            counta += 1
-            
+
             debug_logger.debug(f'text_score: {text_score}')
             debug_logger.debug(f'hrefs_score: {hrefs_score}')
             debug_logger.debug(f'href_value: {href_value}')
 
             hostname_is_current_hostname = self.evaluate_hostname(
-                current_url, href_value)#href属性値がサイト内urlか評価する。
+                current_url,
+                href_value
+                )#href属性値がサイト内urlか評価する。
             debug_logger.debug(f'hostname_is: {hostname_is_current_hostname} | href_value: {href_value}')
-            evaluated_hrefs = self.evaluate_score(scorer_type='Wratio',
-                                                  score=hrefs_score,
-                                                  name_is_current_name=hostname_is_current_hostname,
-                                                  boundary=urls_boudary,
-                                                  **kwargs)
+
+            evaluated_hrefs = self.evaluate_score(
+                scorer_type='Wratio',
+                score=hrefs_score,
+                name_is_current_name=hostname_is_current_hostname,
+                boundary=urls_boudary, 
+                **kwargs
+                )
+            
             #テキストコンテンツのスコア評価と
             #テキストコンテンツ/href属性値の何方か一方の評価が通れば返す。
             if text_score is not None or evaluated_hrefs is True:

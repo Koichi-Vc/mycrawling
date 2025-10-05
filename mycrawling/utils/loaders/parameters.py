@@ -1,6 +1,8 @@
 from .loader import FilesLoader
 from mycrawling.logs.debug_log import debug_logger
 
+
+
 class ClassParameterLoader(FilesLoader):
     
     default_load_file = 'mycrawling/parameter_files/create_instance_parameters.json'
@@ -12,7 +14,7 @@ class ClassParameterLoader(FilesLoader):
         self.load_method = load_method
         self.kwargs = kwargs
     
-
+    
     def load_createinstance_parameter(self):
         ''' ファイルの読み込みを実行。'''
         

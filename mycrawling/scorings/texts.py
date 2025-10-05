@@ -22,8 +22,7 @@ class ScoringTexts:
         def wrapper(self, texts, choices, scorer, *args, **kwargs):
             query_txt = ''
             ext_txt = ''
-            #debug_logger.debug(f'base_text_scoring>>> args: {args} | kwargs: {kwargs}')
-            #debug_logger.debug(f'score_init確認: {self.__score_cutoff_init_}')
+
             if isinstance(texts, str):
                 ''' list型以外が渡されたら変換 '''
                 texts = [texts]
@@ -103,9 +102,9 @@ class ScoringTexts:
 
 class ScoringTitleTexts(ScoringTexts):
     ''' title要素のスコア算出 '''
-    
     title_scorer = rapidfuzz_WRatio
     text_parser = Spacy_TextParse
+
 
     def __init__(self, ref_title_choices:List=None):
         
@@ -139,17 +138,21 @@ class ScoringTitleTexts(ScoringTexts):
             choices = [choices]
         
         title_text = (tt.text.strip() for tt in titles)
-        scoring_title = self.best_text_scoring(texts=title_text,
-                                               choices=choices,
-                                               text_scorer=text_scorer,
-                                               cutoff=cutoff)
-        scored_title = scoring_title[0]
+        scoring_title = self.best_text_scoring( 
+            texts=title_text, 
+            choices=choices, 
+            text_scorer=text_scorer, 
+            cutoff=cutoff
+            )
         
+        scored_title = scoring_title[0]
         debug_logger.debug(f'scoring_title: {scoring_title}')
+        
         if scored_title is not None:
             title_score = scored_title
             text = scoring_title[2]
 
         debug_logger.debug(f'title_score:{title_score} | text: {text}')
         return title_score, text
+
 

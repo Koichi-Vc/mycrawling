@@ -145,7 +145,6 @@ def get_sig_parameters_kinds(signature_parameters:Union[MappingProxyType, Signat
 
 def get_parameters_names(obj):
     ''' オブジェクトからパラメータ名を取得する。 戻り値はリスト型'''
-    
     parameter_names = []
     
     if not isinstance(obj, Signature) and callable(obj):

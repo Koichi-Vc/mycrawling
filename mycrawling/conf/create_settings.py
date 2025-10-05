@@ -6,7 +6,6 @@ from mycrawling.utils.imports_module import create_module_import_path
 
 
 ''' ユーザー設定ファイルをデフォルトの設定ファイルをコピーして生成する。 '''
-
 base_dir = Path(__file__).parent.parent.parent
 default_setting_file = base_dir.joinpath(Path('mycrawling/conf/setting.py'))#パッケージのデフォルトセッティングパス
 created_user_setting_import_path = None
@@ -31,7 +30,7 @@ class CreateSetting:
             self.create_settings_file()
 
 
-    #create_settings_fileの修正
+
     def create_settings_file(self):
         global created_user_setting_import_path
 

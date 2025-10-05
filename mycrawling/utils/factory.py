@@ -147,7 +147,7 @@ class Factory(AbstractFactory):
         return instance_dict
 
 
-    #data_settingモジュールから移動。
+
     def create_data_cls_instance(self, arguments=None, select_cls=None, add_mediator=False, override=True):
         ''' パラメータを元にデータクラスインスタンスを生成する。 '''
         '''
@@ -185,7 +185,7 @@ class Factory(AbstractFactory):
         return data_cls_instances
 
 
-    #data_settingモジュールから移動。
+
     def register_to_datamediator(self, override=True, **values_dict):
         ''' datamediatorへオブジェクトを登録する。'''
         self.datamediator.register_object(values_dict, override)

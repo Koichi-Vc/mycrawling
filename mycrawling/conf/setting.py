@@ -32,12 +32,12 @@ CRAWLING_CLASS = 'mycrawling.crawlings.crawling.MyCrawlingSearch'
 
 CRAWL_DELAY_TIME = 7
 
-#25/2/14/536am;次回以降ロボット解析オブジェクトのインポート先について考える。
+
 #robots.txtの解析を行うオブジェクト
 ROBOTMANAGER = 'mycrawling.robots.robotfileparse.RobotFileparseManager'
 
 
-#REGISTRY_CLASSの後継。変数名が適切ではないと思ったのとより、改善をめざした。
+
 USE_CLASSES = {
     'robotfileparse': 'mycrawling.robots.robotfileparse.RobotFileparseManager',
     'searchanchorelements': 'mycrawling.searchelements.anchor_elements.elements.SearchAnchorElements',
@@ -64,7 +64,7 @@ REGISTRY_DATA_CLASS_INSTANCE = {
 }
 
 
-''' CREATEFILTER_CLSのキーに関して、現状は、クラス名を使っているが、一度要素(タグ)名で指定してみる。 '''
+
 #フィルターを作成するクラス
 CREATEFILTER_CLS = {
     'a': 'mycrawling.filters.anchorelements.CreateAnchorElementFilter',
@@ -89,6 +89,8 @@ PAGEEVALUATION_PARAMETER = {
 }
 
 #mycrawlingでクローリング時に使用するクラスのインスタンス化用パラメータ
+
+
 USE_CLASSES_PARAMETER = package_root.joinpath('mycrawling/parameter_files/create_instance_parameters.json')
 
 

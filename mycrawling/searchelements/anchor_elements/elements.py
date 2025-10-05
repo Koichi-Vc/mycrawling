@@ -19,7 +19,7 @@ class SearchAnchorElements(BaseSearchElements):
     #default_evaluate_object = ref_dataconfig.get_conf_value('USE_CLASSES', 'evaluateanchorelements')
     default_evaluate_object = EvaluateAnchorElements
     default_webdriver = get_module(ref_dataconfig.get_conf_value('USE_WEBDRIVER'))
-    #datamediator = get_module(ref_dataconfig.get_conf_value('USE_MEDIATOR_PATH'))#やっぱり使わないかも。
+    #datamediator = get_module(ref_dataconfig.get_conf_value('USE_MEDIATOR_PATH'))
 
 
     def __init__(
@@ -34,11 +34,8 @@ class SearchAnchorElements(BaseSearchElements):
             **query_kwargs
             ):
         '''
-        args:
-            evaluate_objects:
-                a要素のテキスト、href属性値を評価するクラスを受けとる。
-            evaluate_parameters:
-                evaluate_objectsをインスタンス化する為のパラメータを受けとる。デフォルト値はNone
+        evaluate_objects:
+            a要素のテキスト、href属性値を評価するクラスを受けとる。
         '''
 
         tag ='a'
@@ -50,11 +47,6 @@ class SearchAnchorElements(BaseSearchElements):
         self.visited_page = set()#クロール訪問済みのurlを保持
         self.filter_class_key = query_kwargs.pop('filter_class_key', self.default_filter_class_key)
 
-        #if-elifの修正1
-        #if not evaluate_objects:    
-        #    self.evaluate_objects = self.default_evaluate_object.create_instance()
-
-        #if-elifの修正1の修正
         if not evaluate_objects:
             self.evaluate_objects = self.get_evaluate_class().create_instance()
 
@@ -98,7 +90,7 @@ class SearchAnchorElements(BaseSearchElements):
             current_url=self.current_url
         )
 
-        evaluated_href_values = self.return_evaluated_urls(evaluated_elements)
+        evaluated_href_values = self.is_already_searched(evaluated_elements)
         debug_logger.debug(f'evaluated_href_values: {evaluated_href_values} | searched_url: {self.searched_urls} | visited_page: {self.visited_page}') 
         return evaluated_href_values     
 
@@ -186,13 +178,11 @@ class SearchAnchorElements(BaseSearchElements):
         for url in visited_url:
             self.visited_page.add(url)
 
-
-    def return_evaluated_urls(self, url_items:List[List[str]], *other_exclude_elements):
+    
+    def is_already_searched(self, url_items:List[List[str]]):
         '''
-        検索したhref値(絶対url/相対urlパス)を返す。href値・テキストにより返すアイテムを除外する場合は、other_exclude_elementsを指定する。
-        urls_itemsには二次元配列で[absolute, relative]のペアリストを渡す。 
-        ''' 
-        
+        検索したhref値(絶対url/相対urlパス)が既に検索及び訪問済みかどうかを評価して返す。
+        '''
         list_length = 1
 
         if not isinstance(url_items, (list, tuple, deque, GeneratorType)):
@@ -203,7 +193,9 @@ class SearchAnchorElements(BaseSearchElements):
         relative = []
         for urls in url_items:
             debug_logger.debug(f'urls:{urls}')
+            
             if len(urls) <= list_length:
+
                 logging.error('絶対url/相対urlパスの両方が必要です。')
                 absolute, relative = None, None
                 return absolute, relative
@@ -213,7 +205,7 @@ class SearchAnchorElements(BaseSearchElements):
             yet_to_visited = rel not in self.visited_page and absol not in self.visited_page
             
             if yet_to_searched is True and yet_to_visited is True:
-                #未検索 and 身訪問のurlの場合追加する。
+                #未検索 and 末訪問のurlの場合追加する。
                 searched_urls = [absol, rel]
                 self.add_searched_urls(*searched_urls)
                 relative.append(rel)
@@ -222,6 +214,10 @@ class SearchAnchorElements(BaseSearchElements):
         return absolute, relative
 
 
+
+    #__call__が担う場合不要になる可能性あり
+    #__call__を使わない場合でも内部タスクは大幅に削減される。
+    #役割としては__call__と同じ。
     def find_elements(self,
                            soup_obj,
                            current_url=None):
@@ -234,7 +230,7 @@ class SearchAnchorElements(BaseSearchElements):
             elements,
             current_url=current_url
         )
-        evaluated_href_values = self.return_evaluated_urls(evaluated_elements)
+        evaluated_href_values = self.is_already_searched(evaluated_elements)
 
         return evaluated_href_values
 

@@ -9,7 +9,10 @@ from mycrawling.utils.imports_module import get_module
 from mycrawling.logs.debug_log import debug_logger
 
 
+
 class PageEvaluation(EvaluateTexts):
+    '''訪問したwebページが会社概要コンテンツを持つページかどうかを評価する。'''
+
 
     is_true_urls = set()#searchanchorelementsインスタンスによるurl単独のスコアリング評価でTrue判定を受けたurlの絶対パスセットを保持。
     default_notify_to_obj_name = 'crawling_class'

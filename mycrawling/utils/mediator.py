@@ -245,4 +245,3 @@ class DataMediator(BaseDataMediator):
                     instance.datamediator_update(attr_value)
 
 
-

@@ -5,7 +5,6 @@ from selenium.webdriver.support import expected_conditions as ec
 import time
 import tracemalloc
 from urllib.parse import urlparse
-#from mycrawling.conf import data_setting
 from mycrawling.conf.data_setting import ref_dataconfig
 from mycrawling.utils.imports_module import get_module
 from mycrawling.utils.paths import match_urls
@@ -41,7 +40,7 @@ class MyCrawlingSearch():
         self.searchanchorelements = kwargs.pop('searchanchorelements', self.datamediator.get_instance('searchanchorelements'))
         self.evaluaterobotsmeta = kwargs.pop('evaluaterobotsmeta', self.datamediator.get_instance('evaluaterobotsmeta'))
 
-        if 'scraping' not in kwargs:
+        if 'scraping' not in kwargs:            
             scraping_obj = self.datamediator.get_instance('scraping')
         else:
             scraping_obj = kwargs.pop('scraping')
@@ -82,13 +81,16 @@ class MyCrawlingSearch():
     def myscraping(self, *args, **kwargs):
         ''' 全体の実行 '''
         start_time = time.time()
-        debug_logger.debug(f'Var37.06.14.3a: 実行')
-
+        debug_logger.debug(f'myscraping実行')
+        #time.sleep(2)
+        #raise ConnectionRefusedError#エラー処理実験のみ
+        #raise selem_except.TimeoutException
+        #raise IndexError
         if self.scraping:
             self.scraping.df = self.data_frame
         robot = self.robotmanager.robots_parse(urls=self.input_url)
         self.time_sleep = getattr(self.robotmanager, 'crawl_delay_time', None)
-        #debug_logger.debug(f'robot: {robot}')
+
         if robot:
             logging.info(f'robots_parse():  {robot}')
             self.driver.get(self.input_url)
@@ -110,7 +112,6 @@ class MyCrawlingSearch():
             for overview in company_overview:
                 if not frag:
                     reference_score_texts = instance_pageevaluation.primary_text_list + instance_pageevaluation.high_score_text_list
-                    #reference_score_texts = instance_pageevaluation.retain_textwords
                     debug_logger.debug(f'reference_score_texts:{reference_score_texts}')
                     frag= True
                 self.scraping.element_scrape([overview], reference_score_texts)
@@ -193,6 +194,7 @@ class MyCrawlingSearch():
 
                 debug_logger.debug(f"jump: {jump} | driver.current_url :{self.driver.current_url}")
                 debug_logger.debug(f'relat_href: {relat_href} | absol_href: {absol_href}')
+
                 visited_page = self.searchanchorelements.visited_page
                 if absol_href in visited_page or relat_href in visited_page:
                     #クロール済みのページはスキップ
@@ -246,9 +248,9 @@ class MyCrawlingSearch():
                     self.searchanchorelements.add_visited_urls(*visited)
                 else:
                     continue
+                
                 debug_logger.debug(f'経過時間: {time.time() - start_time} 秒')
                 if (time.time() - start_time) >= 60:
-                    #35秒以上経過していたら終了
                     logging.warning(f'探索タイムオーバー | input_url: {self.input_url} | current_url: {self.driver.current_url}')
                     brakes = True
                     break

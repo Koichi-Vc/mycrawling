@@ -88,7 +88,7 @@ class PageScraping():
                             li.append(i)
                     td_a = td_elem.find_all('a')#aタグを検索
                     if td_a:
-                        for a in td_a:#aタグが存在すれば、追加
+                        for a in td_a:#aタグが存在すれば追加。
                             li.append(a)
             if li:
                 td_list.append(li)
@@ -106,8 +106,9 @@ class PageScraping():
 
 
     def dl_element_scrape(self, element, col_median, company_list, index, text_line_blake):
-        '''dlなどの要素をスクレイピングを行う。'''
-        #elem_index = element
+        ''' dlなどの要素をスクレイピングを行う。 '''
+
+        elem_index = element
         
         element_dt = element.find_all('dt')
         element_dd = element.find_all('dd')
@@ -153,9 +154,9 @@ class PageScraping():
 
 
     def other_elements_scrape(self, element, col_median, company_list, index, reference_score_texts, transpose=False):
-        ''' text_key_listが問題なく動作していたら、 reference_score_textsは撤去する。24/03/05/216am '''
 
         debug_logger.debug(f'element: {element}')
+        
         if not col_median or col_median <= 1:
             col_median += 1
         child_elements = [child for child in element.contents if isinstance(child, (bs4.element.Tag, bs4.element.NavigableString, bs4.Comment))]
@@ -175,7 +176,7 @@ class PageScraping():
             #elem_index = ''#child_text毎のインデックスを参照する為の一時的な変数
             for elem in child_text:
                 debug_logger.debug(f'child_text[elem] : {elem}')
-                if elem in reference_score_texts:#【24/06/13/】any(reference in elem for reference in reference_score_texts)の導入可否を検討。
+                if elem in reference_score_texts:
                     
                     if tx:#既にアイテムが収集されていた場合、今検出された項目の前の項目テキストに対応するアイテムの為保存処理に移る
                         company_list.append(tx)
@@ -307,6 +308,7 @@ class PageScraping():
                     self.df.append(pandas.DataFrame(company_list,index=index))
             else:
                 self.df.append(pandas.DataFrame(company_list))
+
 
         logging.info(f'Scraping完了; time: {time.time() - st}')
         current, peak = tracemalloc.get_traced_memory()

@@ -112,7 +112,7 @@ class AnchorFilterMixin:
         return result
 
 
-#Var37.06.14.15a(24/07/25/時点のバージョン)
+
 class CreateAnchorElementFilter(ElementsFilter, AnchorFilterMixin):
     ''' a要素専用の検索フィルターを作成する。 '''
 
@@ -193,6 +193,5 @@ class CreateAnchorElementFilter(ElementsFilter, AnchorFilterMixin):
     def filters_factory(cls, attr=None, value=True, condition= operator.eq, filter_method=None,**kwargs):
         ''' 自クラスインスタンスを生成する。 '''
         return cls(attr, value, condition,filter_method, **kwargs)
-
 
 

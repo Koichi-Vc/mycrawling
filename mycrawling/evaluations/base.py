@@ -1,4 +1,5 @@
 from mycrawling.logs.debug_log import debug_logger
+
 ''' スコア値をscorerアルゴリズム、符号に合わせてラップする。 '''
 
 

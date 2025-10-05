@@ -24,6 +24,8 @@ class Spacy_TextParse:
     @classmethod
     def textparse(cls, texts, *getattr_name, **kwargs):
         ''' テキストを解析する '''
+
+
         listing = kwargs.pop('listing', True)
 
         if not isinstance(texts, str):
@@ -37,7 +39,6 @@ class Spacy_TextParse:
             getattr_names = getattr_name
             
         is_jp_language = cls.is_jp_language(texts)#日本語のテキストか調べる。
-
         parser = cls.japaniexe_parser
 
         if is_jp_language is False:
@@ -54,7 +55,7 @@ class Spacy_TextParse:
     @classmethod
     def listing_parsed_text(cls, parsed_text, *get_attrname):
         ''' 解析後のテキストを必要に応じてリスト化する。 '''
-        ''' !注意: MeCab用に最適化されている為、他パーサーの場合の動作は非サポートです。 '''
+        ''' !注意: MeCab用の為、他のパーサーの場合の動作は非サポートです。 '''
         #戻り値: リスト型の二次元配列で内側リストのアイテム数は8
         
         parsed_text_list = []
