@@ -24,8 +24,7 @@ class BaseSearchElements(ElementsParse):
                 find_allが受け取る引数をまとめて指定
                 !同じキーがattr_nameに存在していた場合attr_name側キーが優先される。
         '''
-        print('BaseSearchElements>>>>>>')
-        print(f'query_kwargs: {query_kwargs}')
+
         
         if 'name' in query_kwargs:
             #キーワード引数としてnameは指定出来ない。

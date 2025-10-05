@@ -15,7 +15,7 @@ class ParseUrls():
             return urls_attrvalue_dict
         
         for url in urls:
-            #url = urls.pop()
+
             parsed_url = urlparse(url)
             result = {}#属性名をキーにしてvalueを格納
             

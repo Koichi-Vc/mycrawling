@@ -29,19 +29,17 @@ class EvaluateUrls(ParseUrls, ScoreEvaluations):
 
         urls_hostname_is_current_hostname = urls_hostname == current_hostname
 
-        #result = result_urls_hostname or self.compareobjct(
-        #    urls_hostname,current_hostname)#urlsにhostnameが無い又はcurrent_hostnameと一致した場合、同サイト内と見做す。
+        #urlsにhostnameが無い又はcurrent_hostnameと一致した場合、同サイト内と見做す。
         result = result_urls_hostname or urls_hostname_is_current_hostname
         
         return result
     
 
     def evaluate_score(self, scorer_type=None, score=None, *args, **kwargs):
-        ''' evaluate_urlの役割をevaluate_scoreメソッドをオーバーライドする形で実装し直した。 '''
 
         #urlsのhostnameとcurrent_urlのhostnameの一致評価。Noneの場合hostnameを評価対象に含まない。
         name_is_current_name = kwargs.pop('name_is_current_name', None)
-        #name_is_current_name: Falseだった場合、
+
         if isinstance(score, Iterable):
             statistics = kwargs.pop('statistics', 'rate')
             statistics_value = ScoringUrls.urls_statistics(score, statistics=statistics)

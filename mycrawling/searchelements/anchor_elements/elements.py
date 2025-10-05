@@ -13,14 +13,15 @@ from mycrawling.logs.debug_log import debug_logger
 
 
 class SearchAnchorElements(BaseSearchElements):
-    ''' a要素を検索する為のクラス
-    '''
+    ''' a要素を検索する為のクラス'''
+
     default_filter_class_key = 'a'#FilterManagerに於いてフィルタークラスを管理しているキー
     #default_evaluate_object = ref_dataconfig.get_conf_value('USE_CLASSES', 'evaluateanchorelements')
     default_evaluate_object = EvaluateAnchorElements
     #default_evaluate_object = None
     default_webdriver = get_module(ref_dataconfig.get_conf_value('USE_WEBDRIVER'))
-    #datamediator = get_module(ref_dataconfig.get_conf_value('USE_MEDIATOR_PATH'))#やっぱり使わないかも。
+    #datamediator = get_module(ref_dataconfig.get_conf_value('USE_MEDIATOR_PATH'))
+
 
     def __init__(
             self,
@@ -201,7 +202,7 @@ class SearchAnchorElements(BaseSearchElements):
             yet_to_visited = rel not in self.visited_page and absol not in self.visited_page
             
             if yet_to_searched is True and yet_to_visited is True:
-                #未検索 and 身訪問のurlの場合追加する。
+                #未検索 and 末訪問のurlの場合追加する。
                 searched_urls = [absol, rel]
                 self.add_searched_urls(*searched_urls)
                 relative.append(rel)
@@ -213,6 +214,7 @@ class SearchAnchorElements(BaseSearchElements):
 
     #__call__が担う場合不要になる可能性あり
     #__call__を使わない場合でも内部タスクは大幅に削減される。
+    #役割としては__call__と同じ。
     def find_elements(self,
                            soup_obj,
                            current_url=None):

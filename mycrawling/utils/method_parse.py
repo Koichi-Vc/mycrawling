@@ -51,6 +51,7 @@ def edit_keyword_argument(arguments:List, keywords):
 
 def edit_word_argument(arguments:List, value, **kwargs):
     ''' 任意の位置に位置引数値を挿入する。デフォルトでは、最後尾、キーワード引数アイテムの直前'''
+    
     index = kwargs.pop('index', None)
 
     if isinstance(arguments, tuple):
@@ -140,8 +141,8 @@ def get_sig_parameters_kinds(signature_parameters:Union[MappingProxyType, Signat
 
 
 def get_parameters_names(obj):
-    ''' オブジェクトからパラメータ名を取得する。 戻り値はリスト型
-    '''
+    ''' オブジェクトからパラメータ名を取得する。 戻り値はリスト型'''
+
     parameter_names = []
     
     if not isinstance(obj, Signature) and callable(obj):

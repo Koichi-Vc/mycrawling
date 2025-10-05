@@ -5,16 +5,11 @@ from selenium.webdriver.support import expected_conditions as ec
 import time
 import tracemalloc
 from urllib.parse import urlparse
-#以下新しく追加したwebdrivercontextmanager↓↓↓
-from mycrawling.conf import data_setting
 from mycrawling.conf.data_setting import ref_dataconfig
-#from mycrawling.robots.robotfileparse import RobotFileparseManager
-#from mycrawling.searchelements.metaelements.attrs_robot import EvalRobotsMetaElements
 from mycrawling.utils.imports_module import get_module
 from mycrawling.utils.paths import match_urls
 from mycrawling.logs.debug_log import debug_logger
 
-print(f'data_setting.datamediator: {data_setting.datamediator}')
 
 
 class MyCrawlingSearch():
@@ -46,8 +41,7 @@ class MyCrawlingSearch():
         self.searchanchorelements = kwargs.pop('searchanchorelements', self.datamediator.get_instance('searchanchorelements'))
         self.evaluaterobotsmeta = kwargs.pop('evaluaterobotsmeta', self.datamediator.get_instance('evaluaterobotsmeta'))
 
-        if 'scraping' not in kwargs:
-            #scraping_obj = load_use_classes('scrapings', kwargs.pop('scrapings_parameters', None))
+        if 'scraping' not in kwargs:            
             scraping_obj = self.datamediator.get_instance('scraping')
         else:
             scraping_obj = kwargs.pop('scraping')
@@ -119,7 +113,6 @@ class MyCrawlingSearch():
             for overview in company_overview:
                 if not frag:
                     reference_score_texts = instance_pageevaluation.primary_text_list + instance_pageevaluation.high_score_text_list
-                    #reference_score_texts = instance_pageevaluation.retain_textwords
                     debug_logger.debug(f'reference_score_texts:{reference_score_texts}')
                     frag= True
                 self.scraping.element_scrape([overview], reference_score_texts)
@@ -201,9 +194,8 @@ class MyCrawlingSearch():
             for relat_href, absol_href in zip(relative_url_list.popleft(), absolute_url_list.popleft()):
 
                 debug_logger.debug(f"jump: {jump} | driver.current_url :{self.driver.current_url}")
-                #print(f"absolute_url_list: {absolute_url_list} | : {len(absolute_url_list)}個")
-                #print(f'relative_url_list: {relative_url_list} | : {len(relative_url_list)}個')
                 debug_logger.debug(f'relat_href: {relat_href} | absol_href: {absol_href}')
+
                 visited_page = self.searchanchorelements.visited_page
                 if absol_href in visited_page or relat_href in visited_page:
                     #クロール済みのページはスキップ
@@ -257,9 +249,9 @@ class MyCrawlingSearch():
                     self.searchanchorelements.add_visited_urls(*visited)
                 else:
                     continue
+                
                 debug_logger.debug(f'経過時間: {time.time() - start_time} 秒')
                 if (time.time() - start_time) >= 60:
-                    #35秒以上経過していたら終了
                     logging.warning(f'探索タイムオーバー | input_url: {self.input_url} | current_url: {self.driver.current_url}')
                     brakes = True
                     break

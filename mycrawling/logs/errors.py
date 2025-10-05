@@ -45,6 +45,7 @@ class Errorloghandlings_Class:
     default_loglevel = 'warning'
     default_error_message_texts = ['予期しないトラブル・エラーが発生しました。']
 
+
     def __init__(self, logger=None, tb_detail_index_li='all', catch_exception=False, **kwargs):
         logger_conf_variable = kwargs.pop('logger_conf_variable', None)
         logger_conf = None
@@ -197,7 +198,7 @@ class Errorloghandlings_Class:
         return wrapper 
 
     
-    def join_error_text_beta(self,*messages, separator=' | '):
+    def join_error_text(self,*messages, separator=' | '):
         ''' エラーに対する複数のテキスト/ログメッセージをseparatorで結合する。 '''
         join_message = ''
         for message in messages:
@@ -249,7 +250,7 @@ class Errorloghandlings_Class:
 
     @classmethod
     def remove_handlers(self, logger, howmany_handlers:'保持するハンドラ数'= 1, no_delete_handler_type:'削除しないハンドラタイプ'=None):
-        ''' 不要なハンドラを削除する※ 現在使う用途が無いが機能はすると思う。24/02/22'''
+        ''' 不要なハンドラを削除する。'''
 
         is_iterable = isinstance(no_delete_handler_type, Iterable)
         if no_delete_handler_type and not is_iterable:
@@ -309,14 +310,15 @@ class Errorloghandlings_Class:
         return output_level
 
     
-    def output_exc_message(self,
-                         logger,
-                         exc_type,
-                         exc_value,
-                         exc_tb_detail,
-                         custom_message_dict:Dict= None,
-                         save=False,
-                         ):
+    def output_exc_message(
+            self,
+            logger,
+            exc_type,
+            exc_value,
+            exc_tb_detail,
+            custom_message_dict:Dict= None,
+            save=False,
+            ):
         
         ''' exceptionに定義されたエラーメッセージの記録と保存を実行。 '''
         output_level = 30
@@ -340,7 +342,7 @@ class Errorloghandlings_Class:
             logmessage_value = custom_item.get('logmessage', '')#ログメッセージを取得
             
             if isinstance(logmessage_value, Iterable) and not isinstance(logmessage_value, str):
-                join_message = self.join_error_text_beta(*logmessage_value)
+                join_message = self.join_error_text(*logmessage_value)
                 log_text = join_message
             else:
                 log_text = logmessage_value
@@ -407,14 +409,16 @@ class Errorloghandlings_Class:
         return traceback_details
 
 
-    def error_handling(self,
-                       logger,
-                       exc_type,
-                       exc_value,
-                       exc_tb,
-                       save=False,
-                       tb_detail_index_li: "len( [int or 'all' or ('start', 'end')] )" == 2 = 'all',
-                       **kwargs):
+    def error_handling(
+            self,
+            logger,
+            exc_type,
+            exc_value,
+            exc_tb,
+            save=False,
+            tb_detail_index_li: "len( [int or 'all' or ('start', 'end')] )" == 2 = 'all',
+            **kwargs
+            ):
         
         ''' tb_detail_index_liはlist型で3アイテム以内のint、all、tuple('start','end')のスライスを想定します。 '''
         exc_info = []
@@ -436,4 +440,5 @@ class Errorloghandlings_Class:
         
         debug_logger.debug(traceback_details)#コンソールへの出力を再現
         return errer_message
+
 

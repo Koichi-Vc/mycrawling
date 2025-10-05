@@ -117,11 +117,12 @@ class Processing():
                 debug_logger.debug(f'affix is after')
                 debug_logger.debug(f'args_list: {args_list} | method: {method}')
                 after_processed = run_method(args_list, method)
-                #return self._processing(*after_processed, instance=instance_obj)
+                
                 after_processed = edit_keyword_argument(after_processed, {'instance': instance_obj})
                 return run_method(after_processed, self._processing)
+            
             if kwargs:
-                #return method(instance, item, **kwargs) if instance else method(item, **kwargs)
+                
                 return run_method(args_list, method, importance_keys=importance_keys)
 
         return wrapper

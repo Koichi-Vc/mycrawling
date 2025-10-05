@@ -11,7 +11,6 @@ from mycrawling.logs.debug_log import debug_logger
 #filtermanage_object = None
 #ilter_object = None
 
-#parameter_files\elements_filter_arguments3.jsonを元に設計する。
 class SearchElementFilterManager(BaseFilterManage):
     '''
     フィルタークラスとパラメータのインスタンス化を行う。
@@ -29,7 +28,7 @@ class SearchElementFilterManager(BaseFilterManage):
         is_load_files = kwargs.pop('is_load_files', True)#ファイルの読み込み許可。
         debug_logger.debug(f'filter_parameters: {filter_parameters} | is_load_files: {is_load_files}')
         encoding = kwargs.pop('encoding', 'UTF-8')
-        #パラメータを取得する。新コード
+        #パラメータを取得する。
         if not filter_parameters and is_load_files:
             self.filter_parameters = FilterParameterLoader.file_load(load_method= json_load, encoding=encoding)
         elif isinstance(filter_parameters, FilterParameterLoader) and is_load_files:
@@ -39,7 +38,7 @@ class SearchElementFilterManager(BaseFilterManage):
         else:
             raise TypeError(f"filter_parametersが非サポートのデータ型を受けとりました | {filter_parameters}")
 
-        #self.tag_filters = dict()#タグ(未指定もNoneとしてふくむ)に対するフィルター
+        #self.tag_filters = dict()#タグ(未指定もNoneとして含む)に対するフィルター
         #self.query_filterset = dict()#ターゲットをキー、フィルターオブジェクトをアイテムとした辞書型。
         #filter_instance_obj_dictと名されているが、executable_filterの実装に伴い実態はフィルターオブジェクトを格納している。
         #その為、近日中に名称を変更する。

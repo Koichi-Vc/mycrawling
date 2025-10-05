@@ -72,14 +72,14 @@ class PageScorings(PageTextContentsParse, ScoringTexts):
 
         self.title_scorer = rapd_WRatio
         self.title_boundary = title_boundary if title_boundary else 80
-        self.scoring_title_texts = ScoringTitleTexts(ref_title_choices=[self.company_about, self.all_reference_text_list])#使うか現段階では不明。
+        self.scoring_title_texts = ScoringTitleTexts(ref_title_choices=[self.company_about, self.all_reference_text_list])
         
         self.text_scorer =  kwargs.pop('text_scorer', self.default_text_scorer)
         self.scoring_eval = EvaluateTexts()
         self.text_boundary = text_boundary if isinstance(text_boundary, (int, float)) else 0.3
         self.reqd_child_count = 4        
-        self.high_score_jp_text = list()#言語別の検出語彙※現状未使用
-        self.high_score_en_text = list()#言語別の検出語彙※現状未使用
+        #self.high_score_jp_text = list()#言語別の検出語彙
+        #self.high_score_en_text = list()#言語別の検出語彙
         self.primary_text_list = list()#ページ内から検出した重要語彙
         self.high_score_text_list = list()#ページ内から検出した高類似度語彙
 
@@ -135,6 +135,7 @@ class PageScorings(PageTextContentsParse, ScoringTexts):
 
     def detect_high_score_texts(self, element, scorer=None, **kwargs):
       
+
         text_scorer = scorer if callable(scorer) else self.text_scorer
 
         if not isinstance(element, bs4_element.Tag):
@@ -148,7 +149,7 @@ class PageScorings(PageTextContentsParse, ScoringTexts):
             choices=self.all_reference_text_list,
             text_scorer=text_scorer,
             cutoff= self.text_boundary
-            )#contents_parser⇒self        
+            )#contents_parser⇒self     
         
         for score, ext_txt, txt in evaluated_text:
             debug_logger.debug(f'score: {score} | txt: {txt} | ext_txt: {ext_txt}')
@@ -186,8 +187,8 @@ class PageScorings(PageTextContentsParse, ScoringTexts):
         detection_highscore_count = 0#子要素内から検出された高類似度語彙の数
         detection_primary_count = 0#子要素内から検出された重要語彙の数
         
-        detection_primary_text = set()#検出した重要語彙の種類; 24/06/10/323am
-        detection_highscore_text = set()#検出した高類似度テキストの種類; 24/06/10/323am
+        detection_primary_text = set()#検出した重要語彙の種類
+        detection_highscore_text = set()#検出した高類似度テキストの種類
 
         contain_text = set()#childrenの走査で既に出現した高類似度・重要テキストを保持する。
         children = element.children
@@ -248,16 +249,18 @@ class PageScorings(PageTextContentsParse, ScoringTexts):
 
         debug_logger.debug(f'contain_text: {contain_text}')
         debug_logger.debug(f'{child_count} | {detection_highscore_count} | {detection_primary_count} |')    
-        return PageScoreStatisticsSet.create_dataclass(child_length,
-                                                       child_count,
-                                                       detection_highscore_count,
-                                                       detection_highscore_text,
-                                                       detection_primary_count,
-                                                       detection_primary_text)
+        return PageScoreStatisticsSet.create_dataclass( 
+            child_length, 
+            child_count, 
+            detection_highscore_count, 
+            detection_highscore_text, 
+            detection_primary_count, 
+            detection_primary_text
+            )
 
 
     def scoring_titles(self, soup_obj):
-        ''' ページのtitle要素の検索と類似度スコアリング、評価 '''
+        ''' ページのtitle要素の検索と類似度スコアリングして評価。 '''
         titles = soup_obj.find_all('title')
         title_score = None
         is_contain = None

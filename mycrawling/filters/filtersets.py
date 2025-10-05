@@ -19,9 +19,7 @@ class Elements_Filterset(SelectListOperator):
         self.filters: 予め用意したフィルターメソッドのリストをセットする。 
         当クラスのインスタンス化時にフィルターを追加する場合は、以下のパラメータに値を渡す
         ''' 
-        #filter_methods: 1乃至複数の検索フィルターメソッドを渡す。
-        #呼び出し可能なフィルターのみfiltersへ格納。内包表記が問題であればfor文で対応
-        #self.filters = [method for method in filter_method_list if callable(method)]
+
         debug_logger.debug(f'filter_method_list: {filter_method_list}')
         
         self.filters = []
@@ -87,15 +85,14 @@ def filterset_factory(createfilter_cls, filterset_cls= Elements_Filterset, creat
     if isinstance(createfilter_factory_param, dict):
         createfilter_factory_param = [createfilter_factory_param]
 
-    #elif isinstance(createfilter_factory_param, (list, tuple)) and any(not isinstance(param, dict) for param in createfilter_factory_param):
-    #    raise TypeError('createfilter_factory_paramには、Dict型をアイテムに持つリストを渡して下さい') 
+
     
     if not callable(createfilter_cls) or not callable(filterset_cls):
         return instance_list
 
     for parametor in createfilter_factory_param:
         #debug_logger.debug(f'parametor:{parametor}')
-        instance = run_method(parametor, createfilter_cls)#run_methodにインスタンス化を代行させてみる。24/12/03
+        instance = run_method(parametor, createfilter_cls)#run_methodを用いてインスタンス化
 
         if hasattr(instance, 'get_filter_method'):
             instance = instance.get_filter_method()

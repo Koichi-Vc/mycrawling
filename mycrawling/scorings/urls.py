@@ -32,7 +32,7 @@ class ScoringUrls(ScoringTexts):
         text_scores = self.all_text_scoring(texts, choices, scorer, cutoff, *args, **kwargs)
         debug_logger.debug(f'text_scores:{text_scores}')
 
-        #'self.all_text_scoringを呼び出して展開↓↓'
+        #'self.all_text_scoringを呼び出して展開。'
         for score, appl_txt, txt in text_scores:
 
             score_value.append(score)
@@ -42,9 +42,7 @@ class ScoringUrls(ScoringTexts):
         return score_value, applicable_texts, text_list
 
 
-    ''' BaseScoringUrls.urls_scoringではscoringメソッドを用いた基本的な
-    urlsのスコア付けのみ行う。 '''
-    
+    #scoringメソッドを用いた基本的なurlsのスコア付けを行う。
     def urls_scoring(self, urls_attributes:list, choices_url_text, scoring_method, scorer=None, score_cutoff=None, **kwargs):
         
         ''' ParseUrlsで解析された一つのurlから抽出したpath等の属性値をscoring_methodに基づきスコアリングする '''

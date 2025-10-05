@@ -25,8 +25,7 @@ class FilterParameterLoader(FilesLoader):
         self.elements_filter_parameters = None
     
     def load_filter(self, **kwargs):
-        #print(f'FilterParameterLoader.load_filter>>>>>')
-        #print(f'self: {self} | kwargs: {kwargs}')
+
         load_file = self.user_parameter_file_path if self.user_parameter_file_path.is_dir() else self.default_load_file
         elements_filter_parameters = self.file_load(
             load_file,

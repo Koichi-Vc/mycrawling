@@ -12,14 +12,16 @@ class RobotFileparseManager():
     ''' robots.txtファイルの解析を行う '''
     #default_logging_formatter = '%(asctime)s | %(created)s | %(name)s | %(levelname)s | robots_url: %(robots_url)s | %(message)s | '
 
+
     conf_message_val = 'ROBOTS_ERROR_MESSAGE_DICT'
+
 
     def __init__(self, rp=None, useragent='*', prohibition_url_list=None, optional_data_obj=None, custom_message_dict=None, **kwargs):
 
         self.parse_dict = {}#parse済み辞書型コレクション
         self.format_extra = dict()
         self.robots_url = None
-        self.__crawl_delay_time = None#新しく追加(24/06/27)
+        self.__crawl_delay_time = None#クローリングの待機時間。
         #コンストラクタ実引数の処理
         self.rp = rp
         self.useragent = useragent
@@ -136,7 +138,7 @@ class RobotFileparseManager():
         return parsed_url, domain, domain_name, robots_url
 
 
-    #@Errorloghandlings_Class(custom_message_dict=conf_message_val, logger_conf_variable='ROBOTS_SETUP_LOGGER')
+    
     def request_check(self, robots_url):#実験時はrobots_urlはselfのアノテーション化してエスケープする事。
         ''' robots.txtファイルへの参照が可能か評価'''
         debug_logger.debug(f'self: {self} | robots_urls: {robots_url}')
@@ -153,7 +155,7 @@ class RobotFileparseManager():
 
 
     def set_url_fetch(self, urls, robots_url):
-        ''' robots.txtパスをセットして参照・urlへの訪問許可を評価 '''
+        ''' robots.txtパスをセットして参照・urlへの訪問許可を評価。 '''
         if self.result:#アクセスを予めFalseに初期化しておく
             self.result = False
         self.rp.set_url(robots_url)

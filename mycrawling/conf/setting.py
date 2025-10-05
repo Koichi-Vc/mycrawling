@@ -8,9 +8,7 @@ USE_CLASSES:
 
 REGISTRY_DATA_CLASS_INSTANCE:
     データクラスをインスタンス化した上で登録する。
-
-PARAMETERHANDLER:
-    パラメータ管理クラスを指定する。    
+ 
 '''
 
 USE_WEBDRIVER = 'selenium.webdriver.Chrome'
@@ -34,12 +32,12 @@ CRAWLING_CLASS = 'mycrawling.crawlings.crawling.MyCrawlingSearch'
 
 CRAWL_DELAY_TIME = 7
 
-#25/2/14/536am;次回以降ロボット解析オブジェクトのインポート先について考える。
+
 #robots.txtの解析を行うオブジェクト
 ROBOTMANAGER = 'mycrawling.robots.robotfileparse.RobotFileparseManager'
 
 
-#REGISTRY_CLASSの後継。変数名が適切ではないと思ったのとより、改善をめざした。
+
 USE_CLASSES = {
     'robotfileparse': 'mycrawling.robots.robotfileparse.RobotFileparseManager',
     'searchanchorelements': 'mycrawling.searchelements.anchor_elements.elements.SearchAnchorElements',
@@ -66,7 +64,7 @@ REGISTRY_DATA_CLASS_INSTANCE = {
 }
 
 
-''' CREATEFILTER_CLSのキーに関して、現状は、クラス名を使っているが、一度要素(タグ)名で指定してみる。 '''
+
 #フィルターを作成するクラス
 CREATEFILTER_CLS = {
     'a': 'mycrawling.filters.anchorelements.CreateAnchorElementFilter',
@@ -77,8 +75,6 @@ CREATEFILTER_CLS = {
 CREATEFILTERSETS_CLS = 'mycrawling.filters.filtersets.Elements_Filterset'
 
 
-#要素検索のフィルターを管理するクラスを指定※廃止。
-#FILTER_PARAMETER_HANDLER = 'mycrawling.filters.parameter.ElementsFilterParameterHandler'
 
 FILTER_PARAMETER_FILE = package_root.joinpath('mycrawling/parameter_files/elements_filter_arguments.json')
 
@@ -94,15 +90,10 @@ PAGEEVALUATION_PARAMETER = {
 }
 
 #mycrawlingでクローリング時に使用するクラスのインスタンス化用パラメータ
-'''
-USE_CLASSES_PARAMETER = {
-    'robotfileparse': {
-        'datamediator': USE_MEDIATOR_PATH,
-        
-    }
-}'''
+
 
 USE_CLASSES_PARAMETER = package_root.joinpath('mycrawling/parameter_files/create_instance_parameters.json')
+
 
 ROBOTS_ERROR_MESSAGE_DICT = {
     'requests.exceptions.Timeout': {

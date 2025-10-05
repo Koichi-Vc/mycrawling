@@ -67,14 +67,11 @@ class AnchorElementsScorings(ElementsScoring, ScoringUrls):
 
 
 
-    def urls_scoring(self,
-                     urls,
-                     scoring_urls_attrs:List[str]=None,
-                     select_param=0,
-                     **kwargs):
+    def urls_scoring(self, urls, scoring_urls_attrs:List[str]=None, select_param=0, **kwargs):
         '''
         scoring_urls_attrs: スコアリング対象にするurlparse属性名 初期値: self.select_url_attrs_list
         '''
+
         debug_logger.debug(f'urls: {urls}')
         debug_logger.debug(f'scoring_urls_attrs: {scoring_urls_attrs}')
         debug_logger.debug(f'select_param: {select_param}')

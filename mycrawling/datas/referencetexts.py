@@ -10,10 +10,9 @@ class Reference_Title_A_Url_Texts(BaseDataClass):#ElementsFilterを継承して�
     
     reference_texts: set = dataclasses.field(default_factory=set)
     reference_urls: set = dataclasses.field(default_factory=set)
-    #データクラスで保持したテキストが含まれているかを調べるメソッド
-    #他のクラスメソッドで代用できそうかどうか調べてみる。
-    #company_profileメソッドの方も弄ったので確認する事2342~2345付近
     
+    
+    #データクラスで保持したテキストが含まれているかを調べるメソッド
     def texts_is_contain(self, texts):
         ''' textsにreference_textsのテキストが含まれるか評価する。 '''
         result = False
@@ -32,6 +31,7 @@ class Reference_Title_A_Url_Texts(BaseDataClass):#ElementsFilterを継承して�
                 result = True
                 break
         return result
+
 
 
 @dataclasses.dataclass()
