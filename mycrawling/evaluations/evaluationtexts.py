@@ -5,10 +5,6 @@ from mycrawling.scorings.texts import ScoringTexts
 from mycrawling.logs.debug_log import debug_logger
 
 
-<<<<<<< HEAD
-=======
-
->>>>>>> develop
 class EvaluateTexts(ScoreEvaluations, SelectListOperator):
     ''' 文字列の評価 '''
     
