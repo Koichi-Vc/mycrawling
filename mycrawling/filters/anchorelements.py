@@ -7,7 +7,6 @@ from .elements import ElementsFilter
 from rapidfuzz import process as rpdfuzz_process
 from rapidfuzz.distance import Indel
 from .elements import Processing
-import inspect#テスト用
 from mycrawling.utils.imports_module import get_module
 from mycrawling.logs.debug_log import debug_logger
 
@@ -60,7 +59,7 @@ class AnchorFilterMixin:
         for item in value:
 
             self.__reference_exclude_downloads.add(item)
-        #debug_logger.debug(f'self.__reference_exclude_downloads: {self.__reference_exclude_downloads}')
+
 
     #2.    
     @property#exclude_dwl_contentsメソッド使用時に用いるscorer

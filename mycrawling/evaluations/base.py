@@ -37,8 +37,9 @@ class ScoreEvaluations:
                 elif 'ratio' in scorer_name:
                     scorer_type = 'ratio'
 
-            debug_logger.debug(f'after-- scorer: {scorer} score: {score} | scorer_type: {scorer_type}')
             result = func(self, scorer_type, score, add_subst=add_subst, comp_num=comp_num, *args, **kwargs)
+            
+            debug_logger.debug(f'after-- scorer: {scorer} score: {score} | scorer_type: {scorer_type}')
             debug_logger.debug(f'result: {result}')
             return result
 

@@ -56,7 +56,6 @@ class Spacy_TextParse:
     def listing_parsed_text(cls, parsed_text, *get_attrname):
         ''' 解析後のテキストを必要に応じてリスト化する。 '''
         ''' !注意: MeCab用の為、他のパーサーの場合の動作は非サポートです。 '''
-        #戻り値: リスト型の二次元配列で内側リストのアイテム数は8
         
         parsed_text_list = []
         if not isinstance(parsed_text, spacy_DoC_Type):
@@ -74,8 +73,10 @@ class Spacy_TextParse:
         is_single = all(len(item)==1 for item in parsed_text_list)
         debug_logger.debug(f'parsed_text_list: {parsed_text_list}')
         #次元毎に持つアイテム数が単一の場合次元を1次元に減らす
+
         if is_single:
             parsed_text_list = [item[0] for item in parsed_text_list]
+
         return parsed_text_list
 
 

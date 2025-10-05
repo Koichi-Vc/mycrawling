@@ -22,41 +22,45 @@ class PageScraping():
         '''各項目の列数をカウントし、中央値を算出する。改行の基準を中央値にする。'''
         
         num_column = []
-        #tag_name = None
         tag_elements = []
+        
         for elem in company_overview:
             debug_logger.debug(f'elem: {elem} | elem length : {len(elem)} | elem.text: {elem.text}')
 
             if elem.name in ['table','tbody','th','tr']:
-                #isinstance(i, bs4.element.Tag)を追加して事前にコメントアウトに対してattributeエラーが起きない様にした。
+
                 tag_elements = (elm.find_all(['th', 'td']) for elm in elem.find_all('tr') if isinstance(elm, bs4.element.Tag))
-                #tag_name = 'table'
+
 
             elif elem.name == 'dl' or elem.find_all('dl') or elem.find_all(['dt','dd']):
-                #tag_name = 'dl'
                 debug_logger.debug(f'dl要素あり')
+
                 dt,dd = elem.find_all('dt'),elem.find_all('dd')
                 
                 for dt_i,dd_i in zip(dt, dd):
                     t, d = '',''
                     if isinstance(dt_i, bs4.element.Tag):
                         t = dt_i.text.strip().split('\n')
+
                     if isinstance(dd_i, bs4.element.Tag):
                         d = dd_i.text.strip().split('\n')
-                    #t_d = []
                     t_d = [i for i in [t, d] if i != '']
+
                     debug_logger.debug(f't_d: {t_d}')
                     if t_d:
                         num_column.append(len(t_d))
+
                     else:
                         num_column.append(0)        
             else:
                 tag_elements = (content for content in elem.contents if isinstance(content, bs4.element.Tag) or content.strip() != '')
+
             if not num_column:
                 num_column = [len(i) for i in tag_elements][1:]
             
             if num_column:
                 self.col_median_list.append(int(median(num_column)))
+
             else:
                 self.col_median_list.append(1)
         #return num_column
@@ -66,9 +70,10 @@ class PageScraping():
         '''table要素のスクレイピングを行う。'''
 
         tr_elements = []
-        #elems_index = element
+        
         if element.name == 'table' or element.find_all('tr'):
             tr_elements = (i for i in element.find_all('tr') if isinstance(i, bs4.element.Tag))
+        
         elif element.name == 'tr':
             tr_elements = element
         debug_logger.debug(f'element: {element} | tr_elements: {tr_elements}')
@@ -83,10 +88,12 @@ class PageScraping():
                 if td_txt != '':
                     if '\n' not in td_txt:
                         li.append(td_txt)
+
                     else:
                         for i in td_txt.strip().split('\n'):
                             li.append(i)
                     td_a = td_elem.find_all('a')#aタグを検索
+                    
                     if td_a:
                         for a in td_a:#aタグが存在すれば追加。
                             li.append(a)
@@ -99,7 +106,8 @@ class PageScraping():
         for tr in tr_txt:
             if len(tr) <= col_median:
                 index.append(tr[0])
-                company_list.append(tr[1:])    
+                company_list.append(tr[1:])
+
             else:
                 tag_name = 'table'
                 text_line_blake(tr, tag_name, index, row_head=tr[0])
@@ -108,7 +116,6 @@ class PageScraping():
     def dl_element_scrape(self, element, col_median, company_list, index, text_line_blake):
         ''' dlなどの要素をスクレイピングを行う。 '''
 
-        elem_index = element
         
         element_dt = element.find_all('dt')
         element_dd = element.find_all('dd')
@@ -160,7 +167,7 @@ class PageScraping():
         if not col_median or col_median <= 1:
             col_median += 1
         child_elements = [child for child in element.contents if isinstance(child, (bs4.element.Tag, bs4.element.NavigableString, bs4.Comment))]
-        #print(f'child_elements: {child_elements}')
+       
         child_count = len(child_elements)#子要素の数をカウント
         debug_logger.debug(f'child_elements: {child_elements} | child_count: {child_count}')
         
@@ -170,9 +177,7 @@ class PageScraping():
         debug_logger.debug(f'reference_score_texts : {reference_score_texts}')
         for i in range(child_count):
             child_text = (child.strip() for child in child_elements[i].text.strip().split('\n') if child.strip() != '')
-            #print(f'child_text: {child_text}')
-            #tx = []
-            #line_count = 0
+           
             #elem_index = ''#child_text毎のインデックスを参照する為の一時的な変数
             for elem in child_text:
                 debug_logger.debug(f'child_text[elem] : {elem}')
@@ -184,8 +189,9 @@ class PageScraping():
                         line_count = 0
                         if not elem_index:
                             index.append('')
-                    elif not tx and elem_index:#収集アイテムが無く且つインデックスだけが検出されていた場合は、
+                    elif not tx and elem_index:#収集アイテムが無く且つインデックスだけが検出されていた場合
                         company_list.append([''])
+
                     text_index = reference_score_texts.index(elem)
                     elem_index = reference_score_texts[text_index]
                     index.append(elem_index)
@@ -209,11 +215,13 @@ class PageScraping():
         if tx:
             company_list.append(tx)
             if not elem_index:
-                index.append('')      
+                index.append('')
+
         elif elem_index and not tx:
             debug_logger.debug(f'elif-True. elem_index: {elem_index} | tx: {tx}')
             tx.append('')
             company_list.append(tx)
+
         debug_logger.debug(f'ifの後, company_list: {company_list}')
         if transpose:
             debug_logger.debug('転置実行')
@@ -248,7 +256,7 @@ class PageScraping():
                 index.append(row_head)
                 company_list.append(tx)
                 tx = []
-        ''' text_line_blake ここまで '''
+
 
         self.column_count(company_overview)
         
@@ -261,39 +269,35 @@ class PageScraping():
             index = []#pandas.DataFrameのRowネームリスト
             col_median = self.col_median_list.popleft()
             if not col_median:
-                logging.warning(f'No Column. カラムが無い。elements : {com_element}')
+                logging.warning(f'カラムがありません。elements : {com_element}')
                 col_median = 2
+
             if com_element.name in ['table','tbody','th','tr'] or com_element.find_all(['table','tbody','tr','td','td']):
                 debug_logger.debug(f'table_element_scrape実行')
                 logging.info(f'table_element_scrape()実行')
                 self.table_element_scrape(com_element, col_median, company_list, index, text_line_blake)
-                #logging.info(f'table_element_scrape()実行完了; time: {time.time() - st}')
+                
 
-            #elif com_element.name == 'dl' or com_element.find_all('dl') or com_element.find_all(['dt','dd']):
             elif com_element.has_attr('class') and com_element.attrs['class'] == 'overview_dl_elements':
                 #class属性が存在且つ、属性値がoverview_dl_elementsだった場合
                 debug_logger.debug(f'dl_element_scrape()実行')
-                logging.info(f'dl_element_scrape()実行')
+                
                 self.dl_element_scrape(com_element, col_median, company_list, index, text_line_blake)
-                #logging.info(f'dl_element_scrape()実行完了; time: {time.time() - st}')
                 
             elif com_element.name in ['ul','ol'] or len(com_element.find_all(['ul','ol'])) / len(com_element.contents) *100 >= 70:
                 ''' ul, ol要素だった場合の処理 '''
-                logging.info(f'other_elements_scrape()実行')
-                #self.other_elements_scrape(com_element, col_median, company_list, index, text_line_blake)
                 self.other_elements_scrape(com_element, col_median, company_list, index, reference_score_texts)
                 #col_name = True
+
             else:
-                logging.info(f'other_elements_scrape()実行')
                 debug_logger.debug(f'other_elements_scrape()の実行')
                 self.other_elements_scrape(com_element, col_median, company_list, index, reference_score_texts)
 
             if com_element.find_all(text= lambda text: isinstance(text, bs4.Comment)):
                 #コメントアウトはここでスクレイピングする。
                 debug_logger.debug(f'comment_scrape()実行')
-                logging.info(f'comment_scrape()実行')
+
                 self.comment_scrape(com_element, col_median, company_list, index, text_line_blake)
-                #logging.info(f'comment_scrape()実行完了; time: {time.time() - st}')
 
             if not list(map(bool, company_list)):
                 logging.warning(f'Scrapinged No Item. スクレイピングしたがアイテムを確認できない。')#ロガー
@@ -313,6 +317,7 @@ class PageScraping():
         logging.info(f'Scraping完了; time: {time.time() - st}')
         current, peak = tracemalloc.get_traced_memory()
         debug_logger.debug(f'element_scrape()のメモリリソース: current: {current/10**6}MB; peak: {peak/10**6}MB;\n詳細値: current: {current}; peak: {peak}')      
+        
         return self.df
 
 

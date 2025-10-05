@@ -368,7 +368,6 @@ class Errorloghandlings_Class:
         ''' トレースバックの抽出とレンダリング実行。 '''
         
         formated_traceback_details = traceback.format_exception(*exc_info)
-        #traceback_details_ext_list = []#トレースバックをインデックス又はスライスで収集
         extraction_traceback_details = []
         traceback_details = None
         if tb_detail_index == 'all':

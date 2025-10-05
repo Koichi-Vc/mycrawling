@@ -58,10 +58,12 @@ class PageScorings(PageTextContentsParse, ScoringTexts):
             #自クラス内のメンバーを指定した場合は取得する。
             exclude_ref_words = exclude_ref_words.removeprefix('self.')
             exclude_ref_words = getattr(self, exclude_ref_words, set())
+
         elif isinstance(exclude_ref_words, str) and '.' in exclude_ref_words:
             #ドットが含まれる場合はインポートパスと解釈する。
             #ドットをただの文字列として認識させる場合は、set型で渡すこと。
             exclude_ref_words = get_module(exclude_ref_words)
+            
         elif isinstance(exclude_ref_words, str):
             #語彙を直接指定した場合はsetにして保持。
             exclude_ref_words = {exclude_ref_words}
@@ -259,6 +261,7 @@ class PageScorings(PageTextContentsParse, ScoringTexts):
 
     def scoring_titles(self, soup_obj):
         ''' ページのtitle要素の検索と類似度スコアリングして評価。 '''
+        
         titles = soup_obj.find_all('title')
         title_score = None
         is_contain = None
@@ -269,9 +272,12 @@ class PageScorings(PageTextContentsParse, ScoringTexts):
             choices_list = [self.company_about, self.all_reference_text_list]
             for choices in choices_list:
                 self.scoring_title_texts.ref_title_choices = choices
-                title_score, title_text = self.scoring_title_texts.scoring_title_elements(titles,
-                                                                      cutoff= self.title_boundary,
-                                                                      text_scorer=title_scorer)#obj_parser⇒self
+                title_score, title_text = self.scoring_title_texts.scoring_title_elements(
+                    titles,
+                    cutoff= self.title_boundary,
+                    text_scorer=title_scorer
+                    )
+                
                 if title_score:
                     break
         else:

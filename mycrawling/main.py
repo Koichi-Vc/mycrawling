@@ -51,12 +51,12 @@ class Main():
             parameters = loader.file_load(**kwargs)
 
         self.parameters = parameters
-        print(f'Main.parameters: {self.parameters}')
+        
         if factory_instance:
             instance_dict = self.factory.class_instances
         else:
             instance_dict = self.factory.create_instances(**self.parameters)
-        #self.debug_logger.debug(f'instance_dict: {instance_dict}')
+
         self.factory.datamediator.register_object(instance_dict)#datamediatorに生成したインスタンスを登録する。
         self.factory.datamediator.register_object(self.factory.lazy_instances_class_objects)#インスタンス化を遅延するクラスを登録する。
 

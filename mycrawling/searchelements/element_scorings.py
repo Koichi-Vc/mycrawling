@@ -32,25 +32,16 @@ class ElementsScoring(ScoringTexts):
     def reference_texts(self, texts):
         self.__reference_texts = texts
     
-    def all_textcontent_scoring(self, texts, choices, scorer, cutoff, return_score_only=True, *args, **kwargs):
+    def all_textcontent_scoring(self, texts, choices, scorer, cutoff, *args, **kwargs):
         """ 要素のテキストアイテムを順次スコアリングして返す。"""
-        """
-        return_score_only:
-             スコア値のみを返す場合はTrue, (score, applicable_txt, txt)で返す場合はFalse
-        """
-
-        #スコアのみを返す場合はreturn_score_onlyをTrue
         #戻り値はリスト型又はタプル型リストの二次元配列
         #戻り値データ型はリストの二次元配列
+        
         choices = self.__reference_texts
         scorer = self.text_scorer
         cutoff = self.text_score_cutoff
 
-        text_scores = self.all_text_scoring(texts,
-                                            choices,
-                                            scorer,
-                                            cutoff, *args, **kwargs)
-        #a要素リスト全てのテキストコンテンツをスコアリングしリストにまとめる。
+        text_scores = self.all_text_scoring(texts, choices, scorer, cutoff, *args, **kwargs)
         debug_logger.debug(f'text_scores: {text_scores}')
         return text_scores
   

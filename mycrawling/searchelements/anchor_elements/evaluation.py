@@ -13,7 +13,7 @@ class EvaluateAnchorElements(EvaluateUrls):
     default_parameter = ref_dataconfig.get_conf_value('EVALUATEANCHORELEMENTS_PARAMETERS', default=None)
     
     def __init__(self, ref_text=None, ref_urls=None, **kwargs):
-        #print(f'reference_texts: {reference_texts} | reference_urls: {reference_urls}')
+
         self.datamediator = kwargs.pop('datamediator', get_module(ref_dataconfig.get_conf_value('USE_MEDIATOR_PATH')))
         
         if self.datamediator and not ref_text or not ref_urls:         

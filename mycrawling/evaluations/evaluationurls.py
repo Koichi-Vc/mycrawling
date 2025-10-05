@@ -46,7 +46,8 @@ class EvaluateUrls(ParseUrls, ScoreEvaluations):
             score = statistics_value
 
         result = super().evaluate_score(scorer_type, score, *args, **kwargs)
-        debug_logger.debug(f'name_is_current_name: {name_is_current_name}')
         urls_result = result and (name_is_current_name is True or name_is_current_name is None)
+        
+        debug_logger.debug(f'name_is_current_name: {name_is_current_name}')
         return urls_result
 

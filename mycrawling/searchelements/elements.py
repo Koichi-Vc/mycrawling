@@ -13,6 +13,7 @@ class BaseSearchElements(ElementsParse):
         '''
         !留意点!:
             Beautifulsoup.find_allの仕様として第二引数に位置引数を渡した場合、内部的にclass属性に対するフィルターと解釈される。
+            キーワード引数としてquery_kwargsにnameは含める事も指定する事も出来ない。
 
         args:
             tag: 
@@ -29,6 +30,7 @@ class BaseSearchElements(ElementsParse):
         if 'name' in query_kwargs:
             #キーワード引数としてnameは指定出来ない。
             del query_kwargs['name']
+        
         tagname = tag
         self.tag = tagname#タグの条件
         self.attrs_value = {}#属性名を始めとした検索フィルター条件

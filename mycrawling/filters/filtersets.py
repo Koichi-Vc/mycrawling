@@ -38,7 +38,7 @@ class Elements_Filterset(SelectListOperator):
         #メソッドでは無くクラスインスタンスそのものを渡す場合に__call__が働く。
         result = False
         result_list = [f(element) for f in self.filters]
-        #print(f'filtersetclass>> result_list: {result_list} | list_operator: {self.list_operator}')
+       
         result = self.list_operator(result_list)
         return result
 

@@ -17,7 +17,7 @@ class ScoringTexts:
     """
     default_all_text_scorer = Indel.normalized_distance
     default_best_text_scorer = Indel.normalized_distance
-    #base_text_scoringだったが存在意義が薄れた為、ひとまずジェネレータ化するメソッドとして対応する。
+    
     def decorator_text_scoring(parse_method):
         def wrapper(self, texts, choices, scorer, *args, **kwargs):
             query_txt = ''

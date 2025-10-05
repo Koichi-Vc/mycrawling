@@ -7,6 +7,7 @@ class ParseUrls():
 
     def parse_urls(self, urls:List, *urlattrs):
         ''' urlsの解析結果を{url名: {attr:value}} の辞書形式で返す '''
+
         urls_attrvalue_dict = {}
         if isinstance(urls, str):
             urls = [urls]
@@ -28,6 +29,7 @@ class ParseUrls():
 
     def hostname_parse(self, *urls_list):
         ''' urlリストからホストネームを抽出する。 '''
+
         hostname_dict = None
         hostname = ['hostname']
         urls_hostname = self.parse_urls(urls_list, *hostname)
@@ -39,11 +41,13 @@ class ParseUrls():
 
     def get_one_url_attrs(self, url, *urlsattrs):
         ''' 一つのurlを解析し各属性値を返す。 '''
+
         attrs_list = []
         url_attrs_result = self.parse_urls([url], *urlsattrs)
         if url_attrs_result:
             attrs_value = url_attrs_result[url]#urlの属性を参照
             attrs_list = [attrs_value[attrs] for attrs in attrs_value]#属性値のみを取り出す
+            
         return attrs_list
 
 

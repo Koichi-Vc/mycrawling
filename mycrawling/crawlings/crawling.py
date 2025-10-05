@@ -83,9 +83,7 @@ class MyCrawlingSearch():
         start_time = time.time()
         debug_logger.debug(f'myscraping実行')
         #time.sleep(2)
-        #raise ConnectionRefusedError#エラー処理実験のみ
-        #raise selem_except.TimeoutException
-        #raise IndexError
+        
         if self.scraping:
             self.scraping.df = self.data_frame
         robot = self.robotmanager.robots_parse(urls=self.input_url)

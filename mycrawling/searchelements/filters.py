@@ -8,8 +8,6 @@ import logging
 from mycrawling.logs.debug_log import debug_logger
 
 
-#filtermanage_object = None
-#ilter_object = None
 
 class SearchElementFilterManager(BaseFilterManage):
     '''
@@ -28,6 +26,7 @@ class SearchElementFilterManager(BaseFilterManage):
         is_load_files = kwargs.pop('is_load_files', True)#ファイルの読み込み許可。
         debug_logger.debug(f'filter_parameters: {filter_parameters} | is_load_files: {is_load_files}')
         encoding = kwargs.pop('encoding', 'UTF-8')
+        
         #パラメータを取得する。
         if not filter_parameters and is_load_files:
             self.filter_parameters = FilterParameterLoader.file_load(load_method= json_load, encoding=encoding)
@@ -38,17 +37,13 @@ class SearchElementFilterManager(BaseFilterManage):
         else:
             raise TypeError(f"filter_parametersが非サポートのデータ型を受けとりました | {filter_parameters}")
 
-        #self.tag_filters = dict()#タグ(未指定もNoneとして含む)に対するフィルター
-        #self.query_filterset = dict()#ターゲットをキー、フィルターオブジェクトをアイテムとした辞書型。
-        #filter_instance_obj_dictと名されているが、executable_filterの実装に伴い実態はフィルターオブジェクトを格納している。
-        #その為、近日中に名称を変更する。
         self.filter_instance_obj_dict = dict()#タグ別(タグ未指定の場合、キーはNone)に生成したフィルターを格納。
 
 
     def select_filtercls_and_params(method):
         ''' インスタンスに登録済みのフィルターを作成する為のクラスと、パラメータを指定して取得する。'''
 
-        def wrapper(self, tag_name,*args, **kwargs):
+        def wrapper(self, tag_name, **kwargs):
             '''
             tag_nameはタグ名によるフィルタークラスを取得する。
             '''
@@ -79,6 +74,7 @@ class SearchElementFilterManager(BaseFilterManage):
                 フィルター生成クラスをインスタンス化する為の引数データを保持しているキーを指定する。
                 targetにはタグ名か又はクラス名を想定している。
         '''
+        
         tag_name = kwargs.pop('tag_name', None)
         if tag_name not in self.filter_instance_obj_dict:
             self.filter_instance_obj_dict.setdefault(tag_name, dict())

@@ -3,11 +3,6 @@ from mycrawling.utils.loaders.loader import FilesLoader
 from mycrawling.conf.data_setting import ref_dataconfig
 ''' 要素検索のフィルターを作成する為の引数をまとめたjsonファイルを読み込む。 '''
 
-<<<<<<< HEAD
-=======
-
-
->>>>>>> develop
 
 class FilterParameterLoader(FilesLoader):
     '''

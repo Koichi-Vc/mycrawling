@@ -35,13 +35,13 @@ class Factory(AbstractFactory):
 
 
     def __init__(self, classes:dict=None, conf_class_name=None, **kwargs):
-        #global ref_dataconfig
         '''
         conf_class_name:
             settingオブジェクトに登録されているクラスを指定する。
         classes:
             クラス名とインポートパスの辞書型を受けとる。何も指定しない場合、USE_CLASSESが代入される。
         '''
+
         self.classes = dict()
         self.class_objects = dict()#インポートしたクラスを保持。
         self.ref_dataconfig_obj = ref_dataconfig
@@ -93,12 +93,12 @@ class Factory(AbstractFactory):
 
     def import_lazy_instances_class(self, class_name=None):
         imported_class = self.import_classes(class_name, retainer=self.lazy_instances_class_objects, **self.lazy_instances_class)
-        #self.lazy_instances_class.update(imported_class)
         return imported_class
 
 
     def get_class(self, class_name):
         ''' クラスを取得する。'''
+
         if class_name in self.class_objects.keys():
             return self.class_objects.get(class_name)
         
@@ -134,6 +134,7 @@ class Factory(AbstractFactory):
 
     def create_instances(self, **parameters):
         #USE_CLASSESに登録されたクラスをインスタンス化していく
+        
         instance_dict = dict()
         param_keys = parameters.keys()
         class_names = self.class_objects.keys()

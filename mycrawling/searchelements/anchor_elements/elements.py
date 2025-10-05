@@ -222,6 +222,7 @@ class SearchAnchorElements(BaseSearchElements):
                            soup_obj,
                            current_url=None):
         ''' find_elementsメソッドのオーバーライド '''
+        
         elements = super().find_elements(soup_obj)
         if current_url is None:
             current_url = self.current_url

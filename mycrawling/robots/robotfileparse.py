@@ -37,6 +37,7 @@ class RobotFileparseManager():
         self.custom_message_dict = custom_message_dict
         self.kwargs = kwargs
         debug_logger.debug(f'kwargs: {kwargs}')
+
         if not self.rp:#RobotFileParserオブジェクトが指定されていない場合、設定オブジェクトの内容を優先して適用する。
             parameters = ref_dataconfig.get_conf_value('ROBOTFILEPARSE_PARAMETER')
             debug_logger.debug(f'parameters:{parameters}')
@@ -121,10 +122,11 @@ class RobotFileparseManager():
 
         if self.datamediator and self.select_notify_attr == 'crawl_delay_time' and self.notify_to_instance:
             debug_logger.debug(f'notify実行')
-            self.datamediator.notify(delay_time,
-                                     notification_to=self.notify_to_instance,
-                                     notify_to_attr=self.notify_to_attr)
-
+            self.datamediator.notify(
+                delay_time,
+                notification_to=self.notify_to_instance,
+                notify_to_attr=self.notify_to_attr
+                )
 
 
     def url_extract(self, urls):
@@ -138,32 +140,36 @@ class RobotFileparseManager():
         #urls = quote(urls, safe=':/')
         parsed_url = urlparse(urls)#parseしたurlsを格納
         domain_name = parsed_url.hostname
-        #debug_logger.debug(f'domain_name: {domain_name}')
+
         domain = parsed_url.scheme + '://' + domain_name
         robots_url = domain + '/robots.txt'
         return parsed_url, domain, domain_name, robots_url
 
 
     
-    def request_check(self, robots_url):#実験時はrobots_urlはselfのアノテーション化してエスケープする事。
+    def request_check(self, robots_url):
         ''' robots.txtファイルへの参照が可能か評価'''
         
         debug_logger.debug(f'self: {self} | robots_urls: {robots_url}')
+
         session = False
-        self.robots_url = robots_url#実験時はコメントアウト
+        self.robots_url = robots_url
         response = requests.get(self.robots_url, timeout=self.request_check_timeout)
         response.raise_for_status()
         time.sleep(1)
 
         if response:
             session = True
+
         return session
 
 
     def set_url_fetch(self, urls, robots_url):
         ''' robots.txtパスをセットして参照・urlへの訪問許可を評価。 '''
+        
         if self.result:#アクセスを予めFalseに初期化しておく
             self.result = False
+
         self.rp.set_url(robots_url)
         time.sleep(1)
         self.rp.read()
@@ -228,6 +234,7 @@ class RobotFileparseManager():
             if session:
                 self.result = self.set_url_fetch(urls, robots_url)
                 debug_logger.debug(f'self.result: {self.result} ')
+                
         logging.info(f'<robots_url: {robots_url} | urls: {urls} | result: {self.result}>')
         return self.result
 

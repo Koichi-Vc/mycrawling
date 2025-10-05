@@ -60,7 +60,7 @@ def get_module_attr(module, attr_path):
     obj = None
     try:
         for attr in attr_names:
-            #print(f'attr: {attr} | obj: {obj}')
+
             if not obj:
                 obj = getattr(module, attr)
 

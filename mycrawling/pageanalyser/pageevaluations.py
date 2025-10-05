@@ -3,7 +3,6 @@ import logging
 import tracemalloc
 from mycrawling.evaluations.evaluationtexts import EvaluateTexts
 from mycrawling.parse.elementsparse import ElementsParse
-#from mycrawling.crawlings.crawling import MyCrawlingSearch#循環インポート
 from mycrawling.conf.data_setting import ref_dataconfig
 from mycrawling.utils.imports_module import get_module
 from mycrawling.logs.debug_log import debug_logger
