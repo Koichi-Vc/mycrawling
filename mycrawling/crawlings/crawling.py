@@ -98,9 +98,11 @@ class MyCrawlingSearch():
             #フォームデータurlが会社概要ページかどうか評価する
             instance_pageevaluation = self.page_evaluation(**self.pageevaluation_parameter)
             if self.evaluaterobotsmeta(self.driver.page_source):
-                company_overview = instance_pageevaluation.company_profile(self.driver,
-                                                                     self.current_url,
-                                                                     **kwargs)#ページが会社概要か評価し要素を返す。            
+                company_overview = instance_pageevaluation.get_company_profile(
+                    self.driver,
+                    self.current_url,
+                    **kwargs
+                    )#ページが会社概要か評価し要素を返す。            
             else:
                 company_overview = list()
 
@@ -217,9 +219,11 @@ class MyCrawlingSearch():
 
                     instance_pageevaluation = self.page_evaluation(**self.pageevaluation_parameter)
                     if self.evaluaterobotsmeta(self.driver.page_source):#meta要素のrobots属性を検証する。
-                        company_overview = instance_pageevaluation.company_profile(self.driver,
-                                                                               self.driver.current_url,
-                                                                               **kwargs)#会社概要ページかチェック
+                        company_overview = instance_pageevaluation.get_company_profile(
+                            self.driver,
+                            self.driver.current_url,
+                            **kwargs
+                            )#会社概要ページかを評価してコンテンツを収集。
                     else:
                         company_overview = list()
                     
