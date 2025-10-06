@@ -119,6 +119,7 @@ class PageEvaluation(EvaluateTexts):
             debug_logger.debug(f'primary_text_list : {self.primary_text_list}')
             debug_logger.debug(f'self.is_true_textwords: { self.is_true_textwords}')
             debug_logger.debug(f'pry_and_hhscore_texts: {pry_and_hhscore_texts}')
+
             if (len(self.high_score_text_list) >= 3 or len(self.primary_text_list) >= 2) and pry_and_hhscore_texts not in self.is_true_textwords:
                 debug_logger.debug(f'high_score_search True')
                 
@@ -146,23 +147,29 @@ class PageEvaluation(EvaluateTexts):
                         result = False
                     
                     if result:
-                        debug_logger.debug(f'element: {element} | elements text: {[e.text for e in element]}')
+                        
                         contents_length = len([content for content in element.contents if content.name != None])
                         targ_contents_rate = 85
 
+                        debug_logger.debug(f'element: {element} | elements text: {[e.text for e in element]}')
                         debug_logger.debug(f'element.contentsの数: {len(element.contents)} | contents_length: {contents_length}')
+                        
                         dl_length = len(element.find_all('dl'))
                         if dl_length / contents_length*100 >= targ_contents_rate:
                             debug_logger.debug(f'dl要素数: {dl_length}')
                             element.attrs['class'] = 'overview_dl_elements'
+
                         yield element                   
                 
 
-    def company_profile(self, driver, current_url, **kwargs): 
+    def get_company_profile(self, driver, current_url, **kwargs): 
         """
-        ページが会社概要ページかどうかを検査する。ページ内でリンクのない会社概要に関する項目テキストを返す。
-        compay: 会社概要を構成する項目キーワードのリスト(会社概要キーワード)
+        ページから会社概要コンテンツを収集する。
+        compay:
+            会社概要を構成する項目キーワードのリスト(会社概要キーワード)
         """
+
+
         debug_logger.debug(f'kwargs: {kwargs}')
         debug_logger.debug(f'is_true_urls {self.is_true_urls}')
         is_contain = None
@@ -179,6 +186,7 @@ class PageEvaluation(EvaluateTexts):
         
         debug_logger.debug(f'similar_title:{similar_title} | is_contain: {is_contain} | similar_url: {similar_url}')
         similar_title_url = similar_title or is_contain or similar_url
+
         if similar_title_url:
             ''' trimming()後にオブジェクトが有り且つページtitle, urlの評価スコアを参照 '''
             logging.info(f'similar_title_url == True')
@@ -186,10 +194,12 @@ class PageEvaluation(EvaluateTexts):
             elements = self.find_overview_elements(soup)
             
             for element in elements:
-                #debug_logger.debug(f'yield element: {element} | True')
+
                 yield element
+            
             current, peak = tracemalloc.get_traced_memory()
-            debug_logger.debug(f'company_profile()for文内のメモリリソース: current: {current/10**6}MB; peak: {peak/10**6}MB;\n詳細値: current: {current}; peak: {peak}')
+            debug_logger.debug(f'get_company_profile()for文内のメモリリソース: current: {current/10**6}MB; peak: {peak/10**6}MB;\n詳細値: current: {current}; peak: {peak}')
             logging.info(f'MemoryResource: current: {current/10**6}MB; peak: {peak/10**6}MB |')             
+
 
 
