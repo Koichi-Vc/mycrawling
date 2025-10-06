@@ -166,16 +166,6 @@ class SearchElementFilterManager(BaseFilterManage):
             return filter_obj.get(attr)
 
 
-    #当メソッド幾つか問題あり。しばらく凍結。
-    def get_attrs_filter(self, name, get_method=None, **kwargs):
-        ''' フィルターを取得する。フィルターオブジェクトによってメソッドで取得する場合はget_methodを使う。'''
-
-        filter_instance = self.filter_instance_obj_dict.get(name, None)
-        if filter_instance and hasattr(filter_instance, get_method):
-            method = getattr(filter_instance, get_method)
-            return method(**kwargs)
-
-
     @classmethod
     def create_filter(cls, tag_name, select_class, filterset_cls=None, filter_parameters:Dict=None, **kwargs):
         ''' フィルターを取得する。'''

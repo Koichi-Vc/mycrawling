@@ -62,9 +62,3 @@ class Reference_TextCollection(BaseDataClass):
         return field_dict
 
 
-    def is_contain(self, texts:List, reference_type=None):
-        ''' テキストがデータクラスインスタンスが保持しているテキストコレクションに含まれているか評価する。 '''
-        result = []
-        if not reference_type:
-            reference_texts = self.all_reference_text_list
-
