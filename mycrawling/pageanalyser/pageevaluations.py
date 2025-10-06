@@ -17,6 +17,7 @@ class PageEvaluation(EvaluateTexts):
     default_notify_to_obj_name = 'crawling_class'
     default_webdriver = get_module(ref_dataconfig.get_conf_value('USE_WEBDRIVER'), None)
 
+
     def __init__(self, evaluate_reference_textsets=None, reference_title_a_url_texts=None, **kwargs):
         datamediator = kwargs.pop('datamediator', get_module(ref_dataconfig.get_conf_value('USE_MEDIATOR_PATH', default='')))
         
@@ -51,12 +52,12 @@ class PageEvaluation(EvaluateTexts):
         self.high_score_text_list = list()#ルート要素上から検出した高類似度テキスト
         self.primary_text_list = list()#ルート要素上から検出した重要語彙テキスト
         self.notify_to_obj_name = self.default_notify_to_obj_name if 'notify_to_obj_name' not in kwargs.keys() else kwargs.pop('notify_to_obj_name')
-        #obj_name = TestAssistance#オフラインテスト用
         get_attr_name = 'is_true_textwords'
         true_textwords = self.datamediator.get_attr(self.notify_to_obj_name, get_attr_name)        
         #MyCrawlingSearchインスタンスが保持している既出の高類似度テキストコンテンツリストを参照する。
         self.is_true_textwords = true_textwords if true_textwords else list()
         self.is_true_textwords_notification_to = kwargs.pop('is_true_textwords_notification_to', self.notify_to_obj_name)
+
 
     @classmethod
     def datamediator_update(cls, value):
@@ -64,14 +65,17 @@ class PageEvaluation(EvaluateTexts):
         debug_logger.debug(f'cls.is_true_urls: {cls.is_true_urls}')
     
 
-    def condition_evaluation(self, 
-                                   eval_primary_text_types,
-                                   eval_highscore_text_types,
-                                   eval_primary_text_count,
-                                   eval_highscore_text_count,
-                                   eval_primary_or_highscore_text_count,
-                                   eval_all_high_score_rate):
+    def condition_evaluation(
+            self, 
+            eval_primary_text_types,
+            eval_highscore_text_types,
+            eval_primary_text_count,
+            eval_highscore_text_count,
+            eval_primary_or_highscore_text_count,
+            eval_all_high_score_rate
+            ):
         ''' 評価した数値をもとに統計を取り、対象要素オブジェクトかどうか条件判定する '''
+        
         result = False
 
         if eval_primary_or_highscore_text_count and eval_all_high_score_rate:#その要素に属する子要素の必要数を前提にする。
@@ -123,8 +127,6 @@ class PageEvaluation(EvaluateTexts):
                 debug_logger.debug(f'high_score_search True')
                 
                 elements = [elm for elm in root_element.find_all(lambda element: element.name not in exclude_tags)]
-                notification_to = 'MyCrawlingSearch'
-                notification_to = 'testassistance'#オフラインテスト用
                 self.datamediator.notify(
                     pry_and_hhscore_texts,
                     notification_to= self.is_true_textwords_notification_to
@@ -199,6 +201,5 @@ class PageEvaluation(EvaluateTexts):
             current, peak = tracemalloc.get_traced_memory()
             debug_logger.debug(f'get_company_profile()for文内のメモリリソース: current: {current/10**6}MB; peak: {peak/10**6}MB;\n詳細値: current: {current}; peak: {peak}')
             logging.info(f'MemoryResource: current: {current/10**6}MB; peak: {peak/10**6}MB |')             
-
 
 
