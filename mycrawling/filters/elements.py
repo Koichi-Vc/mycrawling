@@ -37,7 +37,7 @@ class Processing():
     
     @instance_obj.setter
     def instance_obj(self, instance):
-        ''' テスト実装'''
+
         if hasattr(self, 'instance_obj'):
             self._instance_obj = None
         self._instance_obj = instance

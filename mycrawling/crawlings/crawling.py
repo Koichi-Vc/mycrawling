@@ -19,7 +19,7 @@ class MyCrawlingSearch():
 
     }
     
-    #debug_logger.debug(f'crawl_delay: {CRAWL_DELAY_TIME}秒')
+
     def __init__(self, driver_manager, input_url, current_url=None, crawl_delay_time=None, robotmanager=None, **kwargs):
         self.driver_manager = driver_manager
         self.driver = self.driver_manager.driver
@@ -29,8 +29,6 @@ class MyCrawlingSearch():
         
         datamediator = kwargs.pop('datamediator') if 'datamediator' in kwargs else self.default_datamediator
         self.datamediator = datamediator
-        #debug_logger.debug(f'DataMediator: {self.datamediator}')
-        #debug_logger.debug(f'datamediator.dict: {self.datamediator.registry_notify_objects} \n')
         self.robotmanager = self.datamediator.get_instance('robotfileparse') if not robotmanager else robotmanager
 
         self.page_evaluation = kwargs.pop('pageevaluation', self.datamediator.get_instance('pageevaluation'))
@@ -48,7 +46,7 @@ class MyCrawlingSearch():
         
         self.time_sleep = crawl_delay_time if crawl_delay_time and isinstance(crawl_delay_time, (int, float)) else self.CRAWL_DELAY_TIME#リクエスト間の待機時間を指定
         self.current_hostname = urlparse(current_url).hostname
-        self.is_true_textwords = list()#retain_textwordsから引き継ぐ役割として、「既スクレイピング済ページの再スクレイピング防止」
+        self.is_true_textwords = list()
         self.data_frame = list()
         self.__window_num = 3#変更非推奨。
 
@@ -69,8 +67,7 @@ class MyCrawlingSearch():
 
     def get_time_sleep(self, time_sleep_value):
         ''' datamediatorを通した待機時間の取得 '''
-        #debug_logger.debug(f'get_time_sleep>>>')
-        #debug_logger.debug(f'time_sleep_value: {time_sleep_value}')
+
         self.__time_sleep = time_sleep_value
 
 
@@ -82,7 +79,6 @@ class MyCrawlingSearch():
         ''' 全体の実行 '''
         start_time = time.time()
         debug_logger.debug(f'myscraping実行')
-        #time.sleep(2)
         
         if self.scraping:
             self.scraping.df = self.data_frame
@@ -165,9 +161,9 @@ class MyCrawlingSearch():
             time.sleep(1)
 
 
-    def Crawling_pages(self, absol_url:list, rel_url:list,*args, **kwargs):# 右の引数は全てinitにある。'url_prohibition', 'company', 'company_english', 'primary_company', 'primary_company_en'
+    def Crawling_pages(self, absol_url:list, rel_url:list,*args, **kwargs):
         """
-        formで受け取ったurlページに於いて、search_anchor_elements()で取得したabsolute_hrefのa要素アイテムを一つずつ探索してスクレイピング。
+        URLページから収集したリンクを一つずつ探索してスクレイピングを行う。
         """
         brakes = False#処理完全終了スイッチ
         absolute_url_list = deque()
@@ -176,9 +172,10 @@ class MyCrawlingSearch():
         jump_page.append(self.input_url)
         absolute_url_list.append(absol_url)#絶対urlパスのリスト
         relative_url_list.append(rel_url)
-        counta = 0#無限ループを防ぐための停止カウンタ
+        counta = 0#停止カウンタ
         stop_counta = 20
         start_time = time.time()
+
         while jump_page and counta <= stop_counta:
             debug_logger.debug(f"jump_page: {jump_page}")
             jump = jump_page.popleft()

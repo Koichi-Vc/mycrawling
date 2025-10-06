@@ -8,7 +8,6 @@ from mycrawling.utils.imports_module import get_module
 from mycrawling.logs.debug_log import debug_logger
 
 
-
 class PageEvaluation(EvaluateTexts):
     '''訪問したwebページが会社概要コンテンツを持つページかどうかを評価する。'''
 
@@ -25,17 +24,19 @@ class PageEvaluation(EvaluateTexts):
             self.datamediator = get_module(datamediator)
         else:
             self.datamediator = datamediator
+
         webdriver = kwargs.get('webdriver', self.default_webdriver)
         self.parse_elements = ElementsParse(webdriver=webdriver) if 'elementparse' not in kwargs.keys() else kwargs.get('elementparse')
         self.traverse_for_root_element = 'body'#最初にページ全体の走査をする際にルート要素とするタグの指定。
         self.pagescorings = None
+
         if 'pagescorings' in kwargs.keys():
             self.pagescorings = kwargs.get('pagescorings')
+
         elif hasattr(self, 'datamediator'):
             self.pagescorings = self.datamediator.get_instance('pagescorings')
 
-        debug_logger.debug(f'evaluate_reference_textsets: {evaluate_reference_textsets} ')
-        debug_logger.debug(f'reference_title_a_url_texts: {reference_title_a_url_texts}')
+        debug_logger.debug(f'evaluate_reference_textsets: {evaluate_reference_textsets} | reference_title_a_url_texts: {reference_title_a_url_texts}')
         
         #コンテンツの評価に用いる条件
         #必要なコンテンツ内子要素の数
@@ -47,8 +48,6 @@ class PageEvaluation(EvaluateTexts):
         self.reqd_primary_texts_count = 4
         self.reqd_highscore_texts_count = 5
         self.reqd_all_high_score_rate = 40
-        self.high_score_jp_text = []#言語別に収集した高類似度テキスト。※現状未使用
-        self.high_score_en_text = []#言語別に収集した高類似度テキスト。※現状未使用
         self.high_score_text_list = list()#ルート要素上から検出した高類似度テキスト
         self.primary_text_list = list()#ルート要素上から検出した重要語彙テキスト
         self.notify_to_obj_name = self.default_notify_to_obj_name if 'notify_to_obj_name' not in kwargs.keys() else kwargs.pop('notify_to_obj_name')
