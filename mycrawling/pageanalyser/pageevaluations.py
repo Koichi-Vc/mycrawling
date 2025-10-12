@@ -16,7 +16,6 @@ class PageEvaluation(EvaluateTexts):
     default_notify_to_obj_name = 'crawling_class'
     default_webdriver = get_module(ref_dataconfig.get_conf_value('USE_WEBDRIVER'), None)
 
-
     def __init__(self, evaluate_reference_textsets=None, reference_title_a_url_texts=None, **kwargs):
         datamediator = kwargs.pop('datamediator', get_module(ref_dataconfig.get_conf_value('USE_MEDIATOR_PATH', default='')))
         
@@ -57,12 +56,10 @@ class PageEvaluation(EvaluateTexts):
         self.is_true_textwords = true_textwords if true_textwords else list()
         self.is_true_textwords_notification_to = kwargs.pop('is_true_textwords_notification_to', self.notify_to_obj_name)
 
-
     @classmethod
     def datamediator_update(cls, value):
         cls.is_true_urls = value
         debug_logger.debug(f'cls.is_true_urls: {cls.is_true_urls}')
-    
 
     def condition_evaluation(
             self, 
@@ -100,7 +97,6 @@ class PageEvaluation(EvaluateTexts):
             debug_logger.debug(f'eval_all_high_score_rate: {eval_all_high_score_rate}')
 
         return result
-
 
     def find_overview_elements(self, soup_obj):
         ''' htmlページ全体から対象コンテンツが存在するか走査する。 '''
@@ -160,7 +156,6 @@ class PageEvaluation(EvaluateTexts):
                             element.attrs['class'] = 'overview_dl_elements'
 
                         yield element                   
-                
 
     def get_company_profile(self, driver, current_url, **kwargs): 
         """
@@ -169,23 +164,22 @@ class PageEvaluation(EvaluateTexts):
             会社概要を構成する項目キーワードのリスト(会社概要キーワード)
         """
 
-
         debug_logger.debug(f'kwargs: {kwargs}')
         debug_logger.debug(f'is_true_urls {self.is_true_urls}')
+
         is_contain = None
         similar_url = None
         similar_title = None
-        soup = self.parse_elements.element_parse(driver)#obj_parser⇒self
+        soup = self.parse_elements.element_parse(driver)
         title_score, title_text, is_contain = self.pagescorings.scoring_titles(soup_obj=soup)
        
         debug_logger.debug(f'title_text: {title_text} | title_score: {title_score}')
         similar_title = title_score
         similar_url = current_url in self.is_true_urls
         similar_title = similar_title is not None 
-        #タイトル要素のスコアリングだけ判断するには限界がある。24/04/29
+        similar_title_url = similar_title or is_contain or similar_url
         
         debug_logger.debug(f'similar_title:{similar_title} | is_contain: {is_contain} | similar_url: {similar_url}')
-        similar_title_url = similar_title or is_contain or similar_url
 
         if similar_title_url:
             ''' trimming()後にオブジェクトが有り且つページtitle, urlの評価スコアを参照 '''

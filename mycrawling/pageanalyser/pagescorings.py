@@ -17,7 +17,14 @@ class PageScorings(PageTextContentsParse, ScoringTexts):
     
     default_text_scorer = Indel.normalized_distance
 
-    def __init__(self, reference_object:'Reference_TextCollection'=None, reference_title_a_url_texts:'Reference_Title_A_Url_Texts'=None, title_boundary = None, text_boundary=None, **kwargs):
+    def __init__(
+            self,
+            reference_object:'Reference_TextCollection' = None,
+            reference_title_a_url_texts:'Reference_Title_A_Url_Texts' = None,
+            title_boundary = None,
+            text_boundary=None,
+            **kwargs
+            ):
 
         datamediator = kwargs.get('datamediator', None)
         if datamediator and isinstance(datamediator, str):
@@ -36,6 +43,7 @@ class PageScorings(PageTextContentsParse, ScoringTexts):
             self.reference_title_a_url_texts = datamediator.get_instance('reference_title_a_url_texts')
         else:
             raise TypeError('PageScorings() に必要な引数"reference_title_a_url_texts"が足りません。')
+        
         debug_logger.debug(f'reference_object: {self.reference_object}')
         debug_logger.debug(f'reference_object.all_reference_text_list: {hasattr(self.reference_object, "all_reference_text_list")}| get_all_fields: {hasattr(self.reference_object, "get_all_fields")}')
         
@@ -84,7 +92,6 @@ class PageScorings(PageTextContentsParse, ScoringTexts):
         self.primary_text_list = list()#ページ内から検出した重要語彙
         self.high_score_text_list = list()#ページ内から検出した高類似度語彙
 
-
     @property
     def text_scorer(self):
         return self.__text_scorer
@@ -93,7 +100,6 @@ class PageScorings(PageTextContentsParse, ScoringTexts):
     def text_scorer(self, algorithm):
         self.__text_scorer = algorithm
 
-    
     @property
     def primary_text_list(self):
         return self.__primary_text_list
@@ -113,7 +119,6 @@ class PageScorings(PageTextContentsParse, ScoringTexts):
                 if value not in self.__primary_text_list:
                     self.__primary_text_list.append(value)
 
-
     @property
     def high_score_text_list(self):
         return self.__high_score_text_list
@@ -132,8 +137,6 @@ class PageScorings(PageTextContentsParse, ScoringTexts):
             for value in values:
                 if value not in self.__high_score_text_list:
                     self.__high_score_text_list.append(value)
-
-
 
     def detect_high_score_texts(self, element, scorer=None, **kwargs):
       
@@ -168,7 +171,6 @@ class PageScorings(PageTextContentsParse, ScoringTexts):
                     self.high_score_en_text.append(txt)
 
         return self.primary_text_list, self.high_score_text_list
-
 
     def child_elements_traverse(self, element):
         ''' 各要素の子要素を走査し、ルート要素から抽出した全ての高類似度語彙の含有量を調べる '''
@@ -219,6 +221,7 @@ class PageScorings(PageTextContentsParse, ScoringTexts):
                 debug_logger.debug(f'match_primary_texts: {match_primary_texts}')
                 debug_logger.debug(f'match_high_score_texts: {match_high_score_texts}')
                 debug_logger.debug('start texts_similarity>>>')
+                
                 for similarity_score in texts_similarity:
                     is_primary_texts = False
                     is_high_score_texts = False
@@ -250,6 +253,7 @@ class PageScorings(PageTextContentsParse, ScoringTexts):
 
         debug_logger.debug(f'contain_text: {contain_text}')
         debug_logger.debug(f'{child_count} | {detection_highscore_count} | {detection_primary_count} |')    
+        
         return PageScoreStatisticsSet.create_dataclass( 
             child_length, 
             child_count, 
@@ -258,7 +262,6 @@ class PageScorings(PageTextContentsParse, ScoringTexts):
             detection_primary_count, 
             detection_primary_text
             )
-
 
     def scoring_titles(self, soup_obj):
         ''' ページのtitle要素の検索と類似度スコアリングして評価。 '''
@@ -285,5 +288,4 @@ class PageScorings(PageTextContentsParse, ScoringTexts):
             title_score = None
 
         return title_score,title_text, is_contain
-
 

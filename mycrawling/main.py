@@ -60,7 +60,6 @@ class Main():
         self.factory.datamediator.register_object(instance_dict)#datamediatorに生成したインスタンスを登録する。
         self.factory.datamediator.register_object(self.factory.lazy_instances_class_objects)#インスタンス化を遅延するクラスを登録する。
 
-
     def start(self, input_url, *args, **kwargs):
 
         if hasattr(self.webdriver_manager, 'setting_service') and 'service_instance' not in self.WEBDRIVER_MANAGER_PARAM and self.WEBDRIVER_SERVICE_PARAM:
@@ -85,5 +84,3 @@ class Main():
         else:
             return self.crawl
         
-
-

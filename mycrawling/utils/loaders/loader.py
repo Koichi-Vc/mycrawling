@@ -7,7 +7,6 @@ def json_load(json_file, load_method=None):
         load_method = json.load
     return load_method(json_file)
 
-
 def ref_files_load(file, load_method=None , **kwargs):
     ''' ファイルの読み込み'''
     with open(file, 'r', **kwargs) as f:
@@ -19,7 +18,6 @@ def ref_files_load(file, load_method=None , **kwargs):
             data = load_method(f)
     
     return data
-
 
 
 class FilesLoader():

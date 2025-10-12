@@ -42,7 +42,6 @@ class ChromeWebDriverContextManager(BasebWebDriverContextManager):
 
         super().__init__(driver_filename, timeout, service_instance=service_instance, **kwargs)
     
-    
     @classmethod
     def setting_service(cls, executable_path=None, *args, **kwargs):
         if isinstance(executable_path, str) and ('/' not in executable_path and '\\' not in executable_path):
@@ -52,11 +51,9 @@ class ChromeWebDriverContextManager(BasebWebDriverContextManager):
         else:
             return super().setting_service(*args, **kwargs)
 
-
     def add_option(self, *values):
         ''' webdriverに指定するオプションを追加する。'''
         for value in values:
             if value not in self.options.arguments:
                 self.options.add_argument(value)
-
 

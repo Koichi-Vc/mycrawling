@@ -6,12 +6,10 @@ from mycrawling.logs.debug_log import debug_logger
 class AbstractElementsFilter(ABC):
     ''' 要素の属性名と属性値のフィルター '''
 
-    
     def __init__(self,filter_method=None):
         debug_logger.debug(f'filter_method is callable: {callable(filter_method)}')
         self._filter_method = filter_method if callable(filter_method)else self.set_filter_method(filter_method) 
 
-    
     def set_filter_method(self, filter_name=None):
         ''' __call__で呼び出すフィルターをセットする '''
         
@@ -34,12 +32,10 @@ class AbstractElementsFilter(ABC):
             self._filter_method = filter_method
         return self._filter_method
 
-
     #検索フィルターを取得するメソッド
     def get_filter_method(self):
         '''検索フィルターを取得する。 '''
         return self._filter_method
-
 
     @abstractmethod
     def valuefilter(self, element_attr):
@@ -47,9 +43,7 @@ class AbstractElementsFilter(ABC):
         #属性名は別途引数や辞書のキーで定義されている事が前提。
         pass
 
-
     def values_listfilter(self, element_attr):
         ''' 属性名に対して複数属性値をフィルタリング候補に用いる場合に定義 '''
         pass
-
 

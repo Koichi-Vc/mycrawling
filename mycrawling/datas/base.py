@@ -16,7 +16,6 @@ class BaseDataClass(ABC):
     def __init__(self):
         self.datamediator = DataMediator()
 
-    
     def sets_datamediator(self, instance):
         ''' mediator(仲介クラスインスタンス)をセットする '''
         self.datamediator = instance
@@ -28,7 +27,7 @@ class BaseDataClass(ABC):
     def get_field(self, field_name):
         if hasattr(self, field_name):
             return self.field_name
-    
+
     def get_fields(self, *field_names):
 
         result_dict = dict()
@@ -37,12 +36,9 @@ class BaseDataClass(ABC):
             if value:
                 result_dict[name] = value
         return result_dict
-    
 
     @classmethod
     def instance_factory(cls, *args, **kwargs):
 
         return cls(*args, **kwargs)
-    
-
 

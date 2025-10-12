@@ -48,7 +48,7 @@ class Ref_DataConfig():
         else:
             self.setting_conf = dict()
         self.default_ref_text_file = self.setting_conf.get('REFERENCE_TEXTS_FILES')
-        #setting_conf = self.setting_conf
+        
         setting_debug_log(debug=self.setting_conf.get('Debug'))#デバッグ用のログを設定する。
 
 
@@ -57,7 +57,6 @@ class Ref_DataConfig():
 
         parameters = FilesLoader.file_load(file, load_method=json_load, encoding='UTF-8')
         return parameters
-
 
     def get_conf_value(self, configparameter, select_attr=None, **kwargs):
         ''' setting_confから特定の設定情報を取得する。'''
@@ -85,13 +84,11 @@ class Ref_DataConfig():
         else:
             return config_value
     
-
     def has_config(self, configparameter):
         result = False
         if configparameter in self.setting_conf:
             result = True
         return result
-
     
     @classmethod
     def ref_dataconfig_factory(cls, parametor_jsonfile=None, parametor_dict=None, retainsettingconf=None):
@@ -114,12 +111,10 @@ class RetainSettingConf:
         )
         self.setting_conf = dict()
 
-
     @property
     def setting_file(self):
         return self._setting_file
 
-    
     @setting_file.setter
     def setting_file(self, import_path):
 
@@ -131,7 +126,6 @@ class RetainSettingConf:
             self.setting_module = get_module(import_path)
             self._setting_file = import_path
         
-
     def read_settings(self):
         ''' セッティングファイルを読み込む。 '''
         for setting_item in self.setting_tuple:
@@ -144,7 +138,6 @@ class RetainSettingConf:
 
         return self.setting_conf
     
-
     def get_setting_value(self, item_name):
         ''' 設定内容を参照する。 '''
         return self.setting_conf.get(item_name, None)

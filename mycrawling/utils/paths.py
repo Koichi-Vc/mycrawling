@@ -10,7 +10,6 @@ def join_current_dir(path, relative=False):
     path = Path(path)
     return current_path.joinpath(path)
 
-
 def join_path(*args):
     ''' パスを連結していく。 '''
     first = True
@@ -25,7 +24,6 @@ def join_path(*args):
         path = path.joinpath(path_obj)
     
     return path
-    
 
 def match_urls(url1, url2):
     '''

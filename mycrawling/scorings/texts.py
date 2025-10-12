@@ -10,11 +10,11 @@ from mycrawling.logs.debug_log import debug_logger
 
 
 class ScoringTexts:
-    """ テキストのscoringを実行する。 """
-    """ 
+    """ テキストのscoringを実行する。  
     all_text_scoringとbest_text_scoringの違いは、テキストコンテンツリストのスコアリング時に
     all_text_scoring全てのスコアを返し、best_text_scoringはリスト中の最高スコアのみを返す。
     """
+
     default_all_text_scorer = Indel.normalized_distance
     default_best_text_scorer = Indel.normalized_distance
     
@@ -30,7 +30,6 @@ class ScoringTexts:
             for score, ext_txt, query_txt in parse_method(self, texts, choices, scorer, *args, **kwargs):
                 yield score, ext_txt, query_txt  
         return wrapper
-
 
     def all_text_scoring(self, texts, choices, text_scorer=None, cutoff=None ,*args, **kwargs:dict['custom_initvalue': '']):
         ''' テキストリスト内全アイテムのスコアを順次返す。cutoff値外又は評価不能の場合はNoneを返す。'''
@@ -66,7 +65,6 @@ class ScoringTexts:
             debug_logger.debug(f'score: {score} | applicable_txt: {applicable_txt} | txt: {txt}')
             yield score, applicable_txt, txt
 
-
     def best_text_scoring(self, texts:List, choices, text_scorer=None, cutoff=None ,*args, **kwargs):
         ''' テキストリストの最高スコアを返す。cutoff値外又は評価不能の場合はNoneを返す。 '''
         
@@ -99,7 +97,6 @@ class ScoringTexts:
         return score, applicable_txt, text_item
 
 
-
 class ScoringTitleTexts(ScoringTexts):
     ''' title要素のスコア算出 '''
     title_scorer = rapidfuzz_WRatio
@@ -123,7 +120,6 @@ class ScoringTitleTexts(ScoringTexts):
     @ref_title_choices.setter
     def ref_title_choices(self, ref_texts:List):
         self._ref_title_choices = ref_texts
-    
 
     def scoring_title_elements(self, titles:List[Tag], cutoff=80, text_scorer=None, ):
         choices = self.ref_title_choices
@@ -154,5 +150,4 @@ class ScoringTitleTexts(ScoringTexts):
 
         debug_logger.debug(f'title_score:{title_score} | text: {text}')
         return title_score, text
-
 

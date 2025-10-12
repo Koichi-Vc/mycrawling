@@ -20,12 +20,9 @@ def create_module_import_path(file_path):
     debug_logger.debug(f'file_path: {file_path}')
     import_path = sub(rep, '.', path_dir)
     debug_logger.debug(f'import_path: {import_path}')
-
-
     joined_import_path = import_path + '.' + module if import_path != '.' else import_path+module
 
     return joined_import_path
-
 
 def split_module_path(module_path, split_place=None):
     ''' moduleインポートパスをfrom節とimport節に該当する様に分割する。'''
@@ -51,7 +48,6 @@ def split_module_path(module_path, split_place=None):
 
     return module_name, obj_name
 
-
 def get_module_attr(module, attr_path):
     ''' モジュールのオブジェクトをパスをたどって順番に取得していく '''
 
@@ -69,7 +65,6 @@ def get_module_attr(module, attr_path):
         logging.error(f'モジュールメンバーのインポート失敗。memberpath: {attr_path}')
         print_exc()
     return obj
-
 
 def get_module(module_path_name, split_place=None):
     ''' moduleを動的にインポートする。'''
@@ -115,5 +110,4 @@ def get_module(module_path_name, split_place=None):
         return obj
     else:
         return module 
-
 

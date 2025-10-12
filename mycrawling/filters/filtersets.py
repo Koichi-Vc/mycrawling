@@ -5,12 +5,12 @@ from mycrawling.logs.debug_log import debug_logger
 
 
 class Elements_Filterset(SelectListOperator):
-    '''beautifulsoup.find, find_allに渡すフィルターセットを生成するクラス '''
     '''
-    インスタンス化時にフィルターメソッドを保持しfind, find_allへ実際に渡す。
-    <フィルターとしての使い方>
-    インスタンス自体をフィルターとして使うか、又はelements_filtersメソッドをフィルターとして使う。
+    beautifulsoup.find, find_allに渡すフィルターセットを生成するクラス 
     
+    インスタンス化時にフィルターメソッドを保持しfind, find_allへ実際に渡す。
+    フィルターとしての使い方:
+        インスタンス自体をフィルターとして使うか、又はelements_filtersメソッドをフィルターとして使う。
     '''
 
     def __init__(self, *filter_method_list, list_operator_type=any, custom_list_operator=None):
@@ -32,7 +32,6 @@ class Elements_Filterset(SelectListOperator):
                 self.filters.append(method)
         debug_logger.debug(f'filters: {self.filters}')
 
-
     def __call__(self, element):
         ''' 保持した全てのfilter_methodをelementに実行し結果リストを論理演算する。 '''
         #メソッドでは無くクラスインスタンスそのものを渡す場合に__call__が働く。
@@ -42,13 +41,11 @@ class Elements_Filterset(SelectListOperator):
         result = self.list_operator(result_list)
         return result
 
-
     def add_filter(self, filter_method):
         '''フィルターを追加する。'''
         if not callable(filter_method):
             raise TypeError(f'methodはフィルターとして機能しません。| {filter_method}')
         self.filters.append(filter_method)
-
 
     def elements_filters(self, element):
         ''' フィルターセットを実行。 '''
@@ -57,12 +54,10 @@ class Elements_Filterset(SelectListOperator):
         result = self.list_operator(result_list)
         return result
 
-
     @classmethod
     def filterset_factory(cls, *filter_method_list, list_operator_type=any, custom_list_operator=None, **kwargs):
         ''' filtersetのインスタンスを生成する。 '''
         return cls(*filter_method_list, list_operator_type, custom_list_operator, **kwargs)
-        
 
 
 def filterset_factory(createfilter_cls, filterset_cls= Elements_Filterset, createfilter_factory_param:List[Dict]=[dict()], **kwargs):
@@ -80,12 +75,11 @@ def filterset_factory(createfilter_cls, filterset_cls= Elements_Filterset, creat
     '''
     debug_logger.debug(f'createfilter_cls: {createfilter_cls} | filterset_cls: {filterset_cls}')
     debug_logger.debug(f'createfilter_factory_param: {createfilter_factory_param}')
+    
     instance_list = []
     
     if isinstance(createfilter_factory_param, dict):
         createfilter_factory_param = [createfilter_factory_param]
-
-
     
     if not callable(createfilter_cls) or not callable(filterset_cls):
         return instance_list

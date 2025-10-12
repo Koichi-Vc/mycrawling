@@ -5,8 +5,9 @@ from mycrawling.logs.debug_log import debug_logger
 
 
 class BaseDataMediator(ABC):
-    ''' DataMediatorクラスの抽象基底クラス '''
-    ''' 仲介クラスを定義するにあたり、以下のメソッドを用いる。 '''
+    ''' DataMediatorクラスの抽象基底クラス。
+    仲介クラスを定義するにあたり、以下のメソッドを用いる。 
+    '''
 
     @abstractmethod
     def get_attr(self, *args, **kwargs):
@@ -19,7 +20,6 @@ class BaseDataMediator(ABC):
     @abstractmethod
     def notify(self, *args, **kwargs):
         pass
-
 
 
 class DataMediator(BaseDataMediator):
@@ -74,8 +74,6 @@ class DataMediator(BaseDataMediator):
         else:
             self.search_notify_to_filter = self.filter_isinstance_or_exact_match
 
-       
-
     def register_object(self, objects_dict:Dict, override=True):
         '''
         datamediatorインスタンスへオブジェクトをkey-valueで登録する。
@@ -95,8 +93,6 @@ class DataMediator(BaseDataMediator):
                 self.registry_notify_objects[key] = obj_value
             else:
                 self.registry_notify_objects.setdefault(key, obj_value)
-
-
 
     def find_all_notification(self, object_name):
         ''' 辞書値を元に登録しているクラスとインスタンスをフィルター検索。戻り値はリスト '''
@@ -121,8 +117,6 @@ class DataMediator(BaseDataMediator):
                 ]
         return searched_obj
 
-
-
     def find_notification(self, object_name):
         ''' 辞書値を元に登録しているクラスとインスタンスを検索し、該当した最初の値を返す。 '''
         ''' クラスとインスタンスを辞書値で検索し該当した最初のオブジェクトを返す。'''
@@ -138,8 +132,6 @@ class DataMediator(BaseDataMediator):
         if searched_obj:
             searched_result = searched_obj[0]
         return searched_result      
-
-    
 
     def search_notify_object(self, object_name:Union[str, type], **kwargs):
         ''' registry_notify_objectsへ登録済みのオブジェクトを名前検索する。 '''
@@ -166,7 +158,6 @@ class DataMediator(BaseDataMediator):
         
         return objects
 
-
     def get_attr(self, object_name, attr_value):
         '''object_nameを送信先の中(registry_notify_objects)から検索し、指定した属性を返す。'''
         '''
@@ -184,7 +175,6 @@ class DataMediator(BaseDataMediator):
             debug_logger.debug(f'instance: {value}')
         return value
 
-
     def get_instance(self, instance_name):
         ''' 登録済みのインスタンスを取得する。 '''
 
@@ -193,12 +183,10 @@ class DataMediator(BaseDataMediator):
         if instance:
             return instance
 
-
     def has_registry_obj(self, name):
         ''' 登録済みのオブジェクトの中に対象の名前が含まれているか評価する。'''
         return name in self.registry_notify_objects.keys()
     
-
     def notify(self, attr_value, **kwargs):
 
         '''
@@ -243,5 +231,4 @@ class DataMediator(BaseDataMediator):
                     notify_to_attr_method(attr_value)
                 else:
                     instance.datamediator_update(attr_value)
-
 

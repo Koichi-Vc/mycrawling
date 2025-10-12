@@ -14,14 +14,12 @@ class Attr_RobotsMetaElements_Parse(SearchMetaElements):
 
     def __init__(self, attrs_value: Dict = None, filter_method=None, re_instr_disallow_list=None, re_instr_allow_list=None, **query_kwargs):
         name = 'robots'
-        #attrs_value.setdefault('name', 'robots')
         self.detect_instraction_to_robots = set()#検出されたロボットへの指示を格納。
 
         self.re_instr_disallow_list = self.default_re_instr_disallow_list if re_instr_disallow_list is not None else list()#robotsの禁止を意味する参照値を保持
         self.re_instr_allow_list = self.default_re_instr_allow_list if not re_instr_allow_list else re_instr_allow_list#robotsの許可を意味する参照値を保持
 
         super().__init__(name, attrs_value, filter_method, **query_kwargs)
-
 
     def detect_instraction(self, elements):
         ''' 検索結果からcontents属性値を抽出し、robotへの命令を取得する。 '''        
@@ -33,8 +31,7 @@ class Attr_RobotsMetaElements_Parse(SearchMetaElements):
                 for value in content_values:
                     self.detect_instraction_to_robots.add(value)
         return self.detect_instraction_to_robots
-    
-    
+
     def eval_instraction_to_robots(self, re_instr_disallow_list:List[str]=None, **kwargs):
         ''' 検出されたmeta robotsに対する指示(content)を評価する。'''
         contain_instraction = dict()#含まれていた指示
@@ -49,7 +46,6 @@ class Attr_RobotsMetaElements_Parse(SearchMetaElements):
             contain_instraction[detect_instr] = result
 
         return contain_instraction
-
 
     def is_allowing_robots(self, contain_instraction:List):
         ''' bool型アイテムリストのrobots許可を評価する。 '''
@@ -67,12 +63,10 @@ class EvalRobotsMetaElements(Attr_RobotsMetaElements_Parse):
     def __init__(self, attrs_value = None, filter_method=None, re_instr_disallow_list=None, re_instr_allow_list=None, **query_kwargs):
         super().__init__(attrs_value, filter_method, re_instr_disallow_list, re_instr_allow_list, **query_kwargs)
 
-
     def __call__(self, soup_obj, **kwargs):
         elements = super().__call__(soup_obj, **kwargs)
         
         self.detect_instraction_to_robots = self.detect_instraction(elements)#meta
         contain_instraction = self.eval_instraction_to_robots()
         return self.is_allowing_robots(contain_instraction.items())
-    
 

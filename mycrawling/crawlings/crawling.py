@@ -16,9 +16,7 @@ class MyCrawlingSearch():
     default_datamediator = get_module(ref_dataconfig.get_conf_value('USE_MEDIATOR_PATH', default=None))#デフォルトで使用するdatamediatorをsettingから取得する。
     CRAWL_DELAY_TIME = ref_dataconfig.get_conf_value('CRAWL_DELAY_TIME', default=5)
     import_classes_parameters = {
-
     }
-    
 
     def __init__(self, driver_manager, input_url, current_url=None, crawl_delay_time=None, robotmanager=None, **kwargs):
         self.driver_manager = driver_manager
@@ -50,11 +48,9 @@ class MyCrawlingSearch():
         self.data_frame = list()
         self.__window_num = 3#変更非推奨。
 
-
     @property
     def time_sleep(self):
         return self.__time_sleep
-    
 
     @time_sleep.setter
     def time_sleep(self, crawl_delay):
@@ -64,16 +60,13 @@ class MyCrawlingSearch():
         else:
             self.__time_sleep = 5
 
-
     def get_time_sleep(self, time_sleep_value):
         ''' datamediatorを通した待機時間の取得 '''
 
         self.__time_sleep = time_sleep_value
 
-
     def datamediator_update(self, value):
         self.is_true_textwords.append(value)
-    
 
     def myscraping(self, *args, **kwargs):
         ''' 全体の実行 '''
@@ -134,6 +127,7 @@ class MyCrawlingSearch():
             logging.warning('スクレイピング不可又はrobots.txt参照エラーのサイト')
             self.driver_manager.error_message.append('このサイトはスクレイピング出来ません。')
 
+
         if self.robotmanager.error:
             for e in self.robotmanager.error:
                 self.driver_manager.error_message.append(e)
@@ -145,7 +139,6 @@ class MyCrawlingSearch():
         if (end_time - start_time) >= 120:
             logging.warning(f'Delayed execution time.許容されるクローリング時間を超過している。| input_url: {self.input_url} | ')
             return
-
 
     def __window_handle(self):
         window_num = self.__window_num
@@ -160,7 +153,6 @@ class MyCrawlingSearch():
             self.driver.switch_to.window(window_handles[-1])
             self.driver_wait.until(ec.presence_of_all_elements_located((By.CSS_SELECTOR, "*")))
             time.sleep(1)
-
 
     def Crawling_pages(self, absol_url:list, rel_url:list,*args, **kwargs):
         """
@@ -238,7 +230,8 @@ class MyCrawlingSearch():
                     anchor_urls = self.searchanchorelements(soup_obj=self.driver)
                     absolute_href, relative_url = anchor_urls
                     debug_logger.debug(f'visited_page: {self.searchanchorelements.visited_page}')
-                    debug_logger.debug(f'searched_page: {self.searchanchorelements.searched_urls}')                    
+                    debug_logger.debug(f'searched_page: {self.searchanchorelements.searched_urls}')
+
                     if absolute_href and relative_url:
                         absolute_url_list.append(absolute_href)
                         relative_url_list.append(relative_url)
@@ -258,6 +251,4 @@ class MyCrawlingSearch():
             counta += 1
             if brakes:
                 break
-
-
 

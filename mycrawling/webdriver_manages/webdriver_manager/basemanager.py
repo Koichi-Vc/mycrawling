@@ -5,8 +5,7 @@ from mycrawling.logs.debug_log import debug_logger
 
 
 class BasebWebDriverContextManager():
-    ''' webdriverのセッティング、起動、終了を管理するベースクラス'''
-    '''
+    ''' webdriverのセッティング、起動、終了を管理するベースクラス。
     メソッド:
         setting_service:
             Serviceクラスをインスタンス化するためのメソッド。
@@ -41,10 +40,8 @@ class BasebWebDriverContextManager():
         self.wait = WebDriverWait(self.driver, self.timeout)
         return self  
 
-
     def __exit__(self, exc_type, exc_value, exc_tb):
         self.driver.quit()
-
 
     def driver_get(self, *args, **kwargs):
         self.driver.get(*args, **kwargs)
@@ -58,13 +55,10 @@ class BasebWebDriverContextManager():
             raise TypeError('Serviceクラスが無効か、設定されていません。service_classに設定してください。')
         return service_instance
 
-
     def show_service_instance(self):
         ''' Serviceインスタンスを返す'''
         return self.service_instance
 
-
     def add_option(self, *values):
         pass
-
 

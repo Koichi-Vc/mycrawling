@@ -8,7 +8,6 @@ import logging
 from mycrawling.logs.debug_log import debug_logger
 
 
-
 class SearchElementFilterManager(BaseFilterManage):
     '''
     フィルタークラスとパラメータのインスタンス化を行う。
@@ -39,7 +38,6 @@ class SearchElementFilterManager(BaseFilterManage):
 
         self.filter_instance_obj_dict = dict()#タグ別(タグ未指定の場合、キーはNone)に生成したフィルターを格納。
 
-
     def select_filtercls_and_params(method):
         ''' インスタンスに登録済みのフィルターを作成する為のクラスと、パラメータを指定して取得する。'''
 
@@ -55,7 +53,6 @@ class SearchElementFilterManager(BaseFilterManage):
 
             return method(self, *createfilter_arguments, createfilter_cls=createfilter_cls_obj, tag_name=tag_name, **kwargs)
         return wrapper
-    
 
     def create_element_filter(self, arguments,createfilter_cls, **kwargs):
         ''' 要素全体に対するフィルターを取得する。これで生成されるフィルターはBeautifulsoup.find_allの第一引数に渡される
@@ -64,7 +61,6 @@ class SearchElementFilterManager(BaseFilterManage):
         element_filter = self.filter_instantiation(arguments, createfilter_cls=createfilter_cls, **kwargs)
         filter_obj = self.executable_filter(element_filter)
         return filter_obj
-    
 
     @select_filtercls_and_params
     def create_attrs_filters(self, *targets, createfilter_cls, **kwargs):
@@ -107,7 +103,6 @@ class SearchElementFilterManager(BaseFilterManage):
         debug_logger.debug('stop for roop')
         self.filter_instance_obj_dict[tag_name].update(filter_instance_dict)
 
-
     def executable_filter(self, obj):
         ''' インスタンスがフィルターとして実行可能か評価する。Falseだった場合フィルターの取得を試みる。'''
         ''' もし実行可能なフィルター取得に失敗した場合は警告ログを出力する。'''
@@ -121,7 +116,6 @@ class SearchElementFilterManager(BaseFilterManage):
             filter_obj = obj
             logging.warning('インスタンスからフィルターを取得してください。')        
         return filter_obj
-    
 
     def filter_instantiation(self,*arguments, createfilter_cls, **kwargs):
         ''' フィルター生成クラスにargumentsに格納されているパラメータを使ってインスタンス化を行う。'''
@@ -143,7 +137,6 @@ class SearchElementFilterManager(BaseFilterManage):
         debug_logger.debug(f'filterset: {filter_set}')
         return filter_set
 
-
     def get_filter_instance(self, tag_name, **kwargs):
         ''' インスタンス化したフィルターオブジェクトを指定して取得する。 '''
         
@@ -164,7 +157,6 @@ class SearchElementFilterManager(BaseFilterManage):
         if attr in filter_obj:
             #タグ名で取得した内属性名でさらに対象を絞って検索、取得する。
             return filter_obj.get(attr)
-
 
     @classmethod
     def create_filter(cls, tag_name, select_class, filterset_cls=None, filter_parameters:Dict=None, **kwargs):

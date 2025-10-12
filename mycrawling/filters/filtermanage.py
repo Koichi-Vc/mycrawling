@@ -9,7 +9,6 @@ CREATEFILTERSETS_CLS = ref_dataconfig.get_conf_value('CREATEFILTERSETS_CLS', def
 class BaseFilterManage():
     ''' 要素検索フィルター用のパラメータハンドラクラスとフィルター作成クラスの管理・インスタンス化、
     を制御する為のインターフェース。
-    
     settingファイルからフィルター生成クラスとフィルターセット生成クラスの情報を取得し、ロードする。
     '''
    
@@ -21,8 +20,7 @@ class BaseFilterManage():
         if createfilter_cls_path:
             createfilter_cls_obj = get_module(createfilter_cls_path) 
         
-        return createfilter_cls_obj
-    
+        return createfilter_cls_obj  
 
     def get_createfilter_classes(self, *select_class_keys):
         ''' 複数のフィルター作成クラスを取得する。select_classesを指定しない場合、settingファイル
@@ -42,7 +40,6 @@ class BaseFilterManage():
 
         return self.createfilter_cls_obj_dict
 
-
     def has_loaded_createfilter_cls(self, name):
         '''  nameのフィルター生成クラスがインポート済みであるか判定する。'''
         
@@ -53,7 +50,6 @@ class BaseFilterManage():
         elif name in self.createfilter_cls_obj_dict:
             result = True
         return result
-
 
     def get_filterset_cls(self, filterset_cls_name=None):
         ''' フィルターセットを生成するクラスを取得 '''
@@ -66,5 +62,4 @@ class BaseFilterManage():
             self.filterset_cls_obj = get_module(filterset_cls_path)
 
         return self.filterset_cls_obj
-
-    
+ 

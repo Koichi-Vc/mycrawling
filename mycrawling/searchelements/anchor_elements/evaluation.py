@@ -26,12 +26,9 @@ class EvaluateAnchorElements(EvaluateUrls):
         self.is_true_url_set = set()#urlパス自体の評価がTrue判定になったurlを絶対パスで保持
         self.is_true_url_set_notify_to = 'pageevaluation'
 
-
-
     @property
     def is_true_url_set(self):
         return self.__is_true_url_set
-    
 
     @is_true_url_set.setter
     def is_true_url_set(self, values):
@@ -52,7 +49,6 @@ class EvaluateAnchorElements(EvaluateUrls):
                 notification_to= self.is_true_url_set_notify_to
                 )
 
-
     @classmethod
     def create_instance(cls, *args, **kwargs):
         if args or kwargs:
@@ -61,13 +57,11 @@ class EvaluateAnchorElements(EvaluateUrls):
             return cls(**cls.default_parameter)
         else:
             return cls()
-        
 
     def del_item_is_true_url_set(self, *items):
         for item in items:
             if item in self.__is_true_url_set:
                 self.__is_true_url_set.discard(item)
-
     
     def evaluate_text_and_href(self, elements, current_url:str, **kwargs):
         ''' text_and_urls_scoringで算出されたスコアを元にテキスト/href属性値を評価する。 '''
@@ -120,5 +114,4 @@ class EvaluateAnchorElements(EvaluateUrls):
                     debug_logger.debug(f'evaluated_hrefs: {evaluated_hrefs}')
                     self.is_true_url_set = absol_href
                 yield absol_href, rel_href
-
 

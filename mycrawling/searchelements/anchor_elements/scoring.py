@@ -23,7 +23,6 @@ class AnchorElementsScorings(ElementsScoring, ScoringUrls):
         self.href_statistics_cutoff = kwargs.pop('hrefssocre_sts_cutoff', 60)
         super().__init__(ref_text, **kwargs)
 
-
     @property
     def href_scorer(self):
         return self.__href_scorer
@@ -31,7 +30,6 @@ class AnchorElementsScorings(ElementsScoring, ScoringUrls):
     @property
     def reference_urls(self):
         return self.__reference_urls
-
 
     @reference_urls.setter
     def reference_urls(self, ref_hrefs):
@@ -44,11 +42,9 @@ class AnchorElementsScorings(ElementsScoring, ScoringUrls):
             for text in ref_hrefs:
                 self.__reference_urls.add(text)
 
-
     def urls_text_scoring(self, texts, choices, scorer, cutoff, return_score_only=True, *args, **kwargs):
-        """ a要素のテキスト・href属性値をスコアリング。 """
-        """ ScoringUrlsクラスでurls_text_scoringの戻り値(generator)を展開している。 """
-        """
+        """ a要素のテキスト・href属性値をスコアリング。
+        ScoringUrlsクラスでurls_text_scoringの戻り値(generator)を展開している。 
         return_score_only:
             スコア値のみを返す場合はTrue, (score, applicable_txt, txt)で返す場合はFalse
         """
@@ -63,8 +59,6 @@ class AnchorElementsScorings(ElementsScoring, ScoringUrls):
             #スコアのみを返す場合はTrue
             text_scores = text_scores[0] 
         return text_scores
-
-
 
     def urls_scoring(self, urls, scoring_urls_attrs:List[str]=None, select_param=0, **kwargs):
         '''
@@ -98,8 +92,6 @@ class AnchorElementsScorings(ElementsScoring, ScoringUrls):
             debug_logger.debug(f'statistics_value:{statistics_value}')
 
         return statistics_value
-    
-
 
     def text_and_urls_scoring(self, elements, **kwargs):
         ''' text/href属性値のスコアリング '''
@@ -125,5 +117,4 @@ class AnchorElementsScorings(ElementsScoring, ScoringUrls):
             href_score_list.append(hrefs_score)
             href_list.append(href) 
         return text_score_list, href_score_list, href_list
-
 

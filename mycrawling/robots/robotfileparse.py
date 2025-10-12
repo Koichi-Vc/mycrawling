@@ -8,8 +8,7 @@ from mycrawling.logs.debug_log import debug_logger
 
 
 class RobotFileparseManager():
-    ''' robots.txtファイルの解析を行う '''
-    '''
+    ''' robots.txtファイルの解析を行う。
     error_loghandling_obj:
         エラー処理を行うオブジェクトを受け取る。
 
@@ -18,9 +17,7 @@ class RobotFileparseManager():
     '''
     #default_logging_formatter = '%(asctime)s | %(created)s | %(name)s | %(levelname)s | robots_url: %(robots_url)s | %(message)s | '
 
-
     conf_message_val = 'ROBOTS_ERROR_MESSAGE_DICT'
-
 
     def __init__(self, rp=None, useragent='*', prohibition_url_list=None, optional_data_obj=None, custom_message_dict=None, **kwargs):
 
@@ -114,7 +111,6 @@ class RobotFileparseManager():
         #クローリングの待機時間を取得する。
         return self.__crawl_delay_time
 
-
     @crawl_delay_time.setter
     def crawl_delay_time(self, delay_time):
 
@@ -127,7 +123,6 @@ class RobotFileparseManager():
                 notification_to=self.notify_to_instance,
                 notify_to_attr=self.notify_to_attr
                 )
-
 
     def url_extract(self, urls):
         ''' urlをparseし、domainを抽出、robots.txtへのパスを生成 '''
@@ -145,8 +140,6 @@ class RobotFileparseManager():
         robots_url = domain + '/robots.txt'
         return parsed_url, domain, domain_name, robots_url
 
-
-    
     def request_check(self, robots_url):
         ''' robots.txtファイルへの参照が可能か評価'''
         
@@ -162,7 +155,6 @@ class RobotFileparseManager():
             session = True
 
         return session
-
 
     def set_url_fetch(self, urls, robots_url):
         ''' robots.txtパスをセットして参照・urlへの訪問許可を評価。 '''
@@ -180,7 +172,6 @@ class RobotFileparseManager():
         if urls not in self.parse_dict:
             self.parse_dict[urls] = self.result
         return self.result
-
 
     def robots_parse(self, urls):
         

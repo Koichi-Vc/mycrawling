@@ -4,6 +4,7 @@ import dataclasses
 @dataclasses.dataclass()
 class PageScoreStatisticsSet():
     ''' スコアから算出した統計情報を保持しておく為のクラス。 '''
+
     instance_reqd_fields = [
         'reqd_detection_primary_texts',
         'reqd_detection_highscore_texts',
@@ -35,11 +36,9 @@ class PageScoreStatisticsSet():
         
         return self.__evaluated_statistics_socre
 
-
     def add_evalated_text_score_statistics(self, *evaluated_values):
         for attrs_name, value in zip(*[self.evaluated_text_score_statistics_attrs_name, evaluated_values]):
             self.__evaluated_statistics_socre.setdefault(attrs_name, value)
-    
 
     def text_score_statistics_eval(self, instance):
         ''' 要素内の子要素に含有していた全ての高類似度テキスト '''
@@ -78,7 +77,6 @@ class PageScoreStatisticsSet():
             )
         
         return self.evaluated_statistics_socre
-
 
     @classmethod
     def create_dataclass(cls, *args, **kwargs):

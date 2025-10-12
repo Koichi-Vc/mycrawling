@@ -10,8 +10,6 @@ class ScoreEvaluations:
         ''' 数値符号をアルゴリズムに合わせて操作する'''
 
         def wrapper(self, scorer=None, score=None, *args, **kwargs):
-
-
             debug_logger.debug(f'before-- func: {func} | args: {args}| kwargs:{kwargs} | before; scorer: {scorer}| score: {score} ')
             
             scorer_type = None
@@ -40,7 +38,6 @@ class ScoreEvaluations:
 
         return wrapper
 
-    
     @__num_symbol_decorator
     def score_cutoff_init_(self, scorer_type=None, score=None, *args, **kwargs):
         ''' socreの初期値をアルゴリズムに合わせて定義する'''
@@ -57,7 +54,6 @@ class ScoreEvaluations:
         else:
             result = 0
         return result
-
 
     @__num_symbol_decorator
     def evaluate_score(self, scorer_type=None, score=None, *args, **kwargs):

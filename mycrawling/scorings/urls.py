@@ -7,7 +7,6 @@ from .texts import ScoringTexts
 from mycrawling.logs.debug_log import debug_logger
 
 
-
 class ScoringUrls(ScoringTexts):
     ''' urlのスコア算出 '''
 
@@ -22,7 +21,6 @@ class ScoringUrls(ScoringTexts):
 
         return text_scoring_method
 
-
     def urls_text_scoring(self, texts, choices, scorer, cutoff=None, *args, **kwargs):
         ''' all_text_scoringの戻り値(generator)を展開して返す '''
 
@@ -33,7 +31,6 @@ class ScoringUrls(ScoringTexts):
         text_scores = self.all_text_scoring(texts, choices, scorer, cutoff, *args, **kwargs)
         debug_logger.debug(f'text_scores:{text_scores}')
 
-
         for score, appl_txt, txt in text_scores:
 
             score_value.append(score)
@@ -41,7 +38,6 @@ class ScoringUrls(ScoringTexts):
             text_list.append(txt)
 
         return score_value, applicable_texts, text_list
-
 
     #scoringメソッドを用いた基本的なurlsのスコア付けを行う。
     def urls_scoring(self, urls_attributes:list, choices_url_text, scoring_method, scorer=None, score_cutoff=None, **kwargs):
@@ -74,11 +70,9 @@ class ScoringUrls(ScoringTexts):
         debug_logger.debug(f'urls_attributes: {urls_attributes} | urls_score: {urls_score}')
         return urls_score 
 
-
     @classmethod
     def urls_statistics(cls, urls_score:List, statistics):
-        ''' urlsのパスを構成するテキストのスコア統計を評価する。'''
-        '''
+        ''' urlsのパスを構成するテキストのスコア統計を評価する。
         <staticticsの値>
             'ave': 各スコアの平均スコア
             'median': 各スコアの中央値
@@ -110,5 +104,4 @@ class ScoringUrls(ScoringTexts):
             result = np.sum(score_list)
             
         return result
-
 

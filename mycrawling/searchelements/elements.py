@@ -25,7 +25,6 @@ class BaseSearchElements(ElementsParse):
                 find_allが受け取る引数をまとめて指定
                 !同じキーがattr_nameに存在していた場合attr_name側キーが優先される。
         '''
-
         
         if 'name' in query_kwargs:
             #キーワード引数としてnameは指定出来ない。
@@ -47,7 +46,6 @@ class BaseSearchElements(ElementsParse):
 
         super().__init__(webdriver=webdriver, parser_name=parser_name)
 
-
     def __call__(self, soup_obj, **kwargs):
         debug_logger.debug(f'tag:{self.tag} | attrs: {self.attrs_value} | query: {self.query_kwargs}')        
         soup_obj = self.element_parse(soup_obj, **kwargs)#BeautifulSoupオブジェクトを解析する。
@@ -55,8 +53,6 @@ class BaseSearchElements(ElementsParse):
         elements = (
             elem for elem in soup_obj.find_all(self.tag, self.attrs_value, string=self.string, **self.query_kwargs))
         return elements
-
-
 
     def find_elements(self, soup_obj:bs4.BeautifulSoup):
         #処理は__call__と同じであるが、soup_objはbs4.BeautifulSoupのみを受け取る。

@@ -8,13 +8,12 @@ from mycrawling.logs.debug_log import debug_logger
 class EvaluateUrls(ParseUrls, ScoreEvaluations):
     ''' urlスコアに基づいて評価。 '''
 
-
     def evaluate_hostname(self, current_url, urls):
-        ''' urlのhostnameとcurrent_urlのhostnameを比較 '''
-        ''' 対象urlのhostnameとcurrent_hostnameが一致か又は対象urlが相対urlパスだった
-        場合、同じサイト内urlとしてTrueを返す。 '''
-
-        ''' 同じサイト内urlである事を前提にurlパス等のスコア評価をする場合に用いる。  '''
+        ''' 
+        urlのhostnameとcurrent_urlのhostnameを比較。
+        対象urlのhostnameとcurrent_hostnameが一致か又は対象urlが相対urlパスだった場合、同じサイト内urlとしてTrueを返す。 
+        
+        '''
 
         result = False
         if current_url == urls:
@@ -34,7 +33,6 @@ class EvaluateUrls(ParseUrls, ScoreEvaluations):
         
         return result
     
-
     def evaluate_score(self, scorer_type=None, score=None, *args, **kwargs):
 
         #urlsのhostnameとcurrent_urlのhostnameの一致評価。Noneの場合hostnameを評価対象に含まない。

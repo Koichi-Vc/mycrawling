@@ -10,14 +10,12 @@ from mycrawling.logs.debug_log import debug_logger
 
 class PageScraping():
 
-    
     def __init__(self, df=None, text_parse_method=None):
         self.company_overview = None
         self.col_median_list = deque()
         self.df = df if df else list()
         self.text_parse_method = text_parse_method
-        
-    
+
     def column_count(self, company_overview):
         '''各項目の列数をカウントし、中央値を算出する。改行の基準を中央値にする。'''
         
@@ -64,7 +62,6 @@ class PageScraping():
             else:
                 self.col_median_list.append(1)
         #return num_column
-     
     
     def table_element_scrape(self, element, col_median, company_list, index, text_line_blake):
         '''table要素のスクレイピングを行う。'''
@@ -112,11 +109,9 @@ class PageScraping():
                 tag_name = 'table'
                 text_line_blake(tr, tag_name, index, row_head=tr[0])
 
-
     def dl_element_scrape(self, element, col_median, company_list, index, text_line_blake):
         ''' dlなどの要素をスクレイピングを行う。 '''
 
-        
         element_dt = element.find_all('dt')
         element_dd = element.find_all('dd')
         for dt, dd in zip(element_dt, element_dd):
@@ -144,7 +139,6 @@ class PageScraping():
                     tag_name = 'dl'
                     text_line_blake(txt, tag_name, index, row_head=dt_txt)
 
-
     def comment_scrape(self, element, col_median, company_list, index, text_line_blake):
         '''コメントアウトのスクレイピング '''
         
@@ -158,7 +152,6 @@ class PageScraping():
                 index.append(head)
             else:
                 text_line_blake(comment,'', index, row_head='')
-
 
     def other_elements_scrape(self, element, col_median, company_list, index, reference_score_texts, transpose=False):
 
@@ -226,8 +219,7 @@ class PageScraping():
         if transpose:
             debug_logger.debug('転置実行')
             company_list = list(zip(*company_list))
-
-            
+ 
     def element_scrape(self, company_overview, reference_score_texts:list):
         """対象ページをスクレイピングする。"""
         
@@ -256,7 +248,6 @@ class PageScraping():
                 index.append(row_head)
                 company_list.append(tx)
                 tx = []
-
 
         self.column_count(company_overview)
         
@@ -319,5 +310,4 @@ class PageScraping():
         debug_logger.debug(f'element_scrape()のメモリリソース: current: {current/10**6}MB; peak: {peak/10**6}MB;\n詳細値: current: {current}; peak: {peak}')      
         
         return self.df
-
 
