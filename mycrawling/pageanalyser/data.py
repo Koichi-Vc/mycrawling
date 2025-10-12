@@ -35,6 +35,7 @@ class PageScoreStatisticsSet():
         
         return self.__evaluated_statistics_socre
 
+
     def add_evalated_text_score_statistics(self, *evaluated_values):
         for attrs_name, value in zip(*[self.evaluated_text_score_statistics_attrs_name, evaluated_values]):
             self.__evaluated_statistics_socre.setdefault(attrs_name, value)

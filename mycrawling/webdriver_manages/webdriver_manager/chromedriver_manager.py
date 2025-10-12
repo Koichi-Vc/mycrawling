@@ -5,7 +5,6 @@ from .basemanager import BasebWebDriverContextManager
 from mycrawling.utils.imports_module import get_module
 import chromedriver_binary
 
-''' chromiumバージョンのウェブドライバー起動モジュールを作成する。'''
 
 remote_debugging_pipe = '--remote-debugging-pipe'
 

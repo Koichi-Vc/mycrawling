@@ -12,7 +12,6 @@ class ElementsScoring(ScoringTexts):
         self.reference_texts = ref_text
         self.text_scorer = Indel.normalized_distance
         self.text_score_cutoff = kwargs.pop('text_score_cutoff', 0.3)
-        #self.datamediator = kwargs.pop('datamediator', None)
 
 
     @property
@@ -31,6 +30,7 @@ class ElementsScoring(ScoringTexts):
     @reference_texts.setter
     def reference_texts(self, texts):
         self.__reference_texts = texts
+    
     
     def all_textcontent_scoring(self, texts, choices, scorer, cutoff, *args, **kwargs):
         """ 要素のテキストアイテムを順次スコアリングして返す。"""

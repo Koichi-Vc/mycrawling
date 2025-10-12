@@ -113,6 +113,7 @@ class PageScorings(PageTextContentsParse, ScoringTexts):
                 if value not in self.__primary_text_list:
                     self.__primary_text_list.append(value)
 
+
     @property
     def high_score_text_list(self):
         return self.__high_score_text_list
@@ -150,7 +151,7 @@ class PageScorings(PageTextContentsParse, ScoringTexts):
             choices=self.all_reference_text_list,
             text_scorer=text_scorer,
             cutoff= self.text_boundary
-            )#contents_parser⇒self     
+            )   
         
         for score, ext_txt, txt in evaluated_text:
             debug_logger.debug(f'score: {score} | txt: {txt} | ext_txt: {ext_txt}')

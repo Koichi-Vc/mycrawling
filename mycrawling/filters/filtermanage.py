@@ -15,7 +15,6 @@ class BaseFilterManage():
    
     def get_createfilter_cls(self, select_cls_key=None):
         ''' フィルターを作成するクラスをsettingから取得しインポートする。 '''
-        #createfilter_cls_nameに何も渡さない場合、メソッドはcreatefilter_cls_name属性を指定しようとする。
 
         createfilter_cls_obj = None
         createfilter_cls_path = CREATEFILTER_CLS.get(select_cls_key, None)

@@ -47,6 +47,7 @@ class AbstractElementsFilter(ABC):
         #属性名は別途引数や辞書のキーで定義されている事が前提。
         pass
 
+
     def values_listfilter(self, element_attr):
         ''' 属性名に対して複数属性値をフィルタリング候補に用いる場合に定義 '''
         pass

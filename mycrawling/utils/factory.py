@@ -179,7 +179,6 @@ class Factory(AbstractFactory):
                 instance = module(**parameter)
                 data_cls_instances[cls_name] = instance
             
-                #register_to_datamediatorに担わせるかどうか検討中。
         if add_mediator is True:
             self.register_to_datamediator(override=override, **data_cls_instances)
         
@@ -194,7 +193,8 @@ class Factory(AbstractFactory):
 
     def get_param_json_file(self, file):
         ''' データクラスインスタンス用パラメータをまとめたjsonファイルを読み込む '''
-        #parameters = ref_files_load(file, json_load, encoding='UTF-8')
+
         parameters = FilesLoader.file_load(file, load_method=json_load, encoding='UTF-8')
         return parameters
+
 

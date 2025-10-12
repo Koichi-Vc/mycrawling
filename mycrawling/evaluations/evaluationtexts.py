@@ -11,7 +11,7 @@ class EvaluateTexts(ScoreEvaluations, SelectListOperator):
     scoring_texts = ScoringTexts()
 
 
-    def texts_is_contain(self, texts:Union[List, str], reference, **kwargs):
+    def texts_is_contain(self, texts:Union[List, str], reference):
         ''' テキストと参照テキスト(reference)との完全一致、部分一致をbool型で評価する '''
         
         debug_logger.debug(f'texts: {texts} | reference: {reference}')
@@ -30,7 +30,7 @@ class EvaluateTexts(ScoreEvaluations, SelectListOperator):
             yield txt, result
 
 
-    def collect_contain_texts(self, texts, reference_texts, **kwargs):
+    def collect_contain_texts(self, texts, reference_texts):
         ''' テキストコンテンツと参照テキスト其々含まれている部分を評価し、該当するテキストを返す '''
         
         contain_texts = set()

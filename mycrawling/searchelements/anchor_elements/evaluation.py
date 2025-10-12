@@ -52,6 +52,7 @@ class EvaluateAnchorElements(EvaluateUrls):
                 notification_to= self.is_true_url_set_notify_to
                 )
 
+
     @classmethod
     def create_instance(cls, *args, **kwargs):
         if args or kwargs:

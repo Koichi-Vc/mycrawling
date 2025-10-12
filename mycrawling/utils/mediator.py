@@ -193,11 +193,11 @@ class DataMediator(BaseDataMediator):
         if instance:
             return instance
 
+
     def has_registry_obj(self, name):
         ''' 登録済みのオブジェクトの中に対象の名前が含まれているか評価する。'''
         return name in self.registry_notify_objects.keys()
     
-
 
     def notify(self, attr_value, **kwargs):
 

@@ -229,7 +229,7 @@ class RobotFileparseManager():
         if seturl_switch:
             
             session = self.request_check(robots_url)
-            #time.sleep(1)
+
             debug_logger.debug(f'session: {session}')
             if session:
                 self.result = self.set_url_fetch(urls, robots_url)

@@ -60,9 +60,8 @@ class Errorloghandlings_Class:
             logger_conf['handler'] = get_module(logger_conf['handler'])()
 
         self.error_logger = self.setup_logger(**logger_conf)
-        #conf_message_val = kwargs.pop('conf_message_val', None)#
-        #self.custom_message_dict = kwargs.pop('custom_message_dict', self.set_custom_messages(variable_name=conf_message_val))#exception別にUI及びログメッセージ内容を定義した辞書
         custom_message_dict = kwargs.get('custom_message_dict', dict())
+
         if isinstance(custom_message_dict, str) and custom_message_dict.isupper():
             self.custom_message_dict = self.set_custom_messages(custom_message_dict, self)
         else:
@@ -121,7 +120,7 @@ class Errorloghandlings_Class:
 
     
     
-    def format_exc_handling_variagle(self, instance_obj, **kwargs):
+    def format_exc_handling_variagle(self, instance_obj):
         ''' ログ出力前のパラメータを引数から受けとった場合は、セットを行う。 '''
         
         if hasattr(instance_obj, 'error_logger'):

@@ -16,10 +16,9 @@ class SearchAnchorElements(BaseSearchElements):
     ''' a要素を検索する為のクラス'''
 
     default_filter_class_key = 'a'#FilterManagerに於いてフィルタークラスを管理しているキー
-    #default_evaluate_object = ref_dataconfig.get_conf_value('USE_CLASSES', 'evaluateanchorelements')
     default_evaluate_object = EvaluateAnchorElements
     default_webdriver = get_module(ref_dataconfig.get_conf_value('USE_WEBDRIVER'))
-    #datamediator = get_module(ref_dataconfig.get_conf_value('USE_MEDIATOR_PATH'))
+
 
 
     def __init__(
@@ -77,7 +76,6 @@ class SearchAnchorElements(BaseSearchElements):
         
         parse_only_tag = 'a'#beautifulsoup解析対象をa要素に絞る。
         elements = super().__call__(soup_obj, parse_only_tag=parse_only_tag)
-        #debug_logger.debug(f'elements: {elements}')
 
 
         if self.handling_fragment:
@@ -147,6 +145,7 @@ class SearchAnchorElements(BaseSearchElements):
                 debug_logger.debug(f'if-True')
                 yield element
 
+
     def exclude_rel_attr_nofollow(self, elements):
         #rel属性値がnofollowの要素を除外する。
         
@@ -214,10 +213,7 @@ class SearchAnchorElements(BaseSearchElements):
         return absolute, relative
 
 
-
-    #__call__が担う場合不要になる可能性あり
-    #__call__を使わない場合でも内部タスクは大幅に削減される。
-    #役割としては__call__と同じ。
+    #役割は__call__と同じ。
     def find_elements(self,
                            soup_obj,
                            current_url=None):
