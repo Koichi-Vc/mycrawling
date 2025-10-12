@@ -395,7 +395,7 @@ class Errorloghandlings_Class:
             exc_value,
             exc_tb,
             save = False,
-            tb_detail_index_li: Union[int, str, tuple[int]],
+            tb_detail_index_li: Union[int, str, tuple[int]] = 'all',
             **kwargs
             ):
         
