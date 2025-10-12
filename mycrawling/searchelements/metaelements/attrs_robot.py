@@ -61,6 +61,7 @@ class Attr_RobotsMetaElements_Parse(SearchMetaElements):
             raise TypeError(f'処理できないデータ型です. contain_instraction: {contain_instraction}')
         return result
 
+
 class EvalRobotsMetaElements(Attr_RobotsMetaElements_Parse):
 
     def __init__(self, attrs_value = None, filter_method=None, re_instr_disallow_list=None, re_instr_allow_list=None, **query_kwargs):

@@ -13,7 +13,7 @@ class Elements_Filterset(SelectListOperator):
     
     '''
 
-    def __init__(self, *filter_method_list, list_operator_type=any, custom_list_operator=None, **kwargs):
+    def __init__(self, *filter_method_list, list_operator_type=any, custom_list_operator=None):
         '''
         self.filters: 予め用意したフィルターメソッドのリストをセットする。 
         当クラスのインスタンス化時にフィルターを追加する場合は、以下のパラメータに値を渡す
@@ -41,6 +41,7 @@ class Elements_Filterset(SelectListOperator):
        
         result = self.list_operator(result_list)
         return result
+
 
     def add_filter(self, filter_method):
         '''フィルターを追加する。'''
@@ -90,7 +91,7 @@ def filterset_factory(createfilter_cls, filterset_cls= Elements_Filterset, creat
         return instance_list
 
     for parametor in createfilter_factory_param:
-        #debug_logger.debug(f'parametor:{parametor}')
+
         instance = run_method(parametor, createfilter_cls)#run_methodを用いてインスタンス化
 
         if hasattr(instance, 'get_filter_method'):

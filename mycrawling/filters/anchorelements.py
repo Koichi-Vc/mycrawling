@@ -19,7 +19,7 @@ from mycrawling.logs.debug_log import debug_logger
 class AnchorFilterMixin:
     ''' a要素検索フィルターに使う条件式をまとめた。 '''
     
-    #preprocessで実装する。
+    
     def exclude_external_urls(self, url):
         ''' href属性値検索対象から外部urlを除外する。 '''
 
@@ -82,6 +82,7 @@ class AnchorFilterMixin:
         else:
             logging.error('値設定に失敗しました。int又はfloat型で指定してください。')
             raise TypeError('正しい値をセットしてください。')
+
 
     #hrefを始め, urlやファイルパスを返す属性に対するフィルター
     def exclude_dwl_contents(self, href):
@@ -166,6 +167,7 @@ class CreateAnchorElementFilter(ElementsFilter, AnchorFilterMixin):
 
         criteria_value = value#※臨時コード;変数名をvalueからcriteria_valueに変更した為暫くの間互換性を担保する。
         super().__init__(attr, criteria_value, condition, filter_method=filter_method, **kwargs)
+
 
     def enable_exclude_fragment(self):
         ''' フラグメントを検索対象から除外するexclude_fragmentメソッドを有効にする。 '''

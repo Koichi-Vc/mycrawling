@@ -6,7 +6,6 @@ from sys import exc_info
 from traceback import print_exc
 from mycrawling.logs.debug_log import debug_logger
 
-debug_logger.debug(f'package_: {__package__} | __name__: {__name__}')
 
 
 def create_module_import_path(file_path):

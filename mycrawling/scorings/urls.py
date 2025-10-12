@@ -33,7 +33,7 @@ class ScoringUrls(ScoringTexts):
         text_scores = self.all_text_scoring(texts, choices, scorer, cutoff, *args, **kwargs)
         debug_logger.debug(f'text_scores:{text_scores}')
 
-        #self.all_text_scoringを呼び出して展開。
+
         for score, appl_txt, txt in text_scores:
 
             score_value.append(score)

@@ -6,7 +6,7 @@ from mycrawling.logs.debug_log import debug_logger
 
 
 @dataclasses.dataclass()
-class Reference_Title_A_Url_Texts(BaseDataClass):#ElementsFilterを継承しているが、インターフェースが若干異なる為除去するかもしれない。
+class Reference_Title_A_Url_Texts(BaseDataClass):
     
     reference_texts: set = dataclasses.field(default_factory=set)
     reference_urls: set = dataclasses.field(default_factory=set)
@@ -22,7 +22,8 @@ class Reference_Title_A_Url_Texts(BaseDataClass):#ElementsFilterを継承して�
                 result = True
                 break
         return result
-    
+
+
     def urls_is_contain(self, urls):
         ''' urlsにreference_urlsのテキストが含まれるか評価する。 '''
         result = False

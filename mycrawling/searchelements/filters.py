@@ -108,7 +108,7 @@ class SearchElementFilterManager(BaseFilterManage):
         self.filter_instance_obj_dict[tag_name].update(filter_instance_dict)
 
 
-    def executable_filter(self, obj, **kwargs):
+    def executable_filter(self, obj):
         ''' インスタンスがフィルターとして実行可能か評価する。Falseだった場合フィルターの取得を試みる。'''
         ''' もし実行可能なフィルター取得に失敗した場合は警告ログを出力する。'''
 

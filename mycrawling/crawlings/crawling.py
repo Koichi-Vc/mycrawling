@@ -128,7 +128,8 @@ class MyCrawlingSearch():
 
                 current, peak = tracemalloc.get_traced_memory()
                 debug_logger.debug(f'searchanchorelements()実行直後のメモリリソース: current: {current/10**6}MB; peak: {peak/10**6}MB;\n詳細値: current: {current}; peak: {peak}')
-                logging.info(f'searchanchorelements()実行完了 | ページ探索終了 | time: {time.time() - st} |')      
+                logging.info(f'searchanchorelements()実行完了 | ページ探索終了 | time: {time.time() - st} |')
+                  
         else:
             logging.warning('スクレイピング不可又はrobots.txt参照エラーのサイト')
             self.driver_manager.error_message.append('このサイトはスクレイピング出来ません。')

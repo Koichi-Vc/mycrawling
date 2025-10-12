@@ -16,7 +16,7 @@ class FilterParameterLoader(FilesLoader):
     default_load_file = Path(ref_dataconfig.get_conf_value('FILTER_PARAMETER_FILE', default=''))
     
     
-    def __init__(self, user_parameter_file_path=None, option='r', encoding='UTF-8', load_method=None, **kwargs):
+    def __init__(self, user_parameter_file_path=None, option='r', encoding='UTF-8', load_method=None):
         
         self.user_parameter_file_path = Path.cwd().joinpath(Path(user_parameter_file_path))
         self.option = option
@@ -24,6 +24,7 @@ class FilterParameterLoader(FilesLoader):
         self.load_method = load_method if callable(load_method) else self.default_load_method
         self.elements_filter_parameters = None
     
+
     def load_filter(self, **kwargs):
 
         load_file = self.user_parameter_file_path if self.user_parameter_file_path.is_dir() else self.default_load_file

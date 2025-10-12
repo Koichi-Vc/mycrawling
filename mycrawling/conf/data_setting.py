@@ -27,7 +27,7 @@ class Ref_DataConfig():
         parametor_dict:
             ファイルでは無く辞書型で渡す場合、此のパラメータへ渡す。
     '''
-    #default_ref_text_file = 'mycrawling/parameter_files/ref_textfiles/ref_texts.json'
+
     default_ref_text_file = setting.REFERENCE_TEXTS_FILES
     
  
@@ -50,6 +50,7 @@ class Ref_DataConfig():
         self.default_ref_text_file = self.setting_conf.get('REFERENCE_TEXTS_FILES')
         #setting_conf = self.setting_conf
         setting_debug_log(debug=self.setting_conf.get('Debug'))#デバッグ用のログを設定する。
+
 
     def get_param_json_file(self, file):
         ''' データクラスインスタンス用パラメータをまとめたjsonファイルを読み込む '''
@@ -84,6 +85,7 @@ class Ref_DataConfig():
         else:
             return config_value
     
+
     def has_config(self, configparameter):
         result = False
         if configparameter in self.setting_conf:
@@ -106,11 +108,6 @@ class RetainSettingConf:
     def __init__(self, settings_file=None):
         self.setting_module = None
         self.setting_file = settings_file
-        #self.setting_tuple = (
-        #    'REGISTRY_CLASS',
-        #    'REGISTRY_DATA_CLASS_INSTANCE',
-        #    'ANCHOR_SEARCH_MODULE'
-        #)
 
         self.setting_tuple = (
             val for val in dir(setting) if (val.isupper() or val.istitle()) and not bool(re_match(r'[__]', val))
@@ -130,7 +127,7 @@ class RetainSettingConf:
             self._setting_file = None
 
         if import_path:
-            #path = Path(file_path)
+
             self.setting_module = get_module(import_path)
             self._setting_file = import_path
         
@@ -151,6 +148,7 @@ class RetainSettingConf:
     def get_setting_value(self, item_name):
         ''' 設定内容を参照する。 '''
         return self.setting_conf.get(item_name, None)
+
 
 #インポート時のreading_settingはFalse
 ref_dataconfig = Ref_DataConfig(reading_setting=False, default=None)

@@ -41,6 +41,7 @@ class BasebWebDriverContextManager():
         self.wait = WebDriverWait(self.driver, self.timeout)
         return self  
 
+
     def __exit__(self, exc_type, exc_value, exc_tb):
         self.driver.quit()
 

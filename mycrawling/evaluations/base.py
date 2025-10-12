@@ -10,15 +10,10 @@ class ScoreEvaluations:
         ''' 数値符号をアルゴリズムに合わせて操作する'''
 
         def wrapper(self, scorer=None, score=None, *args, **kwargs):
-            """ 
-            <パラメータ>
-            add_subst: 加算か減算を指定する。addなら加算,subst or substractionなら減算
-            comp_num: 加点,減点する値を指定。
-            """
+
+
             debug_logger.debug(f'before-- func: {func} | args: {args}| kwargs:{kwargs} | before; scorer: {scorer}| score: {score} ')
             
-            add_subst = kwargs.pop('add_subst', 'add')
-            comp_num = kwargs.pop('comp_num', 0)
             scorer_type = None
 
             if scorer:
@@ -37,7 +32,7 @@ class ScoreEvaluations:
                 elif 'ratio' in scorer_name:
                     scorer_type = 'ratio'
 
-            result = func(self, scorer_type, score, add_subst=add_subst, comp_num=comp_num, *args, **kwargs)
+            result = func(self, scorer_type, score, *args, **kwargs)
             
             debug_logger.debug(f'after-- scorer: {scorer} score: {score} | scorer_type: {scorer_type}')
             debug_logger.debug(f'result: {result}')

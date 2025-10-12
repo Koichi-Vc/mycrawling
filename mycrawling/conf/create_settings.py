@@ -2,7 +2,7 @@ from pathlib import Path
 import shutil
 from mycrawling.utils.paths import join_current_dir
 from mycrawling.utils.imports_module import create_module_import_path
-#from mycrawling.logs.debug_log import debug_logger
+
 
 
 ''' ユーザー設定ファイルをデフォルトの設定ファイルをコピーして生成する。 '''
@@ -34,15 +34,14 @@ class CreateSetting:
     def create_settings_file(self):
         global created_user_setting_import_path
 
-        #user_setting_module_dir_path = current_path.joinpath(self.dir_path)
         user_setting_module_dir_path = join_current_dir(self.dir_path)#dir_pathの
 
         
         if not user_setting_module_dir_path.parent.is_dir():
             user_setting_module_dir_path.parent.mkdir(parents=True)#ディレクトリ生成
-            #user_setting_module_dir_path.touch()#ファイル生成
             shutil.copy(default_setting_file, user_setting_module_dir_path)#コピー
-            #ユーザー用設定ファイル生成時にベースディレクトリをsetting.pyの__file__にしておく。
+
+            #ユーザー用設定ファイル生成時にベースディレクトリをsetting.pyの__file__にする。
             package_base_dir = __file__
             with open(user_setting_module_dir_path, mode='+r', encoding='UTF-8') as f:
                 content = f.read()
