@@ -27,10 +27,18 @@ class Ref_DataConfig():
         parametor_dict:
             ファイルでは無く辞書型で渡す場合、此のパラメータへ渡す。
     '''
-
+    __instance = None
+    __readed_settings = False
     default_ref_text_file = setting.REFERENCE_TEXTS_FILES
     
- 
+    def __new__(cls, *args, **kwargs):
+        """ インスタンスを一回のみに制限する。"""
+
+        if cls.__instance is None and cls.__readed_settings is False:
+            cls.__instance = super().__new__(cls)
+        return cls.__instance
+
+
     def __init__(self, parametor_jsonfile=None, parametor_dict=None, retainsettingconf=None, **kwargs):
 
         reading_setting = kwargs.pop('reading_setting', True)
@@ -45,12 +53,13 @@ class Ref_DataConfig():
         self.retainsettingconf.setting_file = user_setting_import_path if user_setting_import_path else created_user_setting_import_path
         if reading_setting is True:
             self.setting_conf = self.retainsettingconf.read_settings()
+            self.__readed_settings = True
         else:
             self.setting_conf = dict()
         self.default_ref_text_file = self.setting_conf.get('REFERENCE_TEXTS_FILES')
         
-        setting_debug_log(debug=self.setting_conf.get('Debug'))#デバッグ用のログを設定する。
-
+        if self.setting_conf:
+            setting_debug_log(debug=self.setting_conf.get('Debug'))#デバッグ用のログを設定する。
 
     def get_param_json_file(self, file):
         ''' データクラスインスタンス用パラメータをまとめたjsonファイルを読み込む '''
