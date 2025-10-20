@@ -6,7 +6,7 @@ from rapidfuzz.fuzz import WRatio as rapidfuzz_WRatio
 import re
 from typing import List
 from mycrawling.parse.textcontentsparse import Spacy_TextParse
-from mycrawling.logs.debug_log import debug_logger
+from mycrawling.logs.debug_log import debug_logger, retain_logs
 
 
 class ScoringTexts:
@@ -31,15 +31,22 @@ class ScoringTexts:
                 yield score, ext_txt, query_txt  
         return wrapper
 
-    def all_text_scoring(self, texts, choices, text_scorer=None, cutoff=None ,*args, **kwargs:dict['custom_initvalue': '']):
+    def all_text_scoring(
+            self,
+            texts,
+            choices,
+            text_scorer=None,
+            cutoff=None,
+            *args,
+            **kwargs
+            )->tuple[int, str, str]:
         ''' テキストリスト内全アイテムのスコアを順次返す。cutoff値外又は評価不能の場合はNoneを返す。'''
+        retain_debug_logger = retain_logs(debug_logger)
 
         if not text_scorer and hasattr(self, 'text_scorer'):
             text_scorer = self.text_scorer
         elif not text_scorer or not callable(text_scorer):
             text_scorer = self.default_all_text_scorer
-
-        debug_logger.debug(f'has text_scorer: {text_scorer}')
         
         if isinstance(texts, str):
             ''' list型以外が渡されたら変換 '''
@@ -61,9 +68,11 @@ class ScoringTexts:
             else:
                 score = default#score_valueがNoneの場合デフォルト値を代入
                 applicable_txt = ''
+            retain_debug_logger(10, f'score: {score} | applicable_txt: {applicable_txt} | txt: {txt} ;')
             
-            debug_logger.debug(f'score: {score} | applicable_txt: {applicable_txt} | txt: {txt}')
             yield score, applicable_txt, txt
+        retain_debug_logger(10, f'text_scorer: {text_scorer} ;')
+        retain_debug_logger(10, 'all_text_scoring | ', insert_index=0, do_record_log=True)
 
     def best_text_scoring(self, texts:List, choices, text_scorer=None, cutoff=None ,*args, **kwargs):
         ''' テキストリストの最高スコアを返す。cutoff値外又は評価不能の場合はNoneを返す。 '''
