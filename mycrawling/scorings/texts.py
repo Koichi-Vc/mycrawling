@@ -68,8 +68,8 @@ class ScoringTexts:
             else:
                 score = default#score_valueがNoneの場合デフォルト値を代入
                 applicable_txt = ''
-            retain_debug_logger(10, f'score: {score} | applicable_txt: {applicable_txt} | txt: {txt} ;')
-            
+
+            retain_debug_logger(10, f'score: {score} | applicable_txt: {applicable_txt} | txt: {txt} | ')
             yield score, applicable_txt, txt
         retain_debug_logger(10, f'text_scorer: {text_scorer} ;')
         retain_debug_logger(10, 'all_text_scoring | ', insert_index=0, do_record_log=True)
