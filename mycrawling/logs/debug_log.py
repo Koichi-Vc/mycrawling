@@ -36,24 +36,37 @@ def get_debug_logger():
     return debug_logger
 
 def output_logger(debug_logger, loglevel=10, message=None, *args, **kwargs):
-    stacklevel = kwargs.pop('stacklevel', 2)
+    stacklevel = kwargs.pop('stacklevel', 3)
     return debug_logger.log(loglevel, message, stacklevel=stacklevel, *args, **kwargs)
 
 def retain_logs(logger_obj):
-    ''' ループ内などのアイテムを収集して一気にログとして返す。'''
+    ''' メッセージを一定の間蓄積し、出力する。'''
+    '''
+    do_record_log: ログ出力を実行する。Falseの場合は実行しない。
+    insert_index: メッセージをメッセージリストの所定の位置に挿入するためのインデックスを指定する。デフォルトではNoneで末尾へ追加。
+    refresh_messages: メッセージリストの内容をクリアする。
+    '''
     logger_level = logger_obj.level
     messages = []
-    def wrapper(loglevel, message=None, *args, **kwargs):
+    
+    def wrapper(loglevel=10, message=None, *args, **kwargs):
+        nonlocal messages
         do_record_log = kwargs.pop('do_record_log', False)
         insert_index = kwargs.pop('insert_index', None)#ログメッセージを挿入する位置を指定。Noneの場合は末尾に追加。
+        refresh_messages = kwargs.pop('refresh_messages', False)
+        
+        if refresh_messages is True:
+            messages = []
+            return 
         
         if logger_level == 0 or loglevel < logger_level:
             return
         
-        if do_record_log is True and message and messages:
-            if insert_index is not None:
+        if do_record_log is True:
+
+            if message is not None and insert_index is not None:
                 messages.insert(insert_index, message)
-            else:
+            elif message is not None:
                 messages.append(message)
             
             return output_logger(logger_obj, loglevel, messages, *args, **kwargs)
@@ -68,5 +81,6 @@ def retain_logs(logger_obj):
             messages.insert(insert_index, message)
         elif message:
             messages.append(message)
+        
     return wrapper
 
