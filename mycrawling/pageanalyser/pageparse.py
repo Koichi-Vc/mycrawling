@@ -58,9 +58,8 @@ class PageTextContentsParse(Spacy_TextParse):
             texts = (i.strip().replace(' ','') for i in element.text.strip().split('\n' or '\t') if i.strip() != '')
             if do_parsetext:
                 parsed_text = (ps_txt for txt in texts for ps_txt in self.textparse(txt))
-                yield [text for text in parsed_text]
+                yield parsed_text
             
             else:
                 yield texts
-
 
