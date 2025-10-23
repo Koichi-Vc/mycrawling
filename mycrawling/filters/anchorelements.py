@@ -1,5 +1,4 @@
 import os
-import logging
 from urllib.parse import urlparse
 import operator
 from collections.abc import Iterable
@@ -79,8 +78,7 @@ class AnchorFilterMixin:
         if isinstance(value, (int, float)):
             self.__dwlcontents_score_cutoff = value
         else:
-            logging.error('値設定に失敗しました。int又はfloat型で指定してください。')
-            raise TypeError('正しい値をセットしてください。')
+            raise TypeError('値設定に失敗しました、正しい値をセットしてください。int又はfloat型で指定してください。')
 
 
     #hrefを始め, urlやファイルパスを返す属性に対するフィルター

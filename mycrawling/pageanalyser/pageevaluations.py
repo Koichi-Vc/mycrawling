@@ -106,7 +106,7 @@ class PageEvaluation(EvaluateTexts):
         pry_and_hhscore_texts = []#ページ解析と走査で収集したprimaryとhigh_scoreテキストのリスト
         root_element = soup_obj.find([self.traverse_for_root_element])#ルート要素又は文書本体要素の検索を試みる
         elements = None
-        debug_logger.debug(f'root_element: {root_element} | {len(root_element)} | {root_element.name}')
+        debug_logger.debug(f'root_element.name: {root_element.name} | length: {len(root_element)} |')
 
         if root_element:
             #ルート要素から対象テキスト全てを検出する。
@@ -147,8 +147,8 @@ class PageEvaluation(EvaluateTexts):
                         contents_length = len([content for content in element.contents if content.name != None])
                         targ_contents_rate = 85
 
-                        debug_logger.debug(f'element: {element} | elements text: {[e.text for e in element]}')
-                        debug_logger.debug(f'element.contentsの数: {len(element.contents)} | contents_length: {contents_length}')
+                        debug_logger.debug(f'element.name: {element.name} | elements text: {[e.text for e in element]}')
+                        debug_logger.debug(f'contents_length: {contents_length}')
                         
                         dl_length = len(element.find_all('dl'))
                         if dl_length / contents_length*100 >= targ_contents_rate:
@@ -164,26 +164,23 @@ class PageEvaluation(EvaluateTexts):
             会社概要を構成する項目キーワードのリスト(会社概要キーワード)
         """
 
-        debug_logger.debug(f'kwargs: {kwargs}')
-        debug_logger.debug(f'is_true_urls {self.is_true_urls}')
+        debug_logger.debug(f'is_true_urls {self.is_true_urls} | kwargs: {kwargs}')
 
         is_contain = None
         similar_url = None
         similar_title = None
         soup = self.parse_elements.element_parse(driver)
         title_score, title_text, is_contain = self.pagescorings.scoring_titles(soup_obj=soup)
-       
-        debug_logger.debug(f'title_text: {title_text} | title_score: {title_score}')
         similar_title = title_score
         similar_url = current_url in self.is_true_urls
         similar_title = similar_title is not None 
         similar_title_url = similar_title or is_contain or similar_url
         
-        debug_logger.debug(f'similar_title:{similar_title} | is_contain: {is_contain} | similar_url: {similar_url}')
+        debug_logger.debug(f'title_text: {title_text} | title_score: {title_score} | similar_title:{similar_title} | is_contain: {is_contain} | similar_url: {similar_url}')
 
         if similar_title_url:
             ''' trimming()後にオブジェクトが有り且つページtitle, urlの評価スコアを参照 '''
-            logging.info(f'similar_title_url == True')
+            debug_logger.info(f'similar_title_url == True')
             
             elements = self.find_overview_elements(soup)
             
@@ -192,7 +189,6 @@ class PageEvaluation(EvaluateTexts):
                 yield element
             
             current, peak = tracemalloc.get_traced_memory()
-            debug_logger.debug(f'get_company_profile()for文内のメモリリソース: current: {current/10**6}MB; peak: {peak/10**6}MB;\n詳細値: current: {current}; peak: {peak}')
-            logging.info(f'MemoryResource: current: {current/10**6}MB; peak: {peak/10**6}MB |')             
-
+            debug_logger.debug(f'get_company_profileのメモリリソース: current: {current/10**6}MB; peak: {peak/10**6}MB;\n詳細値: current: {current}; peak: {peak}')
+            debug_logger.info(f'MemoryResource: current: {current/10**6}MB; peak: {peak/10**6}MB |')             
 

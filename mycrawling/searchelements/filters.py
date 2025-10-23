@@ -77,13 +77,13 @@ class SearchElementFilterManager(BaseFilterManage):
 
         filter_instance_dict = {}
         first_print = False
-        debug_logger.debug('start for roop>>>')
         for target in targets:
             if not first_print:
                 first_print = True
-            debug_logger.debug(f'target: {target}')
             
             if isinstance(target, dict) and 'attr' in target and 'arguments' in target:
+                debug_logger.debug(f'target: {target}')
+                
                 attr = target.get('attr')if target.get('attr', None) else 'class'#attrキーがNoneの場合、クラス属性に対する指定とする。
                 arguments = target.get('arguments')
                 kwargs.setdefault('createfilter_cls', createfilter_cls)
@@ -129,8 +129,8 @@ class SearchElementFilterManager(BaseFilterManage):
         
         single_item = 1
         if arguments and len(arguments) == single_item:
+            debug_logger.debug('len(arguments) is single_item')
             argument = arguments[0]
-            debug_logger.debug('filter_instantiationのif-------')
             return run_method(argument, createfilter_cls)
 
         filter_set = filterset_factory(createfilter_cls, self.filterset_cls, arguments, **kwargs)

@@ -10,7 +10,7 @@ class ScoreEvaluations:
         ''' 数値符号をアルゴリズムに合わせて操作する'''
 
         def wrapper(self, scorer=None, score=None, *args, **kwargs):
-            debug_logger.debug(f'before-- func: {func} | args: {args}| kwargs:{kwargs} | before; scorer: {scorer}| score: {score} ')
+            debug_logger.debug(f'func: {func} | args: {args}| kwargs:{kwargs} | scorer: {scorer} | score: {score} ')
             
             scorer_type = None
 
@@ -32,8 +32,6 @@ class ScoreEvaluations:
 
             result = func(self, scorer_type, score, *args, **kwargs)
             
-            debug_logger.debug(f'after-- scorer: {scorer} score: {score} | scorer_type: {scorer_type}')
-            debug_logger.debug(f'result: {result}')
             return result
 
         return wrapper
@@ -60,11 +58,11 @@ class ScoreEvaluations:
         ''' scorer_typeに基づく境界値に対するスコアの真偽を評価 '''        
         result = False
         boundary = kwargs.pop('boundary', self.score_cutoff_init_(scorer_type))
-        debug_logger.debug(f'score: {score} | scorer_type: {scorer_type} | boundary: {boundary}')
         if scorer_type == 'distance':
             result = score <= boundary
         else:
             result = score >= boundary
 
+        debug_logger.debug(f'score: {score} | scorer_type: {scorer_type} | boundary: {boundary} | result: {result}')
         return result
 
