@@ -5,7 +5,7 @@ from urllib.parse import urljoin
 from mycrawling.parse.urlcontentsparse import ParseUrls
 from mycrawling.searchelements.element_scorings import ElementsScoring
 from mycrawling.scorings.urls import ScoringUrls
-from mycrawling.logs.debug_log import debug_logger
+from mycrawling.logs.debug_log import debug_logger, retain_logs
 
 
 
@@ -65,17 +65,13 @@ class AnchorElementsScorings(ElementsScoring, ScoringUrls):
             text_scores = text_scores[0] 
         return text_scores
 
-
-
-    def urls_scoring(self, urls, scoring_urls_attrs:List[str]=None, select_param=0, **kwargs):
+    def urls_scoring(self, urls, scoring_urls_attrs:List[str]=None, **kwargs):
         '''
         scoring_urls_attrs: スコアリング対象にするurlparse属性名 初期値: self.select_url_attrs_list
         '''
+        
+        debug_logger.debug(f'urls: {urls} | scoring_urls_attrs: {scoring_urls_attrs} | kwargs: {kwargs}')
 
-        debug_logger.debug(f'urls: {urls}')
-        debug_logger.debug(f'scoring_urls_attrs: {scoring_urls_attrs}')
-        debug_logger.debug(f'select_param: {select_param}')
-        debug_logger.debug(f'kwargs: {kwargs}')
         choices_url_text = self.__reference_urls
 
         if not scoring_urls_attrs:
@@ -92,12 +88,12 @@ class AnchorElementsScorings(ElementsScoring, ScoringUrls):
                                                choices_url_text,
                                                scoring_method,
                                                scorer, score_cutoff,**kwargs)
-        debug_logger.debug(f'urls_score_list: {urls_score_list}')
-        #リスト型の二次元配列が返される為次元を下げる
-        for urlscore in urls_score_list:
-            statistics_value = self.urls_statistics(urlscore, self.href_score_statistics)
-            debug_logger.debug(f'statistics_value:{statistics_value}')
 
+        #リスト型の二次元配列が返される為次元を下げる
+        urls_score_list = [url for urls in urls_score_list for url in urls]
+        statistics_value = self.urls_statistics(urls_score_list, self.href_score_statistics)
+
+        debug_logger.debug(f'statistics_value: {statistics_value}')
         return statistics_value
     
 
@@ -115,10 +111,12 @@ class AnchorElementsScorings(ElementsScoring, ScoringUrls):
         for text, href in contents:
             text_score = self.best_textcontent_scoring(text, **kwargs)[0]
             absolutepath = urljoin(current_url, href)
-            #print(f'hrefpath: {hrefpath}')
-            hrefs_score = self.urls_scoring(absolutepath,
-                                            scoring_urls_attrs=self.select_url_attrs_list,
-                                            select_param=0, **kwargs)
+
+            hrefs_score = self.urls_scoring(
+                absolutepath,
+                scoring_urls_attrs=self.select_url_attrs_list,
+                **kwargs
+                )
             debug_logger.debug(f'text: {text} | text_score: {text_score}')
             debug_logger.debug(f'href: {href} | href_score: {hrefs_score}')
             text_score_list.append(text_score)
