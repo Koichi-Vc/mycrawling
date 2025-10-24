@@ -15,7 +15,6 @@ class SearchMetaElements(BaseSearchElements):
 
         super().__init__(tag, attrs_value, filter_method, **query_kwargs)
 
-
     def __call__(self, soup_obj, **kwargs):
         kwargs['parse_only_tag'] = 'meta'
         return super().__call__(soup_obj, **kwargs)

@@ -2,7 +2,7 @@ import sys
 import logging
 from inspect import ismethod, isfunction
 import traceback
-from typing import Dict
+from typing import Dict, Union, Tuple
 from collections.abc import Iterable
 from collections import deque
 from mycrawling.utils.imports_module import get_module
@@ -72,7 +72,6 @@ class Errorloghandlings_Class:
         self.catch_exception = catch_exception#exc_infoを取得している場合True. __exit__に付ける場合に使用
         self.format_extra = kwargs.pop('format_extra', dict())
 
-
     def help(self):
         '''
         セットアップ:
@@ -87,7 +86,6 @@ class Errorloghandlings_Class:
         '''
         return
     
-    
     @classmethod
     def get_setting_conf(cls, variable_name=None):
         from mycrawling.conf.data_setting import ref_dataconfig
@@ -96,7 +94,6 @@ class Errorloghandlings_Class:
         else:
             settings_conf = None
         return settings_conf
-
 
     @classmethod
     def set_custom_messages(cls, message_conf_name=None, instance=None):
@@ -117,8 +114,6 @@ class Errorloghandlings_Class:
             return instance.custom_message_dict
         
         return custom_message_dict
-
-    
     
     def format_exc_handling_variagle(self, instance_obj):
         ''' ログ出力前のパラメータを引数から受けとった場合は、セットを行う。 '''
@@ -134,8 +129,6 @@ class Errorloghandlings_Class:
         self.log_save = getattr(instance_obj, 'log_save', True)
         if hasattr(instance_obj, 'format_extra'):
             self.format_extra = getattr(instance_obj, 'format_extra')
-         
-
 
     def __call__(self, method):
         methods_instance = None
@@ -173,7 +166,6 @@ class Errorloghandlings_Class:
                 setattr(instance_obj, 'error_message', error_text)
                 debug_logger.debug(f'error_logger: {error_logger} | error_text: {error_text}')
 
-        
         def wrapper_catch_except(instance_obj=None, *exc_objcts, **exc_obj_kwgs):
 
             if is_bound_method and methods_instance:
@@ -195,7 +187,6 @@ class Errorloghandlings_Class:
             return wrapper_catch_except
         return wrapper 
 
-    
     def join_error_text(self,*messages, separator=' | '):
         ''' エラーに対する複数のテキスト/ログメッセージをseparatorで結合する。 '''
         join_message = ''
@@ -203,7 +194,6 @@ class Errorloghandlings_Class:
             join_message += message
             join_message += separator
         return join_message
-
 
     @classmethod
     def get_methods_instance(cls, method):
@@ -216,7 +206,6 @@ class Errorloghandlings_Class:
             result = method.__self__
         return result
 
-
     @classmethod
     def set_formatter(cls, formatter=None):
         ''' フォーマッタの定義 '''
@@ -227,10 +216,12 @@ class Errorloghandlings_Class:
 
         return fmt
 
-
     @classmethod
-    def set_handler(cls, logger, handler, formatter=None, howmany_handlers:'許容するハンドラ数'=1,**kwargs):
-        '''ロガーのハンドラを指定してセットする  '''
+    def set_handler(cls, logger, handler, formatter=None, howmany_handlers:int =1,**kwargs):
+        '''ロガーのハンドラを指定してセットする  
+        howmany_handlers: 許容するハンドラ数
+
+        '''
         if not isinstance(formatter, logging.Formatter):
             formatter = cls.set_formatter(formatter)
         
@@ -245,10 +236,13 @@ class Errorloghandlings_Class:
             logger = cls.remove_handlers(logger, howmany_handlers, no_delete_handler_type)
         return logger
 
-
     @classmethod
-    def remove_handlers(self, logger, howmany_handlers:'保持するハンドラ数'= 1, no_delete_handler_type:'削除しないハンドラタイプ'=None):
-        ''' 不要なハンドラを削除する。'''
+    def remove_handlers(self, logger, howmany_handlers: int = 1, no_delete_handler_type=None):
+        ''' 不要なハンドラを削除する。
+        howmany_handlers: 保持するハンドラ数
+        no_delete_handler_type(handler): 削除しないハンドラタイプ
+
+        '''
 
         is_iterable = isinstance(no_delete_handler_type, Iterable)
         if no_delete_handler_type and not is_iterable:
@@ -265,7 +259,6 @@ class Errorloghandlings_Class:
             else:
                 break
         return logger
-
 
     @classmethod
     def setup_logger(cls, getlogger=None, handler=None, **kwargs):
@@ -294,7 +287,6 @@ class Errorloghandlings_Class:
         
         return logger 
 
-
     def output_select(cls,select_loglevel):
         ''' ログ出力レベルの指定 '''
         output_level = 30#指定したログレベルが無い場合常に30を返す。
@@ -307,7 +299,6 @@ class Errorloghandlings_Class:
             output_level = select_loglevel
         return output_level
 
-    
     def output_exc_message(
             self,
             logger,
@@ -326,7 +317,7 @@ class Errorloghandlings_Class:
         if custom_message_dict is None:
             custom_message_dict = self.custom_message_dict
         
-        debug_logger.debug(f'exc_type: {exc_type} | custom_message_dict: {custom_message_dict} | exc_type in custom_message_dict: {exc_type in custom_message_dict.keys()}')
+        debug_logger.debug(f'exc_type: {exc_type} | custom_message_dict: {custom_message_dict} | custom_message_dict: {custom_message_dict}')
 
         if custom_message_dict and exc_type in custom_message_dict.keys():
 
@@ -361,7 +352,6 @@ class Errorloghandlings_Class:
             logger.log(output_level, message, extra=self.format_extra)#ここでログファイルへの出力処理をする
         
         return error_messages
-
 
     def rendering_traceback(self, tb_detail_index, *exc_info, **kwargs):
         ''' トレースバックの抽出とレンダリング実行。 '''
@@ -405,19 +395,20 @@ class Errorloghandlings_Class:
         traceback_details = ''.join(extraction_traceback_details).strip()
         return traceback_details
 
-
     def error_handling(
             self,
             logger,
             exc_type,
             exc_value,
             exc_tb,
-            save=False,
-            tb_detail_index_li: "len( [int or 'all' or ('start', 'end')] )" == 2 = 'all',
+            save = False,
+            tb_detail_index_li: Union[int, str, tuple[int]] = 'all',
             **kwargs
             ):
         
-        ''' tb_detail_index_liはlist型で3アイテム以内のint、all、tuple('start','end')のスライスを想定します。 '''
+        '''
+        tb_detail_index_liはint、"all"、tuple('start','end')のスライスを想定します。 
+        '''
         exc_info = []
         if exc_type:
             exc_info = [exc_type, exc_value, exc_tb]
@@ -437,5 +428,4 @@ class Errorloghandlings_Class:
         
         debug_logger.debug(traceback_details)#コンソールへの出力を再現
         return errer_message
-
 

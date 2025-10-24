@@ -1,5 +1,4 @@
 import dataclasses
-from typing import List
 from re import search
 from .base import BaseDataClass
 from mycrawling.logs.debug_log import debug_logger
@@ -10,7 +9,6 @@ class Reference_Title_A_Url_Texts(BaseDataClass):
     
     reference_texts: set = dataclasses.field(default_factory=set)
     reference_urls: set = dataclasses.field(default_factory=set)
-    
     
     #データクラスで保持したテキストが含まれているかを調べるメソッド
     def texts_is_contain(self, texts):
@@ -23,7 +21,6 @@ class Reference_Title_A_Url_Texts(BaseDataClass):
                 break
         return result
 
-
     def urls_is_contain(self, urls):
         ''' urlsにreference_urlsのテキストが含まれるか評価する。 '''
         result = False
@@ -32,7 +29,6 @@ class Reference_Title_A_Url_Texts(BaseDataClass):
                 result = True
                 break
         return result
-
 
 
 @dataclasses.dataclass()
@@ -57,9 +53,7 @@ class Reference_TextCollection(BaseDataClass):
         self.all_primary_texts = list(self.jp_primary_texts)+list(self.en_primary_texts)
         self.all_reference_text_list = self.jp_all_texts+self.en_all_texts
 
-
     def get_all_fields(self):
         field_dict = { field:value for field, value in vars(self).items() if bool(search(r'text', field))}
         return field_dict
-
 

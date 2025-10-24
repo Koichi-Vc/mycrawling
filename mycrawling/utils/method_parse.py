@@ -7,7 +7,6 @@ from types import MappingProxyType
 from mycrawling.logs.debug_log import debug_logger
 
 
-
 def run_method(arguments, method, **kwargs):
     ''' メソッドにパラメータを渡して実行する。argumentsに何も渡さない場合は、空のコレクション型を渡す。'''
 
@@ -16,10 +15,10 @@ def run_method(arguments, method, **kwargs):
 
     return method(*args, **kwargs)
 
-
-''' argumentsの検証と整形。 '''
 def edit_keyword_argument(arguments:List, keywords):
-    ''' argumentsにキーワード引数を追加又は編集する。 '''
+    ''' argumentsの検証と整形。
+    argumentsにキーワード引数を追加又は編集する。
+    '''
     
     if not isinstance(keywords, dict):
         raise TypeError('keyowrdsは辞書型のみを受けとります。')
@@ -47,7 +46,6 @@ def edit_keyword_argument(arguments:List, keywords):
     debug_logger.debug(f'arguments: {arguments}')
     return arguments
 
-
 def edit_word_argument(arguments:List, value, **kwargs):
     ''' 任意の位置に位置引数値を挿入する。デフォルトでは、最後尾、キーワード引数アイテムの直前'''
     
@@ -69,7 +67,6 @@ def edit_word_argument(arguments:List, value, **kwargs):
         arguments.append(value)
     return arguments
 
-
 def isiterable(item):
     ''' アイテムが str, bytesを除いたイテラブルオブジェクトかどうか判定する。'''
     
@@ -78,10 +75,10 @@ def isiterable(item):
         result = True
     return result
 
-
-''' methodのシグネチャを解析する '''
 def method_signature(method, attrs=None):
-    '''methodのシグネチャを解析する。デフォルトではSignatureオブジェクトを返す。特定の属性を返す場合はattrsに指定。'''
+    ''' methodのシグネチャを解析する。
+    methodのシグネチャを解析する。デフォルトではSignatureオブジェクトを返す。特定の属性を返す場合はattrsに指定。
+    '''
 
     sig = None
     if not callable(method):
@@ -99,7 +96,6 @@ def method_signature(method, attrs=None):
     
     return sig
 
-
 def method_parameter_parse(method):
     ''' 関数のシグネチャからパラメータ情報を取得。 '''
 
@@ -112,7 +108,6 @@ def method_parameter_parse(method):
     
     else:
         return method.parameters
-
 
 def get_sig_parameters_kinds(signature_parameters:Union[MappingProxyType, Signature]):
     ''' メソッドのシグネチャから取得した各パラメータ(inspect.Parameterオブジェクト)のkind属性を返す。 '''
@@ -140,7 +135,6 @@ def get_sig_parameters_kinds(signature_parameters:Union[MappingProxyType, Signat
     
     return parameter_kinds
 
-
 def get_parameters_names(obj):
     ''' オブジェクトからパラメータ名を取得する。 戻り値はリスト型'''
     parameter_names = []
@@ -167,7 +161,6 @@ def get_parameters_names(obj):
     
     return parameter_names
 
-
 def has_param_type(parameter_obj, type_name):
     ''' 指定したパラメータタイプがシグネチャから取得したパラメータタイプ情報の中に存在するか評価する。 '''
     
@@ -175,7 +168,6 @@ def has_param_type(parameter_obj, type_name):
 
     return type_name in parameter_kinds.values()
 
-    
 def has_param_names(parameter_obj, name):
     ''' 引数名がmethodのシグネチャに含まれているか評価する。 '''
     
@@ -184,7 +176,6 @@ def has_param_names(parameter_obj, name):
     parameter_names = get_parameters_names(parameter_obj)
 
     return name in parameter_names
-            
 
 def param_type_count(*type_name, parameter_obj):
     ''' 指定したパラメータタイプがシグネチャから取得したパラメータタイプ情報の中に何個存在するか評価する。'''
@@ -197,10 +188,9 @@ def param_type_count(*type_name, parameter_obj):
 
     return length_param_types
 
-
-''' methodに実引数を割り当てる処理。 '''
 def split_arg_kwags(arguments):
-    '''
+    ''' methodに実引数を割り当てる処理。 
+
         実引数を位置引数とキーワード引数に分割しリストと辞書型のタプルで返す。但し、辞書型が複数含まれていた場合は、
         最後の辞書型をキーワード引数とし、他は位置引数に吸収される。 
         引数構成によっては位置引数のみ、キーワード引数のみにまとめられる。
@@ -232,7 +222,6 @@ def split_arg_kwags(arguments):
     
     return positionals, kwargs
 
-
 def positional_arg_handling(parameter_obj, arg=None, keyword_param=None):
     ''' 
     位置引数とmethodのパラメータ値を検証し、該当する値を評価する。
@@ -259,7 +248,6 @@ def positional_arg_handling(parameter_obj, arg=None, keyword_param=None):
         return parameter_default
 
     return arg
-
 
 def prepare_arguments(arguments, method:Union[List, Dict], importance_keys=set()):
 
@@ -330,5 +318,4 @@ def prepare_arguments(arguments, method:Union[List, Dict], importance_keys=set()
         raise TypeError('位置引数の数が多すぎます。')
     
     return arranged_args, arranged_kwargs
-
 

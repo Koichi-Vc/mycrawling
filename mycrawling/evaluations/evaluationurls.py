@@ -8,13 +8,12 @@ from mycrawling.logs.debug_log import debug_logger
 class EvaluateUrls(ParseUrls, ScoreEvaluations):
     ''' urlスコアに基づいて評価。 '''
 
-
     def evaluate_hostname(self, current_url, urls):
-        ''' urlのhostnameとcurrent_urlのhostnameを比較 '''
-        ''' 対象urlのhostnameとcurrent_hostnameが一致か又は対象urlが相対urlパスだった
-        場合、同じサイト内urlとしてTrueを返す。 '''
-
-        ''' 同じサイト内urlである事を前提にurlパス等のスコア評価をする場合に用いる。  '''
+        ''' 
+        urlのhostnameとcurrent_urlのhostnameを比較。
+        対象urlのhostnameとcurrent_hostnameが一致か又は対象urlが相対urlパスだった場合、同じサイト内urlとしてTrueを返す。 
+        
+        '''
 
         result = False
         if current_url == urls:
@@ -24,7 +23,6 @@ class EvaluateUrls(ParseUrls, ScoreEvaluations):
         hostname_dict = self.hostname_parse(*(current_url, urls))
         current_hostname = hostname_dict.pop(current_url)
         urls_hostname = hostname_dict.pop(urls)
-        debug_logger.debug(f'current_hostname: {current_hostname} | urls_hostname: {urls_hostname}')
         result_urls_hostname = urls_hostname is None
 
         urls_hostname_is_current_hostname = urls_hostname == current_hostname
@@ -34,7 +32,6 @@ class EvaluateUrls(ParseUrls, ScoreEvaluations):
         
         return result
     
-
     def evaluate_score(self, scorer_type=None, score=None, *args, **kwargs):
 
         #urlsのhostnameとcurrent_urlのhostnameの一致評価。Noneの場合hostnameを評価対象に含まない。
@@ -48,6 +45,5 @@ class EvaluateUrls(ParseUrls, ScoreEvaluations):
         result = super().evaluate_score(scorer_type, score, *args, **kwargs)
         urls_result = result and (name_is_current_name is True or name_is_current_name is None)
         
-        debug_logger.debug(f'name_is_current_name: {name_is_current_name}')
         return urls_result
 

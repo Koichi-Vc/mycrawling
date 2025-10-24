@@ -27,10 +27,18 @@ class Ref_DataConfig():
         parametor_dict:
             ファイルでは無く辞書型で渡す場合、此のパラメータへ渡す。
     '''
-
+    __instance = None
+    __readed_settings = False
     default_ref_text_file = setting.REFERENCE_TEXTS_FILES
     
- 
+    def __new__(cls, *args, **kwargs):
+        """ インスタンスを一回のみに制限する。"""
+
+        if cls.__instance is None and cls.__readed_settings is False:
+            cls.__instance = super().__new__(cls)
+        return cls.__instance
+
+
     def __init__(self, parametor_jsonfile=None, parametor_dict=None, retainsettingconf=None, **kwargs):
 
         reading_setting = kwargs.pop('reading_setting', True)
@@ -45,11 +53,13 @@ class Ref_DataConfig():
         self.retainsettingconf.setting_file = user_setting_import_path if user_setting_import_path else created_user_setting_import_path
         if reading_setting is True:
             self.setting_conf = self.retainsettingconf.read_settings()
+            self.__readed_settings = True
         else:
             self.setting_conf = dict()
         self.default_ref_text_file = self.setting_conf.get('REFERENCE_TEXTS_FILES')
-        #setting_conf = self.setting_conf
-        setting_debug_log(debug=self.setting_conf.get('Debug'))#デバッグ用のログを設定する。
+        
+        if self.setting_conf:
+            setting_debug_log(debug=self.setting_conf.get('Debug'))#デバッグ用のログを設定する。
 
 
     def get_param_json_file(self, file):
@@ -57,7 +67,6 @@ class Ref_DataConfig():
 
         parameters = FilesLoader.file_load(file, load_method=json_load, encoding='UTF-8')
         return parameters
-
 
     def get_conf_value(self, configparameter, select_attr=None, **kwargs):
         ''' setting_confから特定の設定情報を取得する。'''
@@ -91,7 +100,6 @@ class Ref_DataConfig():
         if configparameter in self.setting_conf:
             result = True
         return result
-
     
     @classmethod
     def ref_dataconfig_factory(cls, parametor_jsonfile=None, parametor_dict=None, retainsettingconf=None):
@@ -114,12 +122,10 @@ class RetainSettingConf:
         )
         self.setting_conf = dict()
 
-
     @property
     def setting_file(self):
         return self._setting_file
 
-    
     @setting_file.setter
     def setting_file(self, import_path):
 
@@ -131,7 +137,6 @@ class RetainSettingConf:
             self.setting_module = get_module(import_path)
             self._setting_file = import_path
         
-
     def read_settings(self):
         ''' セッティングファイルを読み込む。 '''
         for setting_item in self.setting_tuple:
@@ -144,7 +149,6 @@ class RetainSettingConf:
 
         return self.setting_conf
     
-
     def get_setting_value(self, item_name):
         ''' 設定内容を参照する。 '''
         return self.setting_conf.get(item_name, None)

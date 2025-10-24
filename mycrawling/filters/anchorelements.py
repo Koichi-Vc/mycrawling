@@ -1,5 +1,4 @@
 import os
-import logging
 from urllib.parse import urlparse
 import operator
 from collections.abc import Iterable
@@ -14,7 +13,6 @@ from mycrawling.logs.debug_log import debug_logger
 フィルター生成クラスはあくまでフィルターを生成するオブジェクトである為、属性をはじめとするフィルタリング対象
 は別途キーワード引数として用意する。
 '''
-
 
 class AnchorFilterMixin:
     ''' a要素検索フィルターに使う条件式をまとめた。 '''
@@ -80,17 +78,18 @@ class AnchorFilterMixin:
         if isinstance(value, (int, float)):
             self.__dwlcontents_score_cutoff = value
         else:
-            logging.error('値設定に失敗しました。int又はfloat型で指定してください。')
-            raise TypeError('正しい値をセットしてください。')
+            raise TypeError('値設定に失敗しました、正しい値をセットしてください。int又はfloat型で指定してください。')
+
 
 
     #hrefを始め, urlやファイルパスを返す属性に対するフィルター
     def exclude_dwl_contents(self, href):
-        ''' 拡張子を走査して検索対象からより厳密にダウンロードコンテンツを排除する。 '''
-        ''' ※注意
-        本メソッドはhref属性のフィルタとして実装する事。
-        実装時は、拡張子データを参照するget__reference_exclude_downloadsメソッド、
-        socrerを参照するdwlcontents_score_cutoffメソッドを其々定義する事。
+        ''' 拡張子を走査して検索対象からより厳密にダウンロードコンテンツを排除する。 
+        
+        ※注意:
+            本メソッドはhref属性のフィルタとして実装する事。
+            実装時は、拡張子データを参照するget__reference_exclude_downloadsメソッド、
+            socrerを参照するdwlcontents_score_cutoffメソッドを其々定義する事。
         '''
         
         result = False
@@ -112,14 +111,11 @@ class AnchorFilterMixin:
         return result
 
 
-
 class CreateAnchorElementFilter(ElementsFilter, AnchorFilterMixin):
     ''' a要素専用の検索フィルターを作成する。 '''
 
-
     default_exclude_downloads_scorer = Indel.normalized_distance
     processing = Processing()
-
 
     def __init__(self, attr=None, value=True, condition= operator.eq, filter_method=None, **kwargs):
         ''' anchor要素用のフィルターメソッド作成クラス '''
@@ -129,9 +125,9 @@ class CreateAnchorElementFilter(ElementsFilter, AnchorFilterMixin):
         kwargs:
             is_exclude_fragment: False
                 フラグメントをフィルターで除外するかをbool型で指定する。デフォルト値はTrueでフラグメントを予め除外する。
-                !注意
-                有効にする場合は、attr, criteria_value, filter_methodに何も渡されていない様にする必要がある。
-                これは用意したフィルター条件やメソッドと常にフラグメントに関するフィルターが重複してしまうのを防ぐためである。
+                !注意:
+                    有効にする場合は、attr, criteria_value, filter_methodに何も渡されていない様にする必要がある。
+                    これは用意したフィルター条件やメソッドと常にフラグメントに関するフィルターが重複してしまうのを防ぐためである。
         '''
         
         is_exclude_fragment = bool(kwargs.pop('is_exclude_fragment', False))
@@ -154,8 +150,7 @@ class CreateAnchorElementFilter(ElementsFilter, AnchorFilterMixin):
         if is_exclude_fragment is True and filter_method is None and not has_attr_and_value:
             #フラグメントの除外フィルターを指定する。
             filter_method = 'exclude_fragment'
-
-        
+    
         #フィルターに通す前後プロセスに関する定義を行う。
         affix_methods = kwargs.pop('affix_methods', list())
         if affix_methods and (isinstance(affix_methods, str) or not isinstance(affix_methods, Iterable)):
@@ -173,13 +168,11 @@ class CreateAnchorElementFilter(ElementsFilter, AnchorFilterMixin):
         ''' フラグメントを検索対象から除外するexclude_fragmentメソッドを有効にする。 '''
         return self.set_filter_method('exclude_fragment')    
 
-
     def definition_exclude_downloads(self,exclude_downloads, dwl_scorer_cutoff=0.4, **kwargs):
         ''' ダウンロードコンテンツの排除に関するフィルター定義を行う。'''
         self.reference_exclude_downloads = exclude_downloads
         self.dwlcontents_score_cutoff = dwl_scorer_cutoff
         self.dwlcontents_scorer = kwargs.pop('dwlcontents_scorer', self.default_exclude_downloads_scorer)
-
 
     #実際にフィルターとして渡すメソッド
     @processing
@@ -188,11 +181,8 @@ class CreateAnchorElementFilter(ElementsFilter, AnchorFilterMixin):
         debug_logger.debug(f'self: {self} | element_attr_value: {element_attr_value} | value: {value}')
         return super().valuefilter(element_attr_value, value)
 
-    
-
     @classmethod
     def filters_factory(cls, attr=None, value=True, condition= operator.eq, filter_method=None,**kwargs):
         ''' 自クラスインスタンスを生成する。 '''
         return cls(attr, value, condition,filter_method, **kwargs)
-
 

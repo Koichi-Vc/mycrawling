@@ -11,6 +11,7 @@ REGISTRY_DATA_CLASS_INSTANCE:
  
 '''
 
+
 USE_WEBDRIVER = 'selenium.webdriver.Chrome'
 
 WEBDRIVER_MANAGER = 'mycrawling.webdriver_manages.webdriver_manager.chromedriver_manager.ChromeWebDriverContextManager'

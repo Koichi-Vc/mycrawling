@@ -10,14 +10,21 @@ from mycrawling.scorings.texts import ScoringTexts
 from mycrawling.scorings.texts import ScoringTitleTexts
 from mycrawling.evaluations.evaluationtexts import EvaluateTexts
 from mycrawling.utils.imports_module import get_module
-from mycrawling.logs.debug_log import debug_logger
+from mycrawling.logs.debug_log import debug_logger, retain_logs
 
 
 class PageScorings(PageTextContentsParse, ScoringTexts):
     
     default_text_scorer = Indel.normalized_distance
 
-    def __init__(self, reference_object:'Reference_TextCollection'=None, reference_title_a_url_texts:'Reference_Title_A_Url_Texts'=None, title_boundary = None, text_boundary=None, **kwargs):
+    def __init__(
+            self,
+            reference_object:'Reference_TextCollection' = None,
+            reference_title_a_url_texts:'Reference_Title_A_Url_Texts' = None,
+            title_boundary = None,
+            text_boundary=None,
+            **kwargs
+            ):
 
         datamediator = kwargs.get('datamediator', None)
         if datamediator and isinstance(datamediator, str):
@@ -36,8 +43,9 @@ class PageScorings(PageTextContentsParse, ScoringTexts):
             self.reference_title_a_url_texts = datamediator.get_instance('reference_title_a_url_texts')
         else:
             raise TypeError('PageScorings() に必要な引数"reference_title_a_url_texts"が足りません。')
+        
         debug_logger.debug(f'reference_object: {self.reference_object}')
-        debug_logger.debug(f'reference_object.all_reference_text_list: {hasattr(self.reference_object, "all_reference_text_list")}| get_all_fields: {hasattr(self.reference_object, "get_all_fields")}')
+        debug_logger.debug(f'reference_object has all_reference_text_list and get_all_fields: {hasattr(self.reference_object, "all_reference_text_list")}| {hasattr(self.reference_object, "get_all_fields")}')
         
         try:
             reference_attrs = self.reference_object.get_all_fields()
@@ -67,6 +75,10 @@ class PageScorings(PageTextContentsParse, ScoringTexts):
         elif isinstance(exclude_ref_words, str):
             #語彙を直接指定した場合はsetにして保持。
             exclude_ref_words = {exclude_ref_words}
+        
+        debug_logger.debug(f'jp_standard_texts: {getattr(self, 'jp_standard_texts', None)}')
+        debug_logger.debug(f'en_standard_texts: {getattr(self, 'en_standard_texts', None)}')
+        debug_logger.debug(f'all_primary_texts: {getattr(self,'all_primary_texts', None)}')
 
         debug_logger.debug(f'exclude_ref_words: {exclude_ref_words}')
         self.exclude_ref_words = exclude_ref_words
@@ -84,7 +96,6 @@ class PageScorings(PageTextContentsParse, ScoringTexts):
         self.primary_text_list = list()#ページ内から検出した重要語彙
         self.high_score_text_list = list()#ページ内から検出した高類似度語彙
 
-
     @property
     def text_scorer(self):
         return self.__text_scorer
@@ -93,7 +104,6 @@ class PageScorings(PageTextContentsParse, ScoringTexts):
     def text_scorer(self, algorithm):
         self.__text_scorer = algorithm
 
-    
     @property
     def primary_text_list(self):
         return self.__primary_text_list
@@ -133,8 +143,6 @@ class PageScorings(PageTextContentsParse, ScoringTexts):
                 if value not in self.__high_score_text_list:
                     self.__high_score_text_list.append(value)
 
-
-
     def detect_high_score_texts(self, element, scorer=None, **kwargs):
       
 
@@ -144,8 +152,9 @@ class PageScorings(PageTextContentsParse, ScoringTexts):
             return
 
         text_contents = self.run_parse_textcontents(element, do_parsetext=self.do_parsetext, exclude_ref_words = self.exclude_ref_words, **kwargs)
-        text_contents = [txt for txt in text_contents]
-        debug_logger.debug(f'text_contents: {text_contents}')
+
+        retain_debug_logger = retain_logs(debug_logger)
+
         evaluated_text = self.all_text_scoring(
             text_contents,
             choices=self.all_reference_text_list,
@@ -153,22 +162,23 @@ class PageScorings(PageTextContentsParse, ScoringTexts):
             cutoff= self.text_boundary
             )   
         
-        for score, ext_txt, txt in evaluated_text:
-            debug_logger.debug(f'score: {score} | txt: {txt} | ext_txt: {ext_txt}')
+        for score, applicable_txt, txt in evaluated_text:
+            
             if score is not None:
 
-                if ext_txt in self.all_primary_texts:
+                retain_debug_logger(10, f'score: {score} | txt: {txt} | applicable_txt: {applicable_txt}')
+                if applicable_txt in self.all_primary_texts:
                     self.primary_text_list = txt
                 else:
                     self.high_score_text_list = txt
                 ''' 全ての高類似度テキストを言語別に格納'''
-                if ext_txt in self.jp_standard_texts:
+                if applicable_txt in self.jp_standard_texts:
                     self.high_score_jp_text.append(txt)
-                elif ext_txt in self.en_standard_texts:
+                elif applicable_txt in self.en_standard_texts:
                     self.high_score_en_text.append(txt)
 
+        retain_debug_logger(10, 'all_text_scoring | ', do_record_log=True)
         return self.primary_text_list, self.high_score_text_list
-
 
     def child_elements_traverse(self, element):
         ''' 各要素の子要素を走査し、ルート要素から抽出した全ての高類似度語彙の含有量を調べる '''
@@ -204,29 +214,32 @@ class PageScorings(PageTextContentsParse, ScoringTexts):
         children_list = self.run_parse_textcontents_list(children)
 
         for child in children_list:
-            debug_logger.debug(f'child: {child}')
             #childがジェネレータ式ならば展開してtextsに保持、リスト型ならそのまま。
             if isinstance(child, GeneratorType):
+                debug_logger.debug(f'childは、GeneratorType')
                 texts = [txt for txt in child]
             else:    
                 texts = child
 
             if texts:
+                debug_logger.debug(f'child: {child}')
                 detect_text_is_true = False
                 texts_similarity = self.all_text_scoring(texts, choices=self.all_reference_text_list, cutoff= 0.45)
                 match_primary_texts = self.scoring_eval.collect_contain_texts(texts, reference_texts=self.primary_text_list)
                 match_high_score_texts = self.scoring_eval.collect_contain_texts(texts, reference_texts=self.high_score_text_list)
                 debug_logger.debug(f'match_primary_texts: {match_primary_texts}')
                 debug_logger.debug(f'match_high_score_texts: {match_high_score_texts}')
-                debug_logger.debug('start texts_similarity>>>')
+                
                 for similarity_score in texts_similarity:
                     is_primary_texts = False
                     is_high_score_texts = False
                     text = similarity_score[2]
                     similarity = similarity_score[0]
-                    debug_logger.debug(f'text: {text} | similarity: {similarity}')
+                    
 
                     if text in match_primary_texts and similarity is not None:
+                        debug_logger.debug(f'text: {text} | similarity: {similarity}')
+                        
                         is_primary_texts = True
                         detection_primary_count += 1
                         detection_primary_text.add(text)
@@ -234,6 +247,8 @@ class PageScorings(PageTextContentsParse, ScoringTexts):
                             self.primary_text_list.append(text)
                     
                     elif text in match_high_score_texts and similarity is not None:
+                        debug_logger.debug(f'text: {text} | similarity: {similarity}')
+    
                         is_high_score_texts = True
                         detection_highscore_count += 1
                         detection_highscore_text.add(text)
@@ -242,14 +257,14 @@ class PageScorings(PageTextContentsParse, ScoringTexts):
 
                     if detect_text_is_true is False and (is_primary_texts or is_high_score_texts):
                         detect_text_is_true = True
-                
-                debug_logger.debug(f'text roop end>>>')
+
                 debug_logger.debug(f'is_primary_texts:{is_primary_texts} | is_high_score_texts: {is_high_score_texts}')                                                  
                 if detect_text_is_true:
                     child_count += 1
 
         debug_logger.debug(f'contain_text: {contain_text}')
         debug_logger.debug(f'{child_count} | {detection_highscore_count} | {detection_primary_count} |')    
+        
         return PageScoreStatisticsSet.create_dataclass( 
             child_length, 
             child_count, 
@@ -258,7 +273,6 @@ class PageScorings(PageTextContentsParse, ScoringTexts):
             detection_primary_count, 
             detection_primary_text
             )
-
 
     def scoring_titles(self, soup_obj):
         ''' ページのtitle要素の検索と類似度スコアリングして評価。 '''
@@ -285,5 +299,4 @@ class PageScorings(PageTextContentsParse, ScoringTexts):
             title_score = None
 
         return title_score,title_text, is_contain
-
 

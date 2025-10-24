@@ -1,4 +1,3 @@
-
 class SelectListOperator:
     ''' リスト全体の論理演算メソッドを指定 '''
     
@@ -26,7 +25,6 @@ class SelectListOperator:
         
         return list_operator
 
-
     def not_and(self, *result_list):
         ''' 配列に対してNAND評価 '''
         return not all(result_list)
@@ -34,5 +32,4 @@ class SelectListOperator:
     def not_or(self, *result_list):
         '''配列に対してNOR評価 '''
         return not any(result_list)
-
 

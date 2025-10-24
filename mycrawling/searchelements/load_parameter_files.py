@@ -23,7 +23,6 @@ class FilterParameterLoader(FilesLoader):
         self.encoding = encoding
         self.load_method = load_method if callable(load_method) else self.default_load_method
         self.elements_filter_parameters = None
-    
 
     def load_filter(self, **kwargs):
 
@@ -41,5 +40,3 @@ class FilterParameterLoader(FilesLoader):
 
         return self.elements_filter_parameters
 
-
-    

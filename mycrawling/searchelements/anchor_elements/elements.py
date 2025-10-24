@@ -8,7 +8,7 @@ from ..filters import SearchElementFilterManager
 from .evaluation import EvaluateAnchorElements
 from mycrawling.conf.data_setting import ref_dataconfig
 from mycrawling.utils.imports_module import get_module
-from mycrawling.logs.debug_log import debug_logger
+from mycrawling.logs.debug_log import debug_logger, retain_logs
 
 
 
@@ -18,8 +18,6 @@ class SearchAnchorElements(BaseSearchElements):
     default_filter_class_key = 'a'#FilterManagerに於いてフィルタークラスを管理しているキー
     default_evaluate_object = EvaluateAnchorElements
     default_webdriver = get_module(ref_dataconfig.get_conf_value('USE_WEBDRIVER'))
-
-
 
     def __init__(
             self,
@@ -68,6 +66,7 @@ class SearchAnchorElements(BaseSearchElements):
             attrs_value.update(filters)
             debug_logger.debug(f'filters: {filters} | attrs_value: {attrs_value}')
 
+        self.retain_debug_logger = retain_logs(debug_logger)
         debug_logger.debug(f'query_kwargs: {query_kwargs}')
         super().__init__(tag, attrs_value, string, **query_kwargs)
 
@@ -92,11 +91,9 @@ class SearchAnchorElements(BaseSearchElements):
         debug_logger.debug(f'evaluated_href_values: {evaluated_href_values} | searched_url: {self.searched_urls} | visited_page: {self.visited_page}') 
         return evaluated_href_values     
 
-
     @property
     def current_url(self):
         return self.__current_url
-    
 
     @current_url.setter
     def current_url(self, url):
@@ -106,23 +103,19 @@ class SearchAnchorElements(BaseSearchElements):
             debug_logger.debug(f'set current_hostname. host: {host}')
             self.current_hostname = host
 
-
     @property
     def current_hostname(self):
         debug_logger.debug(f'current_hostname: {self.__current_hostname}')
         return self.__current_hostname
 
-
     @current_hostname.setter
     def current_hostname(self, host):
         self.__current_hostname = host
-
 
     @property
     def handling_fragment(self):
         #フラグメントの扱いを指定する。
         return self._handling_fragment
-    
 
     @handling_fragment.setter
     def handling_fragment(self, value):
@@ -133,17 +126,17 @@ class SearchAnchorElements(BaseSearchElements):
         
         self._handling_fragment = value
 
-
     def exclude_fragment(self, elements):
         #フラグメントを除外するメソッド
         
         for element in elements:
             href_value = element.get('href', None)
-            debug_logger.debug(f'href_value: {href_value}')
+            self.retain_debug_logger(10, f'href_value: {href_value}')
 
             if not href_value or (href_value and "#" not in href_value):
-                debug_logger.debug(f'if-True')
                 yield element
+        self.retain_debug_logger(10, 'exclude_fragment | ', insert_index=0, do_record_log=True)
+        self.retain_debug_logger(refresh_messages=True)
 
 
     def exclude_rel_attr_nofollow(self, elements):
@@ -153,7 +146,6 @@ class SearchAnchorElements(BaseSearchElements):
             rel_value = element.get('rel', None)
             if not rel_value or (rel_value and 'nofollow' not in rel_value):
                 yield element
-
 
     def get_evaluate_class(self, cls_name=None):
         ''' 検索した要素の評価を行うクラスを設定情報から取得し、evaluate_objectsに設定する。 '''
@@ -166,22 +158,20 @@ class SearchAnchorElements(BaseSearchElements):
 
         return self.evaluate_objects
 
-
     def add_searched_urls(self, *searched_url):
         ''' 検索・抽出済みのurlを追加する。'''
         for url in searched_url:
             self.searched_urls.add(url)
 
-
     def add_visited_urls(self, *visited_url):
         for url in visited_url:
             self.visited_page.add(url)
 
-    
     def is_already_searched(self, url_items:List[List[str]]):
         '''
         検索したhref値(絶対url/相対urlパス)が既に検索及び訪問済みかどうかを評価して返す。
         '''
+
         list_length = 1
 
         if not isinstance(url_items, (list, tuple, deque, GeneratorType)):
@@ -191,8 +181,8 @@ class SearchAnchorElements(BaseSearchElements):
         absolute = []
         relative = []
         for urls in url_items:
-            debug_logger.debug(f'urls:{urls}')
-            
+
+            self.retain_debug_logger(10, f'urls:{urls}')            
             if len(urls) <= list_length:
 
                 logging.error('絶対url/相対urlパスの両方が必要です。')
@@ -209,9 +199,9 @@ class SearchAnchorElements(BaseSearchElements):
                 self.add_searched_urls(*searched_urls)
                 relative.append(rel)
                 absolute.append(absol)
-
+        self.retain_debug_logger(10, 'url_items | ', insert_index=0, do_record_log=True)
+        self.retain_debug_logger(refresh_messages=True)
         return absolute, relative
-
 
     #役割は__call__と同じ。
     def find_elements(self,
@@ -230,5 +220,4 @@ class SearchAnchorElements(BaseSearchElements):
         evaluated_href_values = self.is_already_searched(evaluated_elements)
 
         return evaluated_href_values
-
 

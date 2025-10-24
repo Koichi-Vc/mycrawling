@@ -13,9 +13,8 @@ class Processing():
     '''
     要素又は値をフィルターで評価する前後にプロセス(処理や加工)を追加する。 デフォルトでは何もしない(affix == no_process)
     になっている。
-    
     '''
-
+    
     def __init__(self, *affix_methods, affix=None, **kwargs):
 
         self.affix_methods = list(affix_methods) 
@@ -24,7 +23,6 @@ class Processing():
             setattr(self, kwg, kwargs[kwg])
         self._instance_obj = None
         self.method = None
-
 
     def __call__(self, method):
         self.method = method#現状まだ役割として機能していない。
@@ -41,7 +39,6 @@ class Processing():
         if hasattr(self, 'instance_obj'):
             self._instance_obj = None
         self._instance_obj = instance
-
   
     def _processing(self, *args_tup:List, instance=None, **kwargs):
 
@@ -68,7 +65,6 @@ class Processing():
             else:
                 result = run_method(result, affix_method)
         return result
-
 
     def process(self, method):
         ''' デコレータのラッパーメソッドを指定する。 '''
@@ -128,7 +124,6 @@ class Processing():
         return wrapper
 
 
-
 class ElementsFilter(AbstractElementsFilter, SelectListOperator):
     affix_methods = list()
     ''' 要素を属性でフィルタリングする '''
@@ -142,7 +137,6 @@ class ElementsFilter(AbstractElementsFilter, SelectListOperator):
         self.list_operator = self.select_operator(list_operator_type)
                 
         super().__init__(filter_method)
-
 
     def get_attribute(self, element):
         ''' 要素から指定した属性を取得する。値の場合はそのまま返される。 '''
@@ -159,12 +153,10 @@ class ElementsFilter(AbstractElementsFilter, SelectListOperator):
         debug_logger.debug(f'element: {element} | attr_vlaue: {attr_value}')
         return attr_value        
 
-    
     def invert_operand(self, element):
         #被演算子を反転する。
         attr_value = self.get_attribute(element)
         return self.criteria_value, attr_value
-
 
     def valuefilter(self, element, criteria_value=None):
         '''
@@ -175,23 +167,20 @@ class ElementsFilter(AbstractElementsFilter, SelectListOperator):
         '''
         elem_attr_value = self.get_attribute(element)
         debug_logger.debug(f'criteria_value: {criteria_value} | attr_value: {elem_attr_value}')
+        
         if criteria_value is None:
             criteria_value = self.criteria_value        
         return self.condition(elem_attr_value, criteria_value)
-
 
     def values_listfilter(self, element_attr_value):
         ''' 属性値(属性値だけとは限らない)と複数の値リストを比較する '''
         return self.list_operator(element_attr_value == value for value in self.values_list)
 
-
     def customfilter(self, element_obj):
         ''' カスタムでフィルター関数を作成する場合に用いる'''
         pass
 
-
     @classmethod
     def filters_factory(cls, *args, **kwargs):
         return cls(*args, **kwargs)
-
 

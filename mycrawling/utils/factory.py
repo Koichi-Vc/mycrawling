@@ -33,7 +33,6 @@ class Factory(AbstractFactory):
 
     debug_logger.debug(f'ref_dataconfig: {ref_dataconfig}')
 
-
     def __init__(self, classes:dict=None, conf_class_name=None, **kwargs):
         '''
         conf_class_name:
@@ -66,7 +65,6 @@ class Factory(AbstractFactory):
         
         self.datamediator = get_module(self.ref_dataconfig_obj.get_conf_value('USE_MEDIATOR_PATH'))
 
-
     def import_classes(self, class_name=None, retainer=None, **class_paths):
         ''' クラスをインポートする。'''
         if retainer is None:
@@ -88,13 +86,11 @@ class Factory(AbstractFactory):
             if value:
                 imported_class[class_name] = value
         retainer.update(imported_class)
-        return imported_class        
-
+        return imported_class
 
     def import_lazy_instances_class(self, class_name=None):
         imported_class = self.import_classes(class_name, retainer=self.lazy_instances_class_objects, **self.lazy_instances_class)
         return imported_class
-
 
     def get_class(self, class_name):
         ''' クラスを取得する。'''
@@ -109,7 +105,6 @@ class Factory(AbstractFactory):
             class_object = self.import_classes(class_name=class_path)
             self.class_objects.update(**class_object)
             return class_object.get(class_name)
-
 
     def create_instance(self, class_name, arguments=tuple(), **kwargs):
         ''' クラスのインスタンス化を行う。'''
@@ -130,7 +125,6 @@ class Factory(AbstractFactory):
             self.class_instances[class_name] = instance
 
         return instance
-    
 
     def create_instances(self, **parameters):
         #USE_CLASSESに登録されたクラスをインスタンス化していく
@@ -147,8 +141,6 @@ class Factory(AbstractFactory):
             instance_dict[class_name] = instance
         return instance_dict
 
-
-
     def create_data_cls_instance(self, arguments=None, select_cls=None, add_mediator=False, override=True):
         ''' パラメータを元にデータクラスインスタンスを生成する。 '''
         '''
@@ -157,8 +149,6 @@ class Factory(AbstractFactory):
         override:
             Trueを指定した場合、同じ名前で登録されているオブジェクトは上書きされる。
         '''
-
-        #datacls_objects = setting.registry_data_class_instance
 
         datacls_objects = self.ref_dataconfig_obj.get_conf_value('REGISTRY_DATA_CLASS_INSTANCE')
         ref_texts_arguments_path = arguments if arguments else self.ref_dataconfig_obj.get_conf_value('REFERENCE_TEXTS_FILES')
@@ -184,12 +174,9 @@ class Factory(AbstractFactory):
         
         return data_cls_instances
 
-
-
     def register_to_datamediator(self, override=True, **values_dict):
         ''' datamediatorへオブジェクトを登録する。'''
         self.datamediator.register_object(values_dict, override)
-
 
     def get_param_json_file(self, file):
         ''' データクラスインスタンス用パラメータをまとめたjsonファイルを読み込む '''

@@ -10,7 +10,6 @@ class EvaluateTexts(ScoreEvaluations, SelectListOperator):
     
     scoring_texts = ScoringTexts()
 
-
     def texts_is_contain(self, texts:Union[List, str], reference):
         ''' テキストと参照テキスト(reference)との完全一致、部分一致をbool型で評価する '''
         
@@ -28,7 +27,6 @@ class EvaluateTexts(ScoreEvaluations, SelectListOperator):
                     result = True
                     break
             yield txt, result
-
 
     def collect_contain_texts(self, texts, reference_texts):
         ''' テキストコンテンツと参照テキスト其々含まれている部分を評価し、該当するテキストを返す '''
@@ -48,5 +46,4 @@ class EvaluateTexts(ScoreEvaluations, SelectListOperator):
         
         debug_logger.debug(f'contain_texts:{contain_texts}')
         return contain_texts
-
 

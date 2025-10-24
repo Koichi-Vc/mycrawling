@@ -30,12 +30,10 @@ class PageTextContentsParse(Spacy_TextParse):
         elif isinstance(elements, Iterable):
             texts = elements
         
-
         if do_parsetext and not exclude_ref_words:
             parsed_text = (ps_txt for txt in texts for ps_txt in self.textparse(txt))
             return (text for text in parsed_text)
         
-
         elif do_parsetext and exclude_ref_words:
             parsed_text = list()
             for txt in texts:
@@ -49,7 +47,6 @@ class PageTextContentsParse(Spacy_TextParse):
         else:
             return texts
 
-
     def run_parse_textcontents_list(self, elements:List, do_parsetext=True):
         ''' 複数の要素を順次解析したhtml要素からテキストコンテンツをジェネレータ式で返す。'''
         
@@ -61,9 +58,8 @@ class PageTextContentsParse(Spacy_TextParse):
             texts = (i.strip().replace(' ','') for i in element.text.strip().split('\n' or '\t') if i.strip() != '')
             if do_parsetext:
                 parsed_text = (ps_txt for txt in texts for ps_txt in self.textparse(txt))
-                yield [text for text in parsed_text]
+                yield parsed_text
             
             else:
                 yield texts
-
 

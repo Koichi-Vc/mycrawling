@@ -29,13 +29,10 @@ class CreateSetting:
         if is_create_file is True:
             self.create_settings_file()
 
-
-
     def create_settings_file(self):
         global created_user_setting_import_path
 
-        user_setting_module_dir_path = join_current_dir(self.dir_path)#dir_pathの
-
+        user_setting_module_dir_path = join_current_dir(self.dir_path)#現在のディレクトリ名と、user_settingsファイルのパスを連結する。
         
         if not user_setting_module_dir_path.parent.is_dir():
             user_setting_module_dir_path.parent.mkdir(parents=True)#ディレクトリ生成
