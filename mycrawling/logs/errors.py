@@ -231,8 +231,11 @@ class Errorloghandlings_Class:
 
 
     @classmethod
-    def set_handler(cls, logger, handler, formatter=None, howmany_handlers:'許容するハンドラ数'=1,**kwargs):
-        '''ロガーのハンドラを指定してセットする  '''
+    def set_handler(cls, logger, handler, formatter=None, howmany_handlers:int =1,**kwargs):
+        '''ロガーのハンドラを指定してセットする  
+        howmany_handlers: 許容するハンドラ数
+
+        '''
         if not isinstance(formatter, logging.Formatter):
             formatter = cls.set_formatter(formatter)
         
@@ -249,8 +252,12 @@ class Errorloghandlings_Class:
 
 
     @classmethod
-    def remove_handlers(self, logger, howmany_handlers:'保持するハンドラ数'= 1, no_delete_handler_type:'削除しないハンドラタイプ'=None):
-        ''' 不要なハンドラを削除する。'''
+    def remove_handlers(self, logger, howmany_handlers: int = 1, no_delete_handler_type=None):
+        ''' 不要なハンドラを削除する。
+        howmany_handlers: 保持するハンドラ数
+        no_delete_handler_type(handler): 削除しないハンドラタイプ
+
+        '''
 
         is_iterable = isinstance(no_delete_handler_type, Iterable)
         if no_delete_handler_type and not is_iterable:
@@ -328,7 +335,7 @@ class Errorloghandlings_Class:
         if custom_message_dict is None:
             custom_message_dict = self.custom_message_dict
         
-        debug_logger.debug(f'exc_type: {exc_type} | custom_message_dict: {custom_message_dict} | exc_type in custom_message_dict: {exc_type in custom_message_dict.keys()}')
+        debug_logger.debug(f'exc_type: {exc_type} | custom_message_dict: {custom_message_dict} | custom_message_dict: {custom_message_dict}')
 
         if custom_message_dict and exc_type in custom_message_dict.keys():
 
