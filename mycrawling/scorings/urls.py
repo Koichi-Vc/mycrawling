@@ -4,7 +4,7 @@ import numpy as np
 from rapidfuzz.distance import Indel
 from typing import List
 from .texts import ScoringTexts
-from mycrawling.logs.debug_log import debug_logger
+from mycrawling.logs.debug_log import debug_logger,retain_logs
 
 
 
@@ -25,20 +25,22 @@ class ScoringUrls(ScoringTexts):
 
     def urls_text_scoring(self, texts, choices, scorer, cutoff=None, *args, **kwargs):
         ''' all_text_scoringの戻り値(generator)を展開して返す '''
+        #retain_debug_logger = retain_logs(debug_logger)
         #戻り値はタプル型リストの二次元配列
         score_value = []
         applicable_texts = []
         text_list = []
+
         text_scores = self.all_text_scoring(texts, choices, scorer, cutoff, *args, **kwargs)
-        debug_logger.debug(f'text_scores:{text_scores}')
 
         #'self.all_text_scoringを呼び出して展開。'
         for score, appl_txt, txt in text_scores:
-
+            #retain_debug_logger(10, f'score: {score} | appl_txt: {appl_txt} | txt: {txt}')
             score_value.append(score)
             applicable_texts.append(appl_txt)
             text_list.append(txt)
 
+        #retain_debug_logger(10, 'all_text_scoring | ', do_record_log=True, insert_index=0)
         return score_value, applicable_texts, text_list
 
 
@@ -47,17 +49,20 @@ class ScoringUrls(ScoringTexts):
         
         ''' ParseUrlsで解析された一つのurlから抽出したpath等の属性値をscoring_methodに基づきスコアリングする '''
         ''' urlの各属性名をスコアリングし、属性毎スコアのリストにした二次元配列を返す。 '''
-        #evaluate_textはリスト型を返す。
-        ''' 戻り値:リスト型の3次元配列[([],[],[]), ([],[],[])] '''
+        retain_debug_logger = retain_logs(debug_logger)
+
+
         if scorer is None:
             scorer = Indel.normalized_distance
         if not callable(scoring_method) and isinstance(scoring_method, str):
             
             scoring_method = self.select_url_scoring_method(scoring_method)
-        urls_score = []
+        urls_score_list = []
+        retain_debug_logger(10, f'urls_attributes: {urls_attributes}')
         for url in urls_attributes:
             path_split = url.strip('/').split('/')
-            debug_logger.debug(f'path_split: {path_split}')
+
+            retain_debug_logger(10, f'path_split: {path_split} ;')
             evaluate_text = scoring_method(
                     texts=path_split,
                     choices=choices_url_text,
@@ -66,11 +71,11 @@ class ScoringUrls(ScoringTexts):
                     **kwargs
                     )
             
-            debug_logger.debug(f'evaluate_text:{evaluate_text}')
-            urls_score.append(evaluate_text)
-            
-        debug_logger.debug(f'urls_attributes: {urls_attributes} | urls_score: {urls_score}')
-        return urls_score 
+            urls_score_list.append(evaluate_text)
+
+        retain_debug_logger(10, f'urls_score_list: {urls_score_list}')
+        retain_debug_logger( 10, 'scoring_results | ', do_record_log=True, insert_index=0)
+        return urls_score_list
 
 
     @classmethod
@@ -84,7 +89,7 @@ class ScoringUrls(ScoringTexts):
             'rate': 全アイテムに対する閾値を達したスコアの割合※score_cutoffを指定していない場合統計データとしては無効なデータとなる。
             'sum': 各スコアの合計
         '''
-        debug_logger.debug(f'urls_score: {urls_score}')
+        
         result = None
         if isinstance(urls_score, (int, float)) or urls_score is None:
             urls_score = [urls_score]
