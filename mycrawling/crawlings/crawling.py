@@ -8,7 +8,10 @@ from urllib.parse import urlparse
 from mycrawling.conf.data_setting import ref_dataconfig
 from mycrawling.utils.imports_module import get_module
 from mycrawling.utils.paths import match_urls
-from mycrawling.logs.debug_log import debug_logger
+from mycrawling.logs.debug_log import get_debug_logger
+
+
+debug_logger = get_debug_logger()
 
 
 
@@ -127,15 +130,15 @@ class MyCrawlingSearch():
                 self.searchanchorelements.current_url=self.current_url 
                 anchor_urls = self.searchanchorelements(soup_obj=self.driver)
                 absolute_href, relative_url = anchor_urls
-                debug_logger.debug(f'visited_page: {self.searchanchorelements.visited_page}')
-                debug_logger.debug(f'searched_page: {self.searchanchorelements.searched_urls}')
+                debug_logger.debug(f'visited_page: {self.searchanchorelements.visited_page} | searched_page: {self.searchanchorelements.searched_urls}')
                 st = time.time()
                 time.sleep(self.time_sleep)
                 self.Crawling_pages(absolute_href, relative_url, *args, **kwargs)
 
                 current, peak = tracemalloc.get_traced_memory()
-                debug_logger.debug(f'searchanchorelements()実行直後のメモリリソース: current: {current/10**6}MB; peak: {peak/10**6}MB;\n詳細値: current: {current}; peak: {peak}')
-                logging.info(f'searchanchorelements()実行完了 | ページ探索終了 | time: {time.time() - st} |')      
+                debug_logger.debug(f'searchanchorelements実行直後のメモリリソース: current: {current/10**6}MB; peak: {peak/10**6}MB;\n詳細値: current: {current}; peak: {peak}')
+                logging.info(f'searchanchorelements()実行完了 | ページ探索終了 | time: {time.time() - st} |')
+                  
         else:
             logging.warning('スクレイピング不可又はrobots.txt参照エラーのサイト')
             self.driver_manager.error_message.append('このサイトはスクレイピング出来ません。')
@@ -184,10 +187,10 @@ class MyCrawlingSearch():
         start_time = time.time()
         while jump_page and counta <= stop_counta:
             debug_logger.debug(f"jump_page: {jump_page}")
+            debug_logger.debug(f"absolute_url_list: {absolute_url_list} | relative_url_list: {relative_url_list}")
+            
             jump = jump_page.popleft()
-            debug_logger.debug(f"absolute_url_list: {absolute_url_list}")
-            debug_logger.debug(f'relative_url_list: {relative_url_list}')
-
+            
             if match_urls(self.driver.current_url, jump) is False:
                 self.driver.get(jump)#探索対象のa要素があるページへジャンプ
                 self.driver_wait.until(ec.presence_of_all_elements_located((By.CSS_SELECTOR, "*")))#全部表示されるまで待機
@@ -242,8 +245,8 @@ class MyCrawlingSearch():
                     self.searchanchorelements.current_url = self.driver.current_url
                     anchor_urls = self.searchanchorelements(soup_obj=self.driver)
                     absolute_href, relative_url = anchor_urls
-                    debug_logger.debug(f'visited_page: {self.searchanchorelements.visited_page}')
-                    debug_logger.debug(f'searched_page: {self.searchanchorelements.searched_urls}')                    
+                    debug_logger.debug(f'visited_page: {self.searchanchorelements.visited_page} | searched_page: {self.searchanchorelements.searched_urls}')
+
                     if absolute_href and relative_url:
                         absolute_url_list.append(absolute_href)
                         relative_url_list.append(relative_url)

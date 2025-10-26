@@ -8,7 +8,7 @@ from ..filters import SearchElementFilterManager
 from .evaluation import EvaluateAnchorElements
 from mycrawling.conf.data_setting import ref_dataconfig
 from mycrawling.utils.imports_module import get_module
-from mycrawling.logs.debug_log import debug_logger
+from mycrawling.logs.debug_log import debug_logger, retain_logs
 
 
 
@@ -71,6 +71,7 @@ class SearchAnchorElements(BaseSearchElements):
             attrs_value.update(filters)
             debug_logger.debug(f'filters: {filters} | attrs_value: {attrs_value}')
 
+        self.retain_debug_logger = retain_logs(debug_logger)
         debug_logger.debug(f'query_kwargs: {query_kwargs}')
         super().__init__(tag, attrs_value, string, **query_kwargs)
 
@@ -139,11 +140,12 @@ class SearchAnchorElements(BaseSearchElements):
         
         for element in elements:
             href_value = element.get('href', None)
-            debug_logger.debug(f'href_value: {href_value}')
+            self.retain_debug_logger(10, f'href_value: {href_value}')
 
             if not href_value or (href_value and "#" not in href_value):
-                debug_logger.debug(f'if-True')
                 yield element
+        self.retain_debug_logger(10, 'exclude_fragment | ', insert_index=0, do_record_log=True)
+        self.retain_debug_logger(refresh_messages=True)
 
     def exclude_rel_attr_nofollow(self, elements):
         #rel属性値がnofollowの要素を除外する。
@@ -180,6 +182,7 @@ class SearchAnchorElements(BaseSearchElements):
         '''
         検索したhref値(絶対url/相対urlパス)が既に検索及び訪問済みかどうかを評価して返す。
         '''
+
         list_length = 1
 
         if not isinstance(url_items, (list, tuple, deque, GeneratorType)):
@@ -189,8 +192,8 @@ class SearchAnchorElements(BaseSearchElements):
         absolute = []
         relative = []
         for urls in url_items:
-            debug_logger.debug(f'urls:{urls}')
-            
+
+            self.retain_debug_logger(10, f'urls:{urls}')            
             if len(urls) <= list_length:
 
                 logging.error('絶対url/相対urlパスの両方が必要です。')
@@ -207,7 +210,8 @@ class SearchAnchorElements(BaseSearchElements):
                 self.add_searched_urls(*searched_urls)
                 relative.append(rel)
                 absolute.append(absol)
-
+        self.retain_debug_logger(10, 'url_items | ', insert_index=0, do_record_log=True)
+        self.retain_debug_logger(refresh_messages=True)
         return absolute, relative
 
 

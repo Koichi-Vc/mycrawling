@@ -10,12 +10,7 @@ class ScoreEvaluations:
         ''' 数値符号をアルゴリズムに合わせて操作する'''
 
         def wrapper(self, scorer=None, score=None, *args, **kwargs):
-            """ 
-            <パラメータ>
-            add_subst: 加算か減算を指定する。addなら加算,subst or substractionなら減算
-            comp_num: 加点,減点する値を指定。
-            """
-            debug_logger.debug(f'before-- func: {func} | args: {args}| kwargs:{kwargs} | before; scorer: {scorer}| score: {score} ')
+            debug_logger.debug(f'func: {func} | args: {args}| kwargs:{kwargs} | scorer: {scorer} | score: {score} ')
             
             add_subst = kwargs.pop('add_subst', 'add')
             comp_num = kwargs.pop('comp_num', 0)
@@ -37,9 +32,8 @@ class ScoreEvaluations:
                 elif 'ratio' in scorer_name:
                     scorer_type = 'ratio'
 
-            debug_logger.debug(f'after-- scorer: {scorer} score: {score} | scorer_type: {scorer_type}')
-            result = func(self, scorer_type, score, add_subst=add_subst, comp_num=comp_num, *args, **kwargs)
-            debug_logger.debug(f'result: {result}')
+            result = func(self, scorer_type, score, *args, **kwargs)
+            
             return result
 
         return wrapper
@@ -68,11 +62,11 @@ class ScoreEvaluations:
         ''' scorer_typeに基づく境界値に対するスコアの真偽を評価 '''        
         result = False
         boundary = kwargs.pop('boundary', self.score_cutoff_init_(scorer_type))
-        debug_logger.debug(f'score: {score} | scorer_type: {scorer_type} | boundary: {boundary}')
         if scorer_type == 'distance':
             result = score <= boundary
         else:
             result = score >= boundary
 
+        debug_logger.debug(f'score: {score} | scorer_type: {scorer_type} | boundary: {boundary} | result: {result}')
         return result
 

@@ -1,8 +1,8 @@
 from bs4 import BeautifulSoup
 from bs4.element import SoupStrainer
 from typing import Union
-from mycrawling.utils.imports_module import get_module
-from mycrawling.logs.debug_log import debug_logger
+from mycrawling.utils.imports_module import get_module, debug_logger
+
 
 
 

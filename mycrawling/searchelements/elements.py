@@ -4,7 +4,6 @@ from mycrawling.parse.elementsparse import ElementsParse
 from mycrawling.logs.debug_log import debug_logger
 
 
-
 class BaseSearchElements(ElementsParse):
     
     defaultparser_name = 'lxml'

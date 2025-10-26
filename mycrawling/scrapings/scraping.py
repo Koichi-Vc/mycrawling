@@ -5,7 +5,7 @@ import pandas
 from statistics import median
 import time
 import tracemalloc
-from mycrawling.logs.debug_log import debug_logger
+from mycrawling.logs.debug_log import debug_logger, retain_logs
 
 
 
@@ -15,16 +15,17 @@ class PageScraping():
         self.company_overview = None
         self.col_median_list = deque()
         self.df = df if df else list()
+        self.element_list = list()#スクレイピングするhtmlコードを保持する。
         self.text_parse_method = text_parse_method
-        
-    
+        self.retain_debug_logger = retain_logs(debug_logger)
+
     def column_count(self, company_overview):
         '''各項目の列数をカウントし、中央値を算出する。改行の基準を中央値にする。'''
         num_column = []
         #tag_name = None
         tag_elements = []
         for elem in company_overview:
-            debug_logger.debug(f'elem: {elem} | elem length : {len(elem)} | elem.text: {elem.text}')
+
 
             if elem.name in ['table','tbody','th','tr']:
                 #isinstance(i, bs4.element.Tag)を追加して事前にコメントアウトに対してattributeエラーが起きない様にした。
@@ -58,8 +59,6 @@ class PageScraping():
                 self.col_median_list.append(int(median(num_column)))
             else:
                 self.col_median_list.append(1)
-        #return num_column
-     
     
     def table_element_scrape(self, element, col_median, company_list, index, text_line_blake):
         '''table要素のスクレイピングを行う。'''
@@ -70,7 +69,7 @@ class PageScraping():
             tr_elements = (i for i in element.find_all('tr') if isinstance(i, bs4.element.Tag))
         elif element.name == 'tr':
             tr_elements = element
-        debug_logger.debug(f'element: {element} | tr_elements: {tr_elements}')
+
 
         td_tag_gen = (i.find_all(['th','td']) for i in tr_elements if isinstance(i, bs4.element.Tag))
         td_list = []
@@ -151,9 +150,6 @@ class PageScraping():
 
 
     def other_elements_scrape(self, element, col_median, company_list, index, reference_score_texts, transpose=False):
-
-
-        debug_logger.debug(f'element: {element}')
         
         if not col_median or col_median <= 1:
             col_median += 1
@@ -173,7 +169,8 @@ class PageScraping():
             #line_count = 0
             #elem_index = ''#child_text毎のインデックスを参照する為の一時的な変数
             for elem in child_text:
-                debug_logger.debug(f'child_text[elem] : {elem}')
+                self.retain_debug_logger(10, f'{elem} | ')
+
                 if elem in reference_score_texts:
                     
                     if tx:#既にアイテムが収集されていた場合、今検出された項目の前の項目テキストに対応するアイテムの為保存処理に移る
@@ -199,8 +196,10 @@ class PageScraping():
                     if not elem_index:
                         index.append('')
                     elem_index = ''
-            
+            self.retain_debug_logger(10, 'child_text[elem] :', insert_index=0, do_record_log=True)
             debug_logger.debug(f'forループ終了後 tx: {tx}')
+        self.retain_debug_logger(refresh_messages=True)
+        
         debug_logger.debug(f'ifの手前, company_list: {company_list} | ')
         debug_logger.debug(f'index: {index} | elem_index: {elem_index} | company_list length: {len(company_list)} | index length : {len(index)}')
         
@@ -259,9 +258,11 @@ class PageScraping():
             if not col_median:
                 logging.warning(f'No Column. カラムが無い。elements : {com_element}')
                 col_median = 2
+            self.element_list.append(com_element)
+
             if com_element.name in ['table','tbody','th','tr'] or com_element.find_all(['table','tbody','tr','td','td']):
                 debug_logger.debug(f'table_element_scrape実行')
-                logging.info(f'table_element_scrape()実行')
+                #debug_logger.debug(f'table_element_scrape()実行')
                 self.table_element_scrape(com_element, col_median, company_list, index, text_line_blake)
                 #logging.info(f'table_element_scrape()実行完了; time: {time.time() - st}')
 

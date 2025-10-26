@@ -24,7 +24,6 @@ class EvaluateUrls(ParseUrls, ScoreEvaluations):
         hostname_dict = self.hostname_parse(*(current_url, urls))
         current_hostname = hostname_dict.pop(current_url)
         urls_hostname = hostname_dict.pop(urls)
-        debug_logger.debug(f'current_hostname: {current_hostname} | urls_hostname: {urls_hostname}')
         result_urls_hostname = urls_hostname is None
 
         urls_hostname_is_current_hostname = urls_hostname == current_hostname
@@ -46,7 +45,7 @@ class EvaluateUrls(ParseUrls, ScoreEvaluations):
             score = statistics_value
 
         result = super().evaluate_score(scorer_type, score, *args, **kwargs)
-        debug_logger.debug(f'name_is_current_name: {name_is_current_name}')
         urls_result = result and (name_is_current_name is True or name_is_current_name is None)
+        
         return urls_result
 

@@ -4,7 +4,7 @@ from mycrawling.conf.data_setting import ref_dataconfig
 from mycrawling.evaluations.evaluationurls import EvaluateUrls
 from mycrawling.utils.imports_module import get_module
 from .scoring import AnchorElementsScorings
-from mycrawling.logs.debug_log import debug_logger
+from mycrawling.logs.debug_log import debug_logger, retain_logs
 
 
 class EvaluateAnchorElements(EvaluateUrls):
@@ -71,8 +71,7 @@ class EvaluateAnchorElements(EvaluateUrls):
     def evaluate_text_and_href(self, elements, current_url:str, **kwargs):
         ''' text_and_urls_scoringで算出されたスコアを元にテキスト/href属性値を評価する。 '''
         #current_urlは、現在アクティブになっているurlを受け取る。
-        
-        #url_scoring_type = kwargs.pop('url_scoring_type', 'all')
+        retain_debug_logger = retain_logs(debug_logger)
         text_score_list, href_score_list, href_list = self.anchor_elements_scoring.text_and_urls_scoring(elements, current_url=current_url, **kwargs)
         debug_logger.debug(f'text_score_list: {text_score_list}')
         debug_logger.debug(f'href_score_list:{href_score_list}')
@@ -83,15 +82,10 @@ class EvaluateAnchorElements(EvaluateUrls):
         #算出した各テキスト/hrefのスコアを評価する
         for text_score, hrefs_score, href_value in zip(*[text_score_list,href_score_list,href_list]):
 
-            debug_logger.debug(f'text_score: {text_score}')
-            debug_logger.debug(f'hrefs_score: {hrefs_score}')
-            debug_logger.debug(f'href_value: {href_value}')
-
             hostname_is_current_hostname = self.evaluate_hostname(
                 current_url,
                 href_value
                 )#href属性値がサイト内urlか評価する。
-            debug_logger.debug(f'hostname_is: {hostname_is_current_hostname} | href_value: {href_value}')
 
             evaluated_hrefs = self.evaluate_score(
                 scorer_type='Wratio',
@@ -100,7 +94,11 @@ class EvaluateAnchorElements(EvaluateUrls):
                 boundary=urls_boudary, 
                 **kwargs
                 )
-            
+
+            retain_debug_logger(
+                10,
+                f'text_score: {text_score} | hrefs_score: {hrefs_score} | href_value: {href_value} | hostname_is: {hostname_is_current_hostname} ; '
+                )
             #テキストコンテンツのスコア評価と
             #テキストコンテンツ/href属性値の何方か一方の評価が通れば返す。
             if text_score is not None or evaluated_hrefs is True:
@@ -115,8 +113,9 @@ class EvaluateAnchorElements(EvaluateUrls):
                     rel_href = href_value
                     
                 if evaluated_hrefs is True:
-                    debug_logger.debug(f'evaluated_hrefs: {evaluated_hrefs}')
                     self.is_true_url_set = absol_href
                 yield absol_href, rel_href
+        
+        retain_debug_logger(10, None, do_record_log=True)
 
 

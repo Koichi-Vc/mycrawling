@@ -59,7 +59,8 @@ class AnchorElementsScorings(ElementsScoring, ScoringUrls):
 
         text_scores = super().urls_text_scoring(texts, choices, scorer, cutoff, *args, **kwargs)
         #a要素リスト全てのテキストコンテンツをスコアリングしリストにまとめる。
-        debug_logger.debug(f'text_scores: {text_scores}')
+        debug_logger.debug(f'text_scores: {text_scores} | return_score_only: {return_score_only}')
+
         if return_score_only:
             #スコアのみを返す場合はTrue
             text_scores = text_scores[0] 
@@ -84,15 +85,19 @@ class AnchorElementsScorings(ElementsScoring, ScoringUrls):
         urls_attrs = self.parseurls.get_one_url_attrs(urls, *scoring_urls_attrs)
         scoring_method = self.urls_scoring_method
         #urlsのスコア算出に使うメソッドを指定
-        urls_score_list = super().urls_scoring(urls_attrs,
-                                               choices_url_text,
-                                               scoring_method,
-                                               scorer, score_cutoff,**kwargs)
+        urls_score_list = super().urls_scoring(
+            urls_attrs,
+            choices_url_text,
+            scoring_method,
+            scorer,
+            score_cutoff,
+            **kwargs
+            )
 
         #リスト型の二次元配列が返される為次元を下げる
         urls_score_list = [url for urls in urls_score_list for url in urls]
         statistics_value = self.urls_statistics(urls_score_list, self.href_score_statistics)
-
+        
         debug_logger.debug(f'statistics_value: {statistics_value}')
         return statistics_value
     
@@ -102,6 +107,10 @@ class AnchorElementsScorings(ElementsScoring, ScoringUrls):
         ''' text/href属性値のスコアリング '''
         #scoring_urls_attrs: スコアリング対象にするurlparse属性名 初期値: self.select_url_attrs_list
         #要素からテキスト/href属性値/
+
+        retain_debug_logger_text = retain_logs(debug_logger)
+        retain_debug_logger_href = retain_logs(debug_logger)
+
         contents = ((elem.text.strip(), elem.get('href')) for elem in elements)
         current_url= kwargs.pop('current_url', '')
 
@@ -117,11 +126,13 @@ class AnchorElementsScorings(ElementsScoring, ScoringUrls):
                 scoring_urls_attrs=self.select_url_attrs_list,
                 **kwargs
                 )
-            debug_logger.debug(f'text: {text} | text_score: {text_score}')
-            debug_logger.debug(f'href: {href} | href_score: {hrefs_score}')
+            retain_debug_logger_text(10, f'text: {text} | text_score: {text_score}')
+            retain_debug_logger_href(10, f'href: {href} | href_score: {hrefs_score}')
             text_score_list.append(text_score)
             href_score_list.append(hrefs_score)
             href_list.append(href) 
+        retain_debug_logger_text(10, None, do_record_log=True)
+        retain_debug_logger_href(10, None, do_record_log=True)
         return text_score_list, href_score_list, href_list
 
 
