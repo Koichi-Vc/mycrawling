@@ -94,8 +94,8 @@ class AnchorElementsScorings(ElementsScoring, ScoringUrls):
             **kwargs
             )
 
-        #リスト型の二次元配列が返される為次元を下げる
-        urls_score_list = [url for urls in urls_score_list for url in urls]
+        
+        urls_score_list = [url for urls in urls_score_list for url in urls]#リスト型の二次元配列が返される為次元を下げる
         statistics_value = self.urls_statistics(urls_score_list, self.href_score_statistics)
         
         debug_logger.debug(f'statistics_value: {statistics_value}')

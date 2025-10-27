@@ -212,19 +212,19 @@ class PageScorings(PageTextContentsParse, ScoringTexts):
         for child in children_list:
             #childがジェネレータ式ならば展開してtextsに保持、リスト型ならそのまま。
             if isinstance(child, GeneratorType):
-                debug_logger.debug(f'childは、GeneratorType')
                 texts = [txt for txt in child]
+
             else:    
                 texts = child
 
             if texts:
-                debug_logger.debug(f'child: {child}')
+                debug_logger.debug(f'child: {child} | type of child: {type(child)} | texts: {texts}')
+
                 detect_text_is_true = False
                 texts_similarity = self.all_text_scoring(texts, choices=self.all_reference_text_list, cutoff= 0.45)
                 match_primary_texts = self.scoring_eval.collect_contain_texts(texts, reference_texts=self.primary_text_list)
                 match_high_score_texts = self.scoring_eval.collect_contain_texts(texts, reference_texts=self.high_score_text_list)
-                debug_logger.debug(f'match_primary_texts: {match_primary_texts}')
-                debug_logger.debug(f'match_high_score_texts: {match_high_score_texts}')
+                debug_logger.debug(f'match_primary_texts: {match_primary_texts} | match_high_score_texts: {match_high_score_texts}')
                 
                 for similarity_score in texts_similarity:
                     is_primary_texts = False
