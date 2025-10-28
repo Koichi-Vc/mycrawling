@@ -194,15 +194,12 @@ class PageScorings(PageTextContentsParse, ScoringTexts):
 
         child_length = 0#要素に属する直接の子要素総数
         child_count = 0#子要素の内テキストが検出された要素の数
-
         detection_highscore_count = 0#子要素内から検出された高類似度語彙の数
         detection_primary_count = 0#子要素内から検出された重要語彙の数
-        
         detection_primary_text = set()#検出した重要語彙の種類
         detection_highscore_text = set()#検出した高類似度テキストの種類
-
-        contain_text = set()#childrenの走査で既に出現した高類似度・重要テキストを保持する。
         children = element.children
+
         child_length = len([
             c for c in element.contents if isinstance(c, bs4_element.Tag) or (isinstance(c, str) and c.strip() != '')])
         
@@ -262,7 +259,6 @@ class PageScorings(PageTextContentsParse, ScoringTexts):
                 if detect_text_is_true:
                     child_count += 1
 
-        debug_logger.debug(f'contain_text: {contain_text}')
         debug_logger.debug(f'{child_count} | {detection_highscore_count} | {detection_primary_count} |')    
         
         return PageScoreStatisticsSet.create_dataclass( 
