@@ -9,13 +9,13 @@ from mycrawling.parse.textcontentsparse import Spacy_TextParse
 from mycrawling.logs.debug_log import debug_logger, retain_logs
 
 
-
 class ScoringTexts:
-    """ テキストのscoringを実行する。 """
     """ 
+    テキストのscoringを実行する。  
     all_text_scoringとbest_text_scoringの違いは、テキストコンテンツリストのスコアリング時に
     all_text_scoring全てのスコアを返し、best_text_scoringはリスト中の最高スコアのみを返す。
     """
+
     default_all_text_scorer = Indel.normalized_distance
     default_best_text_scorer = Indel.normalized_distance
     #base_text_scoringだったが存在意義が薄れた為、ひとまずジェネレータ化するメソッドとして対応する。
@@ -75,7 +75,6 @@ class ScoringTexts:
         retain_debug_logger(10, f'text_scorer: {text_scorer} ;')
         retain_debug_logger(10, 'all_text_scoring | ', insert_index=0, do_record_log=True)
 
-
     def best_text_scoring(self, texts:List, choices, text_scorer=None, cutoff=None ,*args, **kwargs):
         ''' テキストリストの最高スコアを返す。cutoff値外又は評価不能の場合はNoneを返す。 '''
         
@@ -104,14 +103,13 @@ class ScoringTexts:
                 cutoff = score
                 applicable_txt = score_value[0]
                 text_item = txt
-        debug_logger.debug(f'score: {score} | text_item: {text_item}')
+        debug_logger.debug(f'score: {score} | applicable_txt: {applicable_txt} | text_item: {text_item}')
         return score, applicable_txt, text_item
-
 
 
 class ScoringTitleTexts(ScoringTexts):
     ''' title要素のスコア算出 '''
-
+    
     title_scorer = rapidfuzz_WRatio
     text_parser = Spacy_TextParse
 
@@ -133,7 +131,6 @@ class ScoringTitleTexts(ScoringTexts):
     @ref_title_choices.setter
     def ref_title_choices(self, ref_texts:List):
         self._ref_title_choices = ref_texts
-    
 
     def scoring_title_elements(self, titles:List[Tag], cutoff=80, text_scorer=None, ):
         choices = self.ref_title_choices
@@ -156,13 +153,11 @@ class ScoringTitleTexts(ScoringTexts):
             )
         
         scored_title = scoring_title[0]
-        debug_logger.debug(f'scoring_title: {scoring_title}')
         
         if scored_title is not None:
             title_score = scored_title
             text = scoring_title[2]
 
-        debug_logger.debug(f'title_score:{title_score} | text: {text}')
+        debug_logger.debug(f'scoring_title: {scoring_title} | title_score:{title_score} | text: {text}')
         return title_score, text
-
 

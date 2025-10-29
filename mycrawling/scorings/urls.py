@@ -7,7 +7,6 @@ from .texts import ScoringTexts
 from mycrawling.logs.debug_log import debug_logger,retain_logs
 
 
-
 class ScoringUrls(ScoringTexts):
     ''' urlのスコア算出 '''
 
@@ -33,14 +32,13 @@ class ScoringUrls(ScoringTexts):
 
         text_scores = self.all_text_scoring(texts, choices, scorer, cutoff, *args, **kwargs)
 
-        #'self.all_text_scoringを呼び出して展開。'
+        #'text_scoresを展開。'
         for score, appl_txt, txt in text_scores:
-            #retain_debug_logger(10, f'score: {score} | appl_txt: {appl_txt} | txt: {txt}')
+
             score_value.append(score)
             applicable_texts.append(appl_txt)
             text_list.append(txt)
 
-        #retain_debug_logger(10, 'all_text_scoring | ', do_record_log=True, insert_index=0)
         return score_value, applicable_texts, text_list
 
 
@@ -109,6 +107,6 @@ class ScoringUrls(ScoringTexts):
             result = score_list_length/urls_socre_length*100
         elif statistics == 'sum':
             result = np.sum(score_list)
+        
         return result
-
 

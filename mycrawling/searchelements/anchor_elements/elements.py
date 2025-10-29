@@ -48,7 +48,6 @@ class SearchAnchorElements(BaseSearchElements):
         self.visited_page = set()#クロール訪問済みのurlを保持
         self.filter_class_key = query_kwargs.pop('filter_class_key', self.default_filter_class_key)
 
-
         if not evaluate_objects:
             self.evaluate_objects = self.get_evaluate_class().create_instance()
 
@@ -77,9 +76,9 @@ class SearchAnchorElements(BaseSearchElements):
 
 
     def __call__(self, soup_obj):
+        
         parse_only_tag = 'a'#beautifulsoup解析対象をa要素に絞る。
         elements = super().__call__(soup_obj, parse_only_tag=parse_only_tag)
-        #debug_logger.debug(f'elements: {elements}')
 
 
         if self.handling_fragment:
@@ -96,11 +95,10 @@ class SearchAnchorElements(BaseSearchElements):
         debug_logger.debug(f'evaluated_href_values: {evaluated_href_values} | searched_url: {self.searched_urls} | visited_page: {self.visited_page}') 
         return evaluated_href_values     
 
-
     @property
     def current_url(self):
         return self.__current_url
-    
+
     @current_url.setter
     def current_url(self, url):
         self.__current_url = url
@@ -109,12 +107,10 @@ class SearchAnchorElements(BaseSearchElements):
             debug_logger.debug(f'set current_hostname. host: {host}')
             self.current_hostname = host
 
-
     @property
     def current_hostname(self):
         debug_logger.debug(f'current_hostname: {self.__current_hostname}')
         return self.__current_hostname
-
 
     @current_hostname.setter
     def current_hostname(self, host):
@@ -124,7 +120,7 @@ class SearchAnchorElements(BaseSearchElements):
     def handling_fragment(self):
         #フラグメントの扱いを指定する。
         return self._handling_fragment
-    
+
     @handling_fragment.setter
     def handling_fragment(self, value):
         if not isinstance(value, bool):
@@ -133,7 +129,6 @@ class SearchAnchorElements(BaseSearchElements):
             self._handling_fragment = False
         
         self._handling_fragment = value
-
 
     def exclude_fragment(self, elements):
         #フラグメントを除外するメソッド
@@ -144,16 +139,16 @@ class SearchAnchorElements(BaseSearchElements):
 
             if not href_value or (href_value and "#" not in href_value):
                 yield element
-        self.retain_debug_logger(10, 'exclude_fragment | ', insert_index=0, do_record_log=True)
+        self.retain_debug_logger(10, 'exclude_fragment | ', do_record_log=True, insert_index=0)
         self.retain_debug_logger(refresh_messages=True)
 
     def exclude_rel_attr_nofollow(self, elements):
         #rel属性値がnofollowの要素を除外する。
+        
         for element in elements:
             rel_value = element.get('rel', None)
             if not rel_value or (rel_value and 'nofollow' not in rel_value):
                 yield element
-
 
     def get_evaluate_class(self, cls_name=None):
         ''' 検索した要素の評価を行うクラスを設定情報から取得し、evaluate_objectsに設定する。 '''
@@ -166,18 +161,15 @@ class SearchAnchorElements(BaseSearchElements):
 
         return self.evaluate_objects
 
-
     def add_searched_urls(self, *searched_url):
         ''' 検索・抽出済みのurlを追加する。'''
         for url in searched_url:
             self.searched_urls.add(url)
 
-
     def add_visited_urls(self, *visited_url):
         for url in visited_url:
             self.visited_page.add(url)
 
-    
     def is_already_searched(self, url_items:List[List[str]]):
         '''
         検索したhref値(絶対url/相対urlパス)が既に検索及び訪問済みかどうかを評価して返す。
@@ -214,15 +206,12 @@ class SearchAnchorElements(BaseSearchElements):
         self.retain_debug_logger(refresh_messages=True)
         return absolute, relative
 
-
-
-    #__call__が担う場合不要になる可能性あり
-    #__call__を使わない場合でも内部タスクは大幅に削減される。
-    #役割としては__call__と同じ。
+    #役割は__call__と同じ。
     def find_elements(self,
                            soup_obj,
                            current_url=None):
         ''' find_elementsメソッドのオーバーライド '''
+        
         elements = super().find_elements(soup_obj)
         if current_url is None:
             current_url = self.current_url
@@ -234,5 +223,4 @@ class SearchAnchorElements(BaseSearchElements):
         evaluated_href_values = self.is_already_searched(evaluated_elements)
 
         return evaluated_href_values
-
 
