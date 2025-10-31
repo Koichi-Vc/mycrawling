@@ -151,12 +151,11 @@ class ScoringTitleTexts(ScoringTexts):
             )
         
         scored_title = scoring_title[0]
-        debug_logger.debug(f'scoring_title: {scoring_title}')
         
         if scored_title is not None:
             title_score = scored_title
             text = scoring_title[2]
 
-        debug_logger.debug(f'title_score:{title_score} | text: {text}')
+        debug_logger.debug(f'scoring_title: {scoring_title} | title_score:{title_score} | text: {text}')
         return title_score, text
 

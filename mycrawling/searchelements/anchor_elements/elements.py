@@ -135,7 +135,7 @@ class SearchAnchorElements(BaseSearchElements):
 
             if not href_value or (href_value and "#" not in href_value):
                 yield element
-        self.retain_debug_logger(10, 'exclude_fragment | ', insert_index=0, do_record_log=True)
+        self.retain_debug_logger(10, 'exclude_fragment | ', do_record_log=True, insert_index=0)
         self.retain_debug_logger(refresh_messages=True)
 
 
@@ -199,7 +199,7 @@ class SearchAnchorElements(BaseSearchElements):
                 self.add_searched_urls(*searched_urls)
                 relative.append(rel)
                 absolute.append(absol)
-        self.retain_debug_logger(10, 'url_items | ', insert_index=0, do_record_log=True)
+        self.retain_debug_logger(10, 'url_items | ', do_record_log=True, insert_index=0)
         self.retain_debug_logger(refresh_messages=True)
         return absolute, relative
 
