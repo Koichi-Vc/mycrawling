@@ -71,7 +71,6 @@ class AnchorElementsScorings(ElementsScoring, ScoringUrls):
         scoring_urls_attrs: スコアリング対象にするurlparse属性名 初期値: self.select_url_attrs_list
         '''
         
-        debug_logger.debug(f'urls: {urls} | scoring_urls_attrs: {scoring_urls_attrs} | kwargs: {kwargs}')
 
         choices_url_text = self.__reference_urls
 
@@ -98,7 +97,8 @@ class AnchorElementsScorings(ElementsScoring, ScoringUrls):
         urls_score_list = [url for urls in urls_score_list for url in urls]#リスト型の二次元配列が返される為次元を下げる
         statistics_value = self.urls_statistics(urls_score_list, self.href_score_statistics)
         
-        debug_logger.debug(f'statistics_value: {statistics_value}')
+        debug_logger.debug(f'実引数 > urls: {urls} | scoring_urls_attrs: {scoring_urls_attrs} | kwargs: {kwargs} | 戻り値 > statistics_value: {statistics_value}')
+
         return statistics_value
     
 
