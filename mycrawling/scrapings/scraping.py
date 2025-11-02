@@ -196,7 +196,7 @@ class PageScraping():
                     if not elem_index:
                         index.append('')
                     elem_index = ''
-            self.retain_debug_logger(10, 'child_text[elem] :', insert_index=0, do_record_log=True)
+            self.retain_debug_logger(10, 'child_text[elem] :', do_record_log=True, insert_index=0)
             debug_logger.debug(f'forループ終了後 tx: {tx}')
         self.retain_debug_logger(refresh_messages=True)
         
