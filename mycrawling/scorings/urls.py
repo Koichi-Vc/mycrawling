@@ -23,7 +23,7 @@ class ScoringUrls(ScoringTexts):
 
     def urls_text_scoring(self, texts, choices, scorer, cutoff=None, *args, **kwargs):
         ''' all_text_scoringの戻り値(generator)を展開して返す '''
-        #retain_debug_logger = retain_logs(debug_logger)
+
         #戻り値はタプル型リストの二次元配列
         score_value = []
         applicable_texts = []
@@ -32,12 +32,11 @@ class ScoringUrls(ScoringTexts):
         text_scores = self.all_text_scoring(texts, choices, scorer, cutoff, *args, **kwargs)
 
         for score, appl_txt, txt in text_scores:
-            #retain_debug_logger(10, f'score: {score} | appl_txt: {appl_txt} | txt: {txt}')
+            
             score_value.append(score)
             applicable_texts.append(appl_txt)
             text_list.append(txt)
 
-        #retain_debug_logger(10, 'all_text_scoring | ', do_record_log=True, insert_index=0)
         return score_value, applicable_texts, text_list
 
     #scoringメソッドを用いた基本的なurlsのスコア付けを行う。
