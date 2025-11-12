@@ -142,7 +142,6 @@ class DataMediator(BaseDataMediator):
             type: クラスオブジェクトの場合、該当するクラスインスタンス全てを検索する。
         '''
 
-        debug_logger.debug(f'object_name: {object_name} | type: {type(object_name)}')
 
         objects = None
         if isinstance(object_name, str):
@@ -150,8 +149,8 @@ class DataMediator(BaseDataMediator):
             
         elif isinstance(object_name, (type, object)):
             objects = self.find_notification(object_name)
-        
-        debug_logger.debug(f'objects: {objects}')
+
+        debug_logger.debug(f'object_name: {object_name} | objects: {objects} | type: {type(object_name)}')
 
         if objects == []:
             objects = None
@@ -213,8 +212,7 @@ class DataMediator(BaseDataMediator):
         instance_list = list()
         debug_logger.debug(f'attr_value: {attr_value}')
         debug_logger.debug(f'self.registry_notify_objects: {self.registry_notify_objects}')
-        debug_logger.debug(f'notification_to: {notification_to}')
-        debug_logger.debug(f'notify_to_attr: {notify_to_attr}')
+        debug_logger.debug(f'notification_to: {notification_to} | notify_to_attr: {notify_to_attr}')
         
         if self.registry_notify_objects:
             if notification_to:
