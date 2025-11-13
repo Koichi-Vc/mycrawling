@@ -139,15 +139,12 @@ class PageScorings(PageTextContentsParse, ScoringTexts):
 
     def detect_high_score_texts(self, element, scorer=None, **kwargs):
       
-
         text_scorer = scorer if callable(scorer) else self.text_scorer
 
         if not isinstance(element, bs4_element.Tag):
             return
 
         text_contents = self.run_parse_textcontents(element, do_parsetext=self.do_parsetext, exclude_ref_words = self.exclude_ref_words, **kwargs)
-
-        retain_debug_logger = retain_logs(debug_logger)
 
         evaluated_text = self.all_text_scoring(
             text_contents,
@@ -160,7 +157,6 @@ class PageScorings(PageTextContentsParse, ScoringTexts):
             
             if score is not None:
 
-                retain_debug_logger(10, f'score: {score} | txt: {txt} | applicable_txt: {applicable_txt}')
                 if applicable_txt in self.all_primary_texts:
                     self.primary_text_list = txt
                 else:
@@ -171,7 +167,7 @@ class PageScorings(PageTextContentsParse, ScoringTexts):
                 elif applicable_txt in self.en_standard_texts:
                     self.high_score_en_text.append(txt)
 
-        retain_debug_logger(10, 'all_text_scoring | ', do_record_log=True)
+        debug_logger.debug(f'primary_text_list: {self.primary_text_list} | high_score_text_list: {self.high_score_text_list}')
         return self.primary_text_list, self.high_score_text_list
 
 
@@ -258,8 +254,8 @@ class PageScorings(PageTextContentsParse, ScoringTexts):
                 if detect_text_is_true:
                     child_count += 1
 
-        debug_logger.debug(f'contain_text: {contain_text}')
-        debug_logger.debug(f'{child_count} | {detection_highscore_count} | {detection_primary_count} |')    
+        debug_logger.debug(f'child_lengthの数: {child_length} | {child_count} | {detection_highscore_count} | {detection_primary_count} |')    
+        
         return PageScoreStatisticsSet.create_dataclass( 
             child_length, 
             child_count, 
