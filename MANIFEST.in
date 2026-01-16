@@ -1,0 +1,10 @@
+recursive-include mycrawling/parameter_files *
+
+recursive-exclude mycrawling/parameter_files test_*.json
+
+include requirements.txt
+
+include NOTICE
+
+include README.md
+

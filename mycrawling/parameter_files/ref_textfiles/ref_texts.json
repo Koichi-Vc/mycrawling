@@ -1,0 +1,35 @@
+{
+    "robotsparsedatalist" :{
+        "prohibition_url_list" : [
+            "https://www.facebook.com",
+            "https://twitter.com",
+            "https://www.amazon.co.jp/", 
+            "https://www.rakuten.co.jp/",
+            "https://finance.yahoo.co.jp/"
+        ]
+    },
+
+
+    "reference_title_a_url_texts" : {
+        "reference_texts" : ["会社概要","会社案内","会社情報","企業情報","企業概要", "About","about","company","ir情報","役員"],
+        "reference_urls" : ["About","about","Company", "company","overview","profile", "corporate", "ir"]
+
+    },
+
+    
+    "reference_textcollection" : {
+
+        "jp_standard_texts" : [
+            "名称",  "売上高","年商","ウェブサイトurl", "取引","従業員","社員", "電話番号",
+            "オフィス","取締役","監査","役員", "株主","関連グループ", "認証","許可"],
+            
+        "jp_primary_texts" : ["会社名","企業名","創立","創業", "創設","設立","所在地","資本金","住所","本社","事業内容","電話","メールアドレス", "代表"],
+
+        "en_standard_texts" : [ "infomation","capital", "corporate","common", "phone","area","services", "president","Employees","fax"],
+
+        "en_primary_texts" : ["address", "location","company","tell","bussiness","office","ceo","established","products", "Manufacturing Facilities"]
+
+    }
+
+}
+

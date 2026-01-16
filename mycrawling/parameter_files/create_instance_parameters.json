@@ -1,0 +1,13 @@
+{
+    "searchanchorelements": {
+        "evaluate_objects": "",
+        "handling_fragment": true
+    },
+    "pagescorings": {
+        "title_boundary": 80,
+        "text_boundary": 0.3,
+        "datamediator" : "mycrawling.conf.data_setting.datamediator",
+        "do_parsetext" : true,
+        "exclude_ref_words": "self.all_reference_text_list"
+    }
+}

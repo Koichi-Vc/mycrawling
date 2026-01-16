@@ -1,0 +1,28 @@
+###### Requirements without Version Specifiers ######
+
+requests
+
+beautifulsoup4
+
+lxml
+
+rapidfuzz
+
+selenium
+
+numpy
+
+Pandas
+
+spacy
+
+###### Package dependent on browser version. ######
+
+chromedriver_binary
+
+#####it is dictionary to using in spacy.####
+
+ginza
+
+ja-ginza
+
