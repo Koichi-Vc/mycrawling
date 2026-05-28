@@ -114,7 +114,8 @@ ref_dataconfig = Ref_DataConfig.ref_dataconfig_factory()
 ##### RetainSettingConfクラス
 setting.pyから有効な設定変数を取得し、またsetting_fileにユーザーによる設定情報ファイル(.pyファイル)を渡す事で読み込み時に反映させる事もできます。
 
-### crawlings
+
+### **crawlings**
 サイト内をクローリングする機能を提供します。
 
 #### crawling.py
@@ -122,12 +123,35 @@ setting.pyから有効な設定変数を取得し、またsetting_fileにユー�
 最初の時点でコンテンツが見つかった場合は、スクレイピングを実行してクローリングはせずに終了します。
 
 
+### **datas**
+スクレイピング対象の評価基準となるキーワードデータを管理します。
 
-### filters
+#### referencetexts.py
+キーワードとなるテキストを保持するデータクラスを提供します。
+
+##### Reference_Title_A_Url_Textsクラス
+収集対象のa要素を評価するための基準となるキーワードを保持するデータクラス
+
+##### Reference_TextCollection
+ページのスクレイピングする為の評価基準となるキーワードを保持するデータクラス
+
+
+### **evaluations**
+ページのURLとテキストコンテンツを評価基準のキーワードデータと完全一致、部分一致で評価する機能を提供します。
+
+#### evaluationtexts.EvaluateTextsクラス
+ページ内のテキストを完全一致、部分一致で評価します。
+
+#### evaluationurls.EvaluateUrlsクラス
+ページのURLを評価します。
+##### evaluate_hostnameメソッド
+ホストネームから、外部サイトへのurlかどうかを評価します。
+
+
+### **filters**
 Beautifulsoup.find_allで検索する際のフィルターを作成するパッケージ。
 要素に対するフィルターから属性をターゲットにしたフィルターにも対応する様にしました。
 またフィルターにかける前後に処理を追加できる機能もあります。
-
 
 #### anchorelements.py
 
@@ -135,6 +159,7 @@ Beautifulsoup.find_allで検索する際のフィルターを作成するパッ�
 a要素専用の検索フィルターを作成するためのクラス。ダウンロードコンテンツやフラグメントを対象から除外する機能もあります。
 ダウンロードコンテンツの除外機能に関しては、href属性値から拡張子の部分を検証して該当するダウンロードコンテンツの場合に除外します。
 除外対象のダウンロードコンテンツ(拡張子で指定)は、引数exclude_downloadsで指定してください。
+
 
 - **processing**
         フィルターの前後に処理を追加する為のオブジェクト。現在valuefilterメソッドのみでのサポートであり、
@@ -146,6 +171,7 @@ a要素専用の検索フィルターを作成するためのクラス。ダウ�
 
 ##### ElementsFilterクラス
 パラメータが受け取るものはBeautifulsoup.find_allが受け付ける引数に準じており、加えて、conditionではフィルター条件(and, orなど)をoperaterモジュールのメソッド等で指定します。またcriteria_valueには基準とする値を指定できます。
+
 
 **パラメータ**
 - attr : フィルター対象の要素から取得する属性を指定する。受け取った値はElementsFilter.get_attributeメソッドにて、element.get(self.attr)で取得される。
